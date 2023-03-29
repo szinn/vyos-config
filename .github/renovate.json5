@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":dependencyDashboard",
+    ":disableRateLimiting",
+    "docker:enableMajor",
+    "docker:pinDigests",
+    ":automergeDigest",
+    ":enablePreCommit",
+    "github>szinn/vyos-config//.github/renovate/commit-message.json5",
+    "github>szinn/vyos-config//.github/renovate/pr-labels.json5",
+    "github>szinn/vyos-config//.github/renovate/semantic-commits.json5",
+    "github>szinn/vyos-config//.github/renovate/generic-regex-manager.json5",
+    "github>szinn/vyos-config//.github/renovate/automerge-github-actions.json5"
+  ],
+  "onboarding": false,
+  "requireConfig": "optional",
+  "timezone": "America/Toronto",
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "suppressNotifications": ["prIgnoreNotification"],
+  "commitBodyTable": true,
+  "rebaseWhen": "conflicted",
+  "platform": "github",
+  "username": "repo-jeeves[bot]",
+  "gitAuthor": "repo-jeeves <106431701+repo-jeeves[bot]@users.noreply.github.com>",
+  "repositories": ["szinn/vyos-config"],
+  "regexManagers": [
+    {
+      "description": ["Generic Docker image Regex manager"],
+      "fileMatch": [
+        "config-parts/.+\\.sh$"
+      ],
+      "matchStrings": [
+        "set container name .* image '?(?<depName>.*?):(?<currentValue>[^'\n]*=?)'?"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
+  "packageRules": []
+}
