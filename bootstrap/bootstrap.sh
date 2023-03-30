@@ -72,49 +72,56 @@ set firewall zone wan from lan firewall name 'lan-wan'
 set firewall zone wan from local firewall name 'local-wan'
 set firewall zone wan interface 'eth0'
 
+set firewall zone services default-action 'drop'
+set firewall zone services description 'VyOS services zone'
+set firewall zone services from lan firewall name 'lan-services'
+set firewall zone services from local firewall name 'local-services'
+set firewall zone services from wan firewall name 'wan-services'
+set firewall zone services interface 'cni-services'
+
 # From LOCAL to LAN
 set firewall name local-lan default-action 'drop'
 set firewall name local-lan description 'From LOCAL to LAN'
 set firewall name local-lan enable-default-log
+
+# From LOCAL to SERVICES
+set firewall name local-services default-action 'accept'
+set firewall name local-services description 'From LOCAL to SERVICES'
+
+# From LOCAL to WAN
+set firewall name local-wan default-action 'accept'
+set firewall name local-wan description 'From LOCAL to WAN'
 
 # From WAN to LAN
 set firewall name wan-lan default-action 'drop'
 set firewall name wan-lan description 'From WAN to LAN'
 set firewall name wan-lan enable-default-log
 
-# From LAN to LOCAL
-set firewall name lan-local default-action 'drop'
-set firewall name lan-local description 'From LAN to LOCAL'
-set firewall name lan-local enable-default-log
-set firewall name lan-local rule 1 action 'accept'
-set firewall name lan-local rule 1 description 'Rule: accept_ssh'
-set firewall name lan-local rule 1 destination port 'ssh'
-set firewall name lan-local rule 1 protocol 'tcp'
-set firewall name lan-local rule 2 action 'accept'
-set firewall name lan-local rule 2 description 'Rule: accept_ntp'
-set firewall name lan-local rule 2 destination port 'ntp'
-set firewall name lan-local rule 2 protocol 'udp'
-set firewall name lan-local rule 3 action 'accept'
-set firewall name lan-local rule 3 description 'Rule: accept_dhcp'
-set firewall name lan-local rule 3 destination port '67,68'
-set firewall name lan-local rule 3 protocol 'udp'
-set firewall name lan-local rule 3 source port '67,68'
-
 # From WAN to LOCAL
 set firewall name wan-local default-action 'drop'
 set firewall name wan-local description 'From WAN to LOCAL'
 set firewall name wan-local enable-default-log
 
+# From WAN to SERVICES
+set firewall name wan-services default-action 'drop'
+set firewall name wan-services description 'From WAN to SERVICES'
+set firewall name wan-services enable-default-log
+
+# From LAN to LOCAL
+set firewall name lan-local default-action 'accept'
+set firewall name lan-local description 'From LAN to LOCAL'
+set firewall name lan-local enable-default-log
+
+# From LAN to SERVICES
+set firewall name lan-services default-action 'accept'
+set firewall name lan-services description 'From LAN to SERVICES'
+
 # From LAN to WAN
 set firewall name lan-wan default-action 'accept'
 set firewall name lan-wan description 'From LAN to WAN'
 
-# From LOCAL to WAN
-set firewall name local-wan default-action 'accept'
-set firewall name local-wan description 'From LOCAL to WAN'
-
 # Container networks
-set container network lan prefix '10.0.0.0/24'
+set container network services prefix '10.0.5.0/24'
 
 # unifi
 mkdir -p /config/containers/unifi
@@ -123,9 +130,10 @@ set container name unifi environment TZ value 'America/Toronto'
 set container name unifi environment UNIFI_GID value '999'
 set container name unifi environment UNIFI_STDOUT value 'true'
 set container name unifi environment UNIFI_UID value '999'
+set container name unifi environment CERT_IS_CHAIN value 'true'
 set container name unifi image 'ghcr.io/jacobalberty/unifi-docker:v7.3.83'
 set container name unifi memory '0'
-set container name unifi network lan address '10.0.0.16'
+set container name unifi network services address '10.0.5.2'
 set container name unifi restart 'on-failure'
 set container name unifi shared-memory '0'
 set container name unifi volume data destination '/unifi'
