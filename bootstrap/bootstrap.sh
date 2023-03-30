@@ -87,10 +87,12 @@ set firewall name local-lan enable-default-log
 # From LOCAL to SERVICES
 set firewall name local-services default-action 'accept'
 set firewall name local-services description 'From LOCAL to SERVICES'
+set firewall name local-services enable-default-log
 
 # From LOCAL to WAN
 set firewall name local-wan default-action 'accept'
 set firewall name local-wan description 'From LOCAL to WAN'
+set firewall name local-wan enable-default-log
 
 # From WAN to LAN
 set firewall name wan-lan default-action 'drop'
@@ -115,10 +117,12 @@ set firewall name lan-local enable-default-log
 # From LAN to SERVICES
 set firewall name lan-services default-action 'accept'
 set firewall name lan-services description 'From LAN to SERVICES'
+set firewall name lan-services enable-default-log
 
 # From LAN to WAN
 set firewall name lan-wan default-action 'accept'
 set firewall name lan-wan description 'From LAN to WAN'
+set firewall name lan-wan enable-default-log
 
 # Container networks
 set container network services prefix '10.0.5.0/24'
