@@ -3,9 +3,4 @@
 
 # Track certain files and directories
 !.gitignore
-
-# Containers
-!/unifi/
-!/coredns/
-!/haproxy/
-
+!*.sh

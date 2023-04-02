@@ -18,7 +18,7 @@ set service ssh disable-password-authentication
 set service ssh port '22'
 
 delete system host-name
-set system domain-name 'zinn.ca'
+set system domain-name 'zinn.tech'
 set system host-name 'gateway'
 
 set system ipv6 disable-forwarding
@@ -28,6 +28,9 @@ set system name-server '1.1.1.1'
 set system sysctl parameter kernel.pty.max value '24000'
 
 set system time-zone 'America/Toronto'
+
+set service dhcp-server hostfile-update
+set service dhcp-server host-decl-name
 
 set service dhcp-server shared-network-name LAN authoritative
 set service dhcp-server shared-network-name LAN ping-check
@@ -58,6 +61,7 @@ set firewall state-policy related action 'accept'
 
 set firewall zone lan default-action 'drop'
 set firewall zone lan from local firewall name 'local-lan'
+set firewall zone lan from services firewall name 'services-lan'
 set firewall zone lan from wan firewall name 'wan-lan'
 set firewall zone lan interface 'eth0'
 set firewall zone lan interface 'eth1'
@@ -65,12 +69,9 @@ set firewall zone lan interface 'eth1'
 set firewall zone local default-action 'drop'
 set firewall zone local description 'Local router zone'
 set firewall zone local from lan firewall name 'lan-local'
+set firewall zone local from services firewall name 'services-local'
 set firewall zone local from wan firewall name 'wan-local'
 set firewall zone local local-zone
-
-set firewall zone wan from lan firewall name 'lan-wan'
-set firewall zone wan from local firewall name 'local-wan'
-set firewall zone wan interface 'eth5'
 
 set firewall zone services default-action 'drop'
 set firewall zone services description 'VyOS services zone'
@@ -79,35 +80,10 @@ set firewall zone services from local firewall name 'local-services'
 set firewall zone services from wan firewall name 'wan-services'
 set firewall zone services interface 'cni-services'
 
-# From LOCAL to LAN
-set firewall name local-lan default-action 'drop'
-set firewall name local-lan description 'From LOCAL to LAN'
-set firewall name local-lan enable-default-log
-
-# From LOCAL to SERVICES
-set firewall name local-services default-action 'accept'
-set firewall name local-services description 'From LOCAL to SERVICES'
-set firewall name local-services enable-default-log
-
-# From LOCAL to WAN
-set firewall name local-wan default-action 'accept'
-set firewall name local-wan description 'From LOCAL to WAN'
-set firewall name local-wan enable-default-log
-
-# From WAN to LAN
-set firewall name wan-lan default-action 'drop'
-set firewall name wan-lan description 'From WAN to LAN'
-set firewall name wan-lan enable-default-log
-
-# From WAN to LOCAL
-set firewall name wan-local default-action 'drop'
-set firewall name wan-local description 'From WAN to LOCAL'
-set firewall name wan-local enable-default-log
-
-# From WAN to SERVICES
-set firewall name wan-services default-action 'drop'
-set firewall name wan-services description 'From WAN to SERVICES'
-set firewall name wan-services enable-default-log
+set firewall zone wan from lan firewall name 'lan-wan'
+set firewall zone wan from local firewall name 'local-wan'
+set firewall zone wan from services firewall name 'services-wan'
+set firewall zone wan interface 'eth5'
 
 # From LAN to LOCAL
 set firewall name lan-local default-action 'accept'
@@ -124,6 +100,49 @@ set firewall name lan-wan default-action 'accept'
 set firewall name lan-wan description 'From LAN to WAN'
 set firewall name lan-wan enable-default-log
 
+# From LOCAL to LAN
+set firewall name local-lan default-action 'drop'
+set firewall name local-lan description 'From LOCAL to LAN'
+set firewall name local-lan enable-default-log
+
+# From LOCAL to SERVICES
+set firewall name local-services default-action 'accept'
+set firewall name local-services description 'From LOCAL to SERVICES'
+set firewall name local-services enable-default-log
+
+# From LOCAL to WAN
+set firewall name local-wan default-action 'accept'
+set firewall name local-wan description 'From LOCAL to WAN'
+set firewall name local-wan enable-default-log
+
+# From SERVICES to LAN
+set firewall name services-lan default-action 'drop'
+set firewall name services-lan description 'From SERVICES to LAN'
+set firewall name services-lan enable-default-log
+
+# From SERVICES to LOCAL
+set firewall name services-local default-action 'accept'
+set firewall name services-local description 'From SERVICES to LOCAL'
+
+# From SERVICES to WAN
+set firewall name services-wan default-action 'accept'
+set firewall name services-wan description 'From SERVICES to WAN'
+
+# From WAN to LAN
+set firewall name wan-lan default-action 'drop'
+set firewall name wan-lan description 'From WAN to LAN'
+set firewall name wan-lan enable-default-log
+
+# From WAN to LOCAL
+set firewall name wan-local default-action 'drop'
+set firewall name wan-local description 'From WAN to LOCAL'
+set firewall name wan-local enable-default-log
+
+# From WAN to SERVICES
+set firewall name wan-services default-action 'drop'
+set firewall name wan-services description 'From WAN to SERVICES'
+set firewall name wan-services enable-default-log
+
 # Container networks
 set container network services prefix '10.0.5.0/24'
 
@@ -137,7 +156,7 @@ set container name unifi environment UNIFI_UID value '999'
 set container name unifi environment CERT_IS_CHAIN value 'true'
 set container name unifi image 'ghcr.io/jacobalberty/unifi-docker:v7.3.83'
 set container name unifi memory '0'
-set container name unifi network services address '10.0.5.2'
+set container name unifi network services address '10.0.5.3'
 set container name unifi restart 'on-failure'
 set container name unifi shared-memory '0'
 set container name unifi volume data destination '/unifi'
