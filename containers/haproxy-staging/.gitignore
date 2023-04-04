@@ -4,8 +4,6 @@
 # Track certain files and directories
 !.gitignore
 
-# Containers
-!/unifi/
-!/coredns/
-!/haproxy-main/
-!/haproxy-staging/
+!/config/
+/config/*
+!/config/haproxy.cfg

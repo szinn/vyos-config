@@ -32,14 +32,10 @@ set system static-host-mapping host-name k8s-5.zinn.tech inet 10.10.0.20
 set system static-host-mapping host-name k8s-6.zinn.tech inet 10.10.0.21
 
 # k8s Staging Cluster
-set system static-host-mapping host-name staging.zinn.tech inet 10.0.5.4
+set system static-host-mapping host-name staging.zinn.tech inet 10.0.5.5
 set system static-host-mapping host-name stage-1.zinn.tech inet 10.10.0.24
 set system static-host-mapping host-name stage-2.zinn.tech inet 10.10.0.25
 set system static-host-mapping host-name stage-3.zinn.tech inet 10.10.0.26
 set system static-host-mapping host-name stage-4.zinn.tech inet 10.10.0.27
 set system static-host-mapping host-name stage-5.zinn.tech inet 10.10.0.28
 set system static-host-mapping host-name stage-6.zinn.tech inet 10.10.0.29
-
-# Devices
-set system static-host-mapping host-name odin.zinn.tech inet 10.20.0.19
-set system static-host-mapping host-name odin-wifi.zinn.tech inet 10.20.0.20
