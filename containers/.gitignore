@@ -7,5 +7,6 @@
 # Containers
 !/unifi/
 !/coredns/
+!/dnsdist/
 !/haproxy-main/
 !/haproxy-staging/

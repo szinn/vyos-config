@@ -8,7 +8,7 @@ set service dhcp-server shared-network-name LAN authoritative
 set service dhcp-server shared-network-name LAN ping-check
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 default-router '10.0.0.1'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 lease '900'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 name-server '10.0.5.2'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 start '10.0.0.208'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 stop '10.0.0.254'
 
@@ -57,7 +57,7 @@ set service dhcp-server shared-network-name LAN authoritative
 set service dhcp-server shared-network-name LAN ping-check
 set service dhcp-server shared-network-name LAN subnet 10.0.1.0/24 default-router '10.0.1.1'
 set service dhcp-server shared-network-name LAN subnet 10.0.1.0/24 lease '900'
-set service dhcp-server shared-network-name LAN subnet 10.0.1.0/24 name-server '10.0.5.2'
+set service dhcp-server shared-network-name LAN subnet 10.0.1.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name LAN subnet 10.0.1.0/24 range 0 start '10.0.1.208'
 set service dhcp-server shared-network-name LAN subnet 10.0.1.0/24 range 0 stop '10.0.1.254'
 
@@ -67,7 +67,7 @@ set service dhcp-server shared-network-name SERVERS ping-check
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 default-router '10.10.0.1'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 domain-name 'zinn.tech'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 lease '900'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 name-server '10.0.5.2'
+set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 start '10.10.0.200'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 stop '10.10.0.254'
 
@@ -116,7 +116,7 @@ set service dhcp-server shared-network-name TRUSTED ping-check
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 default-router '10.20.0.1'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 domain-name 'zinn.tech'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 lease '900'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 name-server '10.0.5.2'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 start '10.20.0.200'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 stop '10.20.0.254'
 
