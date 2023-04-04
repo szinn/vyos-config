@@ -191,3 +191,72 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
+
+# IOT VLAN
+set service dhcp-server shared-network-name IOT authoritative
+set service dhcp-server shared-network-name IOT ping-check
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 default-router '192.168.1.1'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 domain-name 'zinn.tech'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 lease '900'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 name-server '1.1.1.1'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 start '192.168.1.200'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 stop '192.168.1.254'
+
+# IOT devices
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm-switch ip-address '192.168.1.10'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm-switch mac-address '84:c2:e4:26:4e:8c'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-basement ip-address '192.168.1.16'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-basement mac-address '64:16:66:ce:90:da'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-furnace ip-address '192.168.1.17'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-furnace mac-address '64:16:66:cc:7d:3b'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-front-door ip-address '192.168.1.18'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-front-door mac-address '18:b4:30:ae:8a:85'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-kitchen ip-address '192.168.1.19'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-kitchen mac-address '16:66:cd:f6:08'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs ip-address '192.168.1.20'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs mac-address '64:16:66:cd:f8:e8'
+
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping g4-front-door ip-address '192.168.1.24'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping g4-front-door mac-address 'e0:63:da:00:9f:e1'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 ip-address '192.168.1.25'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 mac-address '2c:aa:8e:6e:90:d3'
+#set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-2 ip-address '192.168.1.26'
+#set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-2 mac-address '64:16:66:cd:f8:e8'
+
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tplink-energy ip-address '192.168.1.32'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tplink-energy mac-address '54:af:97:08:14:34'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tpllink-switch-1 ip-address '192.168.1.33'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tpllink-switch-1 mac-address '70:4f:57:b0:10:09'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tpllink-switch-2 ip-address '192.168.1.34'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tpllink-switch-2 mac-address '70:4f:57:b0:20:24'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tpllink-switch-3 ip-address '192.168.1.35'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tpllink-switch-3 mac-address '70:4f:57:b4:5b:ca'
+
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping printer-3d-octoprint ip-address '192.168.1.48'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping printer-3d-octoprint mac-address 'b8:27:eb:e4:eb:5a'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping ecobee ip-address '192.168.1.49'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping ecobee mac-address '44:61:32:ac:20:ff'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping hottub ip-address '192.168.1.50'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping hottub mac-address '00:15:27:39:1f:16'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping philips-hue ip-address '192.168.1.51'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping philips-hue mac-address '00:17:88:24:d0:d9'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping sony-tv ip-address '192.168.1.52'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping sony-tv mac-address 'cc:98:8b:fb:6d:36'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping chargepoint ip-address '192.168.1.53'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping chargepoint mac-address '00:24:b1:04:16:b5'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping peleton ip-address '192.168.1.54'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping peleton mac-address 'ac:04:0b:6f:0c:bc'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tesla-whisper ip-address '192.168.1.55'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping tesla-whisper mac-address '4c:fc:aa:03:d8:81'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping aria-scale ip-address '192.168.1.56'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping aria-scale mac-address '18:00:db:0c:e8:e2'
+
+# GUEST VLAN
+set service dhcp-server shared-network-name GUEST authoritative
+set service dhcp-server shared-network-name GUEST ping-check
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 default-router '192.168.2.1'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 domain-name 'zinn.tech'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 lease '900'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 name-server '1.1.1.1'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 start '192.168.2.200'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 stop '192.168.2.254'

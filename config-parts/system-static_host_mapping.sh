@@ -39,3 +39,8 @@ set system static-host-mapping host-name stage-3.zinn.tech inet 10.10.0.26
 set system static-host-mapping host-name stage-4.zinn.tech inet 10.10.0.27
 set system static-host-mapping host-name stage-5.zinn.tech inet 10.10.0.28
 set system static-host-mapping host-name stage-6.zinn.tech inet 10.10.0.29
+
+# Other devices
+set system static-host-mapping host-name kvm.zinn.tech inet 192.168.1.10
+set system static-host-mapping host-name octo.zinn.tech inet 192.168.1.48
+set system static-host-mapping host-name hottub.zinn.tech inet 192.168.1.50
