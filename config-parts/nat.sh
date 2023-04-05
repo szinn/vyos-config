@@ -5,7 +5,7 @@ set nat destination rule 100 description 'HTTPS'
 set nat destination rule 100 destination port '443'
 set nat destination rule 100 inbound-interface 'eth5'
 set nat destination rule 100 protocol 'tcp'
-set nat destination rule 100 translation address '10.11.0.1'
+set nat destination rule 100 translation address '10.10.1.2'
 set nat destination rule 100 translation port '443'
 
 # set nat destination rule 101 description 'HTTP'

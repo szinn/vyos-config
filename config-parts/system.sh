@@ -1,7 +1,8 @@
 #!/bin/vbash
 
-set system domain-name 'zinn.tech'
 set system host-name 'gateway'
+set system domain-name 'zinn.tech'
+set system login banner post-login 'Welcome to gateway.zinn.tech'
 
 set system ipv6 disable-forwarding
 

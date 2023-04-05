@@ -8,5 +8,5 @@
 !/unifi/
 !/coredns/
 !/dnsdist/
-!/haproxy-main/
-!/haproxy-staging/
+!/main-k8s/
+!/staging-k8s/

@@ -16,7 +16,6 @@ END
 #
 tee -a /home/vyos/.bash_aliases <<END
 export SOPS_AGE_KEY_FILE=/config/secrets/age.key
-export GIT_SSH_COMMAND="ssh -i /config/secrets/id_rsa"
 export VISUAL=vi
 export EDITOR=vi
 END

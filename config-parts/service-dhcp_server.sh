@@ -133,8 +133,8 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-wifi mac-address 'f4:d4:88:5d:e7:21'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-win11 ip-address '10.20.0.29'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-win11 mac-address '00:1c:42:0b:1e:65'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-usbc ip-address '10.20.0.30'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-usbc mac-address '00:e0:4c:a9:e9:59'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-usbc-2 ip-address '10.20.0.30'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-usbc-2 mac-address '00:e0:4c:a9:e9:59'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-block-macbook ip-address '10.20.0.31'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-block-macbook mac-address 'f4:d4:88:68:6b:3d'
 
@@ -171,26 +171,6 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-kitchen mac-address '34:7e:5c:d0:6c:72'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom ip-address '10.20.0.137'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom mac-address '38:42:0b:66:1c:82'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping delta mac-address 'de:ca:ff:10:00:18' # stage-1
 
 # IOT VLAN
 set service dhcp-server shared-network-name IOT authoritative
@@ -251,11 +231,16 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping aria-scale ip-address '192.168.1.56'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping aria-scale mac-address '18:00:db:0c:e8:e2'
 
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping lexmark-office ip-address '192.168.1.96'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping lexmark-office mac-address '78:8c:77:12:04:16'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office ip-address '192.168.1.97'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office mac-address '84:25:3f:6d:b8:8c'
+
+
 # GUEST VLAN
 set service dhcp-server shared-network-name GUEST authoritative
 set service dhcp-server shared-network-name GUEST ping-check
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 default-router '192.168.2.1'
-set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 domain-name 'zinn.tech'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 lease '900'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 name-server '1.1.1.1'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 start '192.168.2.200'
