@@ -42,12 +42,12 @@ set firewall name lan-trusted enable-default-log
 
 # From LAN to IOT
 set firewall name lan-iot description 'From LAN to IOT'
-set firewall name lan-iot default-action 'drop'
-set firewall name lan-iot enable-default-log
-set firewall name lan-iot rule 1 description 'Rule: accept_unifi_to_iot_cameras'
-set firewall name lan-iot rule 1 action 'accept'
-set firewall name lan-iot rule 1 source group address-group 'unifi-unvr'
-set firewall name lan-iot rule 1 destination group address-group 'unifi-iot-cameras'
+set firewall name lan-iot default-action 'accept'
+# set firewall name lan-iot enable-default-log
+# set firewall name lan-iot rule 1 description 'Rule: accept_unifi_to_iot_cameras'
+# set firewall name lan-iot rule 1 action 'accept'
+# set firewall name lan-iot rule 1 source group address-group 'unifi-unvr'
+# set firewall name lan-iot rule 1 destination group address-group 'unifi-iot-cameras'
 
 # From LAN to GUEST
 set firewall name lan-guest description 'From LAN to GUEST'
