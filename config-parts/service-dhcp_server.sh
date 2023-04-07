@@ -12,6 +12,16 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 name-server '
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 start '10.0.0.208'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 stop '10.0.0.254'
 
+set service dhcp-server global-parameters 'option space ubnt;'
+set service dhcp-server global-parameters 'option ubnt.unifi-address code 1 = ip-address;'
+set service dhcp-server global-parameters 'class &quot;ubnt&quot; {'
+set service dhcp-server global-parameters 'match if substring (option vendor-class-identifier, 0, 4) = &quot;ubnt&quot;;'
+set service dhcp-server global-parameters 'option vendor-class-identifier &quot;ubnt&quot;;'
+set service dhcp-server global-parameters 'vendor-option-space ubnt;'
+set service dhcp-server global-parameters '}'
+
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 subnet-parameters 'option ubnt.unifi-address 10.0.5.2;'
+
 # LAN Switches
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-pro24 ip-address '10.0.0.16'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-pro24 mac-address '74:ac:b9:4a:50:2b'
@@ -38,7 +48,7 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mappin
 
 # LAN Protect
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping zeus ip-address '10.0.0.32'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping zeus mac-address 'F4:92:BF:86:2F:78'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping zeus mac-address 'F4:92:BF:86:2F:79'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping driveway-cam ip-address '10.0.0.33'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping driveway-cam mac-address '74:ac:b9:01:93:bd'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping backdoor-cam ip-address '10.0.0.34'
