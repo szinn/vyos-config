@@ -70,7 +70,7 @@ set firewall name local-servers default-action 'drop'
 set firewall name local-servers enable-default-log
 set firewall name local-servers rule 1 description 'Rule: accept_bgp'
 set firewall name local-servers rule 1 action 'accept'
-set firewall name local-servers rule 1 destination port 'bgp'<
+set firewall name local-servers rule 1 destination port 'bgp'
 set firewall name local-servers rule 1 protocol 'tcp'
 set firewall name local-servers rule 2 description 'Rule: accept_dns'
 set firewall name local-servers rule 2 action 'accept'

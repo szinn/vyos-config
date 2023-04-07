@@ -17,6 +17,7 @@ set system static-host-mapping host-name zeus.zinn.tech alias zeus.zinn.ca
 # Servers
 set system static-host-mapping host-name ragnar.zinn.tech inet 10.10.0.2
 set system static-host-mapping host-name ragnar.zinn.tech alias atlas.zinn.tech
+set system static-host-mapping host-name ragnar.zinn.tech alias onepassword-connect.zinn.tech
 set system static-host-mapping host-name hades.zinn.tech inet 10.10.0.3
 set system static-host-mapping host-name ares.zinn.tech inet 10.10.0.4
 set system static-host-mapping host-name ares.zinn.tech alias ares.zinn.ca
