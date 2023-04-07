@@ -6,7 +6,7 @@ set firewall state-policy invalid action 'drop'
 set firewall state-policy related action 'accept'
 
 # Services containers
-set firewall group address-group unifi-controller '10.0.5.2'
+set firewall group address-group unifi-controller address '10.0.5.2'
 
 # k8s cluster ingress
 set firewall group address-group k8s_main_ingress address '10.10.1.2'

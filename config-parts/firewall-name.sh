@@ -53,7 +53,7 @@ set firewall name lan-wan default-action 'accept'
 
 # From LOCAL to LAN
 set firewall name local-lan description 'From LOCAL to LAN'
-set firewall name local-lan default-action 'drop'
+set firewall name local-lan default-action 'accept'
 set firewall name local-lan enable-default-log
 
 # From LOCAL to SERVICES
@@ -349,6 +349,10 @@ set firewall name guest-trusted enable-default-log
 set firewall name guest-iot description 'From GUEST to IOT'
 set firewall name guest-iot default-action 'drop'
 set firewall name guest-iot enable-default-log
+
+# From GUEST to WAN
+set firewall name guest-wan description 'From IOT to WAN'
+set firewall name guest-wan default-action 'accept'
 
 # ---------------------------------
 

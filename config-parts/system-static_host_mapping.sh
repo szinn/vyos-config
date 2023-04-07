@@ -1,7 +1,7 @@
 # External Services
-set system static-host-mapping host-name ghs.google.com alias calendar.zinn.ca
-set system static-host-mapping host-name ghs.google.com alias docs.zinn.ca
-set system static-host-mapping host-name ghs.google.com alias mail.zinn.ca
+# set system static-host-mapping host-name ghs.google.com alias calendar.zinn.ca
+# set system static-host-mapping host-name ghs.google.com alias docs.zinn.ca
+# set system static-host-mapping host-name ghs.google.com alias mail.zinn.ca
 
 # Gateway
 set system static-host-mapping host-name gateway.zinn.tech inet 10.0.0.1
