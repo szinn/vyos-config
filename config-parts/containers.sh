@@ -68,3 +68,22 @@ set container name staging-k8s-api volume config destination '/usr/local/etc/hap
 set container name staging-k8s-api volume config source '/config/containers/staging-k8s/config/haproxy.cfg'
 set container name staging-k8s-api volume config mode 'ro'
 
+# udp-broadcast-relay-mdns
+set container name udp-broadcast-relay-mdns allow-host-networks
+set container name udp-broadcast-relay-mdns cap-add 'net-raw'
+set container name udp-broadcast-relay-mdns environment CFG_DEV value 'eth0;eth0.20;eth0.98'
+set container name udp-broadcast-relay-mdns environment CFG_ID value '2'
+set container name udp-broadcast-relay-mdns environment CFG_MULTICAST value '224.0.0.251'
+set container name udp-broadcast-relay-mdns environment CFG_PORT value '5353'
+set container name udp-broadcast-relay-mdns environment SEPARATOR value ';'
+set container name udp-broadcast-relay-mdns image 'ghcr.io/onedr0p/udp-broadcast-relay-redux:1.0.27'
+set container name udp-broadcast-relay-mdns memory '0'
+set container name udp-broadcast-relay-mdns restart 'on-failure'
+set container name udp-broadcast-relay-mdns shared-memory '0'
+
+# speedtest-exporter
+set container name speedtest-exporter image 'ghcr.io/miguelndecarvalho/speedtest-exporter:v3.5.3'
+set container name speedtest-exporter memory '0'
+set container name speedtest-exporter allow-host-networks
+set container name speedtest-exporter restart 'on-failure'
+set container name speedtest-exporter shared-memory '0'
