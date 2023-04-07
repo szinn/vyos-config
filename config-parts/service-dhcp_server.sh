@@ -53,13 +53,13 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mappin
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-plug mac-address 'fc:ec:da:76:74:9a' # USP-Plug
 
 # LAN (service port - eth4)
-set service dhcp-server shared-network-name LAN authoritative
-set service dhcp-server shared-network-name LAN ping-check
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 default-router '10.0.4.1'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 lease '900'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 name-server '10.0.5.4'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 range 0 start '10.0.4.208'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 range 0 stop '10.0.4.254'
+set service dhcp-server shared-network-name SERVICE authoritative
+set service dhcp-server shared-network-name SERVICE ping-check
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 default-router '10.0.4.1'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 lease '900'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 name-server '10.0.5.4'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 start '10.0.4.208'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 stop '10.0.4.254'
 
 # Servers VLAN
 set service dhcp-server shared-network-name SERVERS authoritative

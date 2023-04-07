@@ -43,13 +43,13 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 name-server '
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 start '10.0.0.208'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 stop '10.0.0.254'
 
-set service dhcp-server shared-network-name LAN authoritative
-set service dhcp-server shared-network-name LAN ping-check
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 default-router '10.0.4.1'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 lease '900'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 name-server '1.1.1.1'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 range 0 start '10.0.4.208'
-set service dhcp-server shared-network-name LAN subnet 10.0.4.0/24 range 0 stop '10.0.4.254'
+set service dhcp-server shared-network-name SERVICE authoritative
+set service dhcp-server shared-network-name SERVICE ping-check
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 default-router '10.0.4.1'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 lease '900'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 name-server '1.1.1.1'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 start '10.0.4.208'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 stop '10.0.4.254'
 
 # ALL -> WAN masquerade
 set nat source rule 100 description 'ALL -> WAN'
@@ -68,7 +68,7 @@ set firewall zone lan from local firewall name 'local-lan'
 set firewall zone lan from services firewall name 'services-lan'
 set firewall zone lan from wan firewall name 'wan-lan'
 set firewall zone lan interface 'eth0'
-set firewall zone lan interface 'eth1'
+set firewall zone lan interface 'eth4'
 
 set firewall zone local description 'Local router zone'
 set firewall zone local default-action 'drop'
@@ -108,7 +108,7 @@ set firewall name lan-wan enable-default-log
 
 # From LOCAL to LAN
 set firewall name local-lan description 'From LOCAL to LAN'
-set firewall name local-lan default-action 'drop'
+set firewall name local-lan default-action 'accept'
 set firewall name local-lan enable-default-log
 
 # From LOCAL to SERVICES
@@ -157,7 +157,6 @@ mkdir -p /config/containers/unifi
 mkdir -p /config/containers/unifi/data
 mkdir -p /config/containers/unifi/cert
 mkdir -p /config/containers/unifi/log
-sudo chmod -R 999:999 /config/containers/unifi
 set container name unifi environment RUNAS_UID0 value 'false'
 set container name unifi environment TZ value 'America/Toronto'
 set container name unifi environment UNIFI_GID value '999'
