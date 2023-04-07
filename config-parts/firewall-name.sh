@@ -39,6 +39,10 @@ set firewall name lan-trusted enable-default-log
 set firewall name lan-iot description 'From LAN to IOT'
 set firewall name lan-iot default-action 'drop'
 set firewall name lan-iot enable-default-log
+set firewall name lan-iot rule 1 description 'Rule: accept_unifi_to_iot_cameras'
+set firewall name lan-iot rule 1 action 'accept'
+set firewall name lan-iot rule 1 source group address-group 'unifi-unvr'
+set firewall name lan-iot rule 1 destination group address-group 'unifi-iot-cameras'
 
 # From LAN to GUEST
 set firewall name lan-guest description 'From LAN to GUEST'
@@ -66,7 +70,7 @@ set firewall name local-servers default-action 'drop'
 set firewall name local-servers enable-default-log
 set firewall name local-servers rule 1 description 'Rule: accept_bgp'
 set firewall name local-servers rule 1 action 'accept'
-set firewall name local-servers rule 1 destination port 'bgp'
+set firewall name local-servers rule 1 destination port 'bgp'<
 set firewall name local-servers rule 1 protocol 'tcp'
 set firewall name local-servers rule 2 description 'Rule: accept_dns'
 set firewall name local-servers rule 2 action 'accept'
@@ -129,10 +133,10 @@ set firewall name services-trusted enable-default-log
 set firewall name services-iot description 'From SERVICES to IOT'
 set firewall name services-iot default-action 'drop'
 set firewall name services-iot enable-default-log
-set firewall name services-iot rule 1 description 'Rule: accept_unifi-iot-devices'
+set firewall name services-iot rule 1 description 'Rule: accept_unifi_to_iot_cameras'
 set firewall name services-iot rule 1 action 'accept'
 set firewall name services-iot rule 1 source group address-group 'unifi-controller'
-set firewall name services-iot rule 1 destination group address-group 'unifi-iot-devices'
+set firewall name services-iot rule 1 destination group address-group 'unifi-iot-cameras'
 
 # From SERVICES to GUEST
 set firewall name services-guest description 'From SERVICES to GUEST'
@@ -264,6 +268,10 @@ set firewall name trusted-wan default-action 'accept'
 set firewall name iot-lan description 'From IOT to LAN'
 set firewall name iot-lan default-action 'drop'
 set firewall name iot-lan enable-default-log
+set firewall name iot-lan rule 1 description 'Rule: accept_unifi_iot_cameras_to_unifi'
+set firewall name iot-lan rule 1 action 'accept'
+set firewall name iot-lan rule 1 source group address-group 'unifi-iot-cameras'
+set firewall name iot-lan rule 1 destination group address-group 'unifi-unvr'
 
 # From IOT to LOCAL
 set firewall name iot-local description 'From IOT to LOCAL'
@@ -285,10 +293,10 @@ set firewall name iot-local rule 3 protocol '2'
 # From IOT to SERVICES
 set firewall name iot-services description 'From IOT to SERVICES'
 set firewall name iot-services default-action 'drop'
+set firewall name iot-services rule 1 description 'Rule: accept_unifi_iot_cameras_to_unifi'
 set firewall name iot-services rule 1 action 'accept'
-set firewall name iot-services rule 1 description 'Rule: accept_unifi_iot_cameras to unifi'
-set firewall name iot-services rule 1 source group address-group 'unifi-iot-devices'
-set firewall name services-iot rule 1 destination group address-group 'unifi-controller'
+set firewall name iot-services rule 1 source group address-group 'unifi-iot-cameras'
+set firewall name iot-services rule 1 destination group address-group 'unifi-controller'
 
 # From IOT to SERVERS
 set firewall name iot-servers description 'From IOT to SERVERS'

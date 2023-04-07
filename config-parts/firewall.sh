@@ -7,6 +7,7 @@ set firewall state-policy related action 'accept'
 
 # Services containers
 set firewall group address-group unifi-controller address '10.0.5.2'
+set firewall group address-group unifi-unvr address '10.0.0.32'
 
 # k8s cluster ingress
 set firewall group address-group k8s_main_ingress address '10.10.1.2'
@@ -31,5 +32,5 @@ set firewall group network-group cloudflare-ipv4 network '172.64.0.0/13'
 set firewall group network-group cloudflare-ipv4 network '131.0.72.0/22'
 
 # Unifi IoT Devices
-set firewall group address-group unifi-iot-devices description 'Unifi devices on IoT VLAN'
-set firewall group address-group unifi-iot-devices address '192.168.1.24'
+set firewall group address-group unifi-iot-cameras description 'Unifi cameras on IoT VLAN'
+set firewall group address-group unifi-iot-cameras address '192.168.1.24'
