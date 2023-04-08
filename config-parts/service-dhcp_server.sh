@@ -130,7 +130,7 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 name-ser
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 start '10.20.0.200'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 stop '10.20.0.254'
 
-# 
+# Unifi Devices
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping g4-front-door ip-address '10.20.0.8'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping g4-front-door mac-address 'e0:63:da:00:9f:e1'
 

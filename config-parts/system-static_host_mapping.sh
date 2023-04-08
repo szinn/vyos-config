@@ -25,6 +25,10 @@ set system static-host-mapping host-name pikvm.zinn.tech inet 10.10.0.5
 set system static-host-mapping host-name pikvm.zinn.tech alias pikvm.zinn.ca
 set system static-host-mapping host-name pihole.zinn.tech inet 10.10.0.6
 
+# Trusted
+set system static-host-mapping host-name odin.zinn.tech inet 10.20.0.19
+set system static-host-mapping host-name odin-wifi.zinn.tech inet 10.20.0.20
+
 # k8s Main Cluster
 set system static-host-mapping host-name main.zinn.tech inet 10.0.5.10
 set system static-host-mapping host-name k8s-1.zinn.tech inet 10.10.0.16
