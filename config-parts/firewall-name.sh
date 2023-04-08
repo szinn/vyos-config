@@ -42,11 +42,6 @@ set firewall name lan-trusted default-action 'accept'
 # From LAN to IOT
 set firewall name lan-iot description 'From LAN to IOT'
 set firewall name lan-iot default-action 'accept'
-# set firewall name lan-iot enable-default-log
-# set firewall name lan-iot rule 1 description 'Rule: accept_unifi_to_iot_cameras'
-# set firewall name lan-iot rule 1 action 'accept'
-# set firewall name lan-iot rule 1 source group address-group 'unifi-unvr'
-# set firewall name lan-iot rule 1 destination group address-group 'unifi-iot-cameras'
 
 # From LAN to GUEST
 set firewall name lan-guest description 'From LAN to GUEST'
@@ -147,10 +142,6 @@ set firewall name services-trusted enable-default-log
 set firewall name services-iot description 'From SERVICES to IOT'
 set firewall name services-iot default-action 'drop'
 set firewall name services-iot enable-default-log
-set firewall name services-iot rule 1 description 'Rule: accept_unifi_to_iot_cameras'
-set firewall name services-iot rule 1 action 'accept'
-set firewall name services-iot rule 1 source group address-group 'unifi-controller'
-set firewall name services-iot rule 1 destination group address-group 'unifi-iot-cameras'
 
 # From SERVICES to GUEST
 set firewall name services-guest description 'From SERVICES to GUEST'
@@ -287,10 +278,6 @@ set firewall name trusted-wan default-action 'accept'
 set firewall name iot-lan description 'From IOT to LAN'
 set firewall name iot-lan default-action 'drop'
 set firewall name iot-lan enable-default-log
-set firewall name iot-lan rule 1 description 'Rule: accept_unifi_iot_cameras_to_unifi'
-set firewall name iot-lan rule 1 action 'accept'
-set firewall name iot-lan rule 1 source group address-group 'unifi-iot-cameras'
-set firewall name iot-lan rule 1 destination group address-group 'unifi-unvr'
 
 # From IOT to LOCAL
 set firewall name iot-local description 'From IOT to LOCAL'
@@ -317,15 +304,17 @@ set firewall name iot-local rule 4 source port 'mdns'
 # From IOT to SERVICES
 set firewall name iot-services description 'From IOT to SERVICES'
 set firewall name iot-services default-action 'drop'
-set firewall name iot-services rule 1 description 'Rule: accept_unifi_iot_cameras_to_unifi'
-set firewall name iot-services rule 1 action 'accept'
-set firewall name iot-services rule 1 source group address-group 'unifi-iot-cameras'
-set firewall name iot-services rule 1 destination group address-group 'unifi-controller'
 
 # From IOT to SERVERS
 set firewall name iot-servers description 'From IOT to SERVERS'
 set firewall name iot-servers default-action 'drop'
 set firewall name iot-servers enable-default-log
+set firewall name iot-servers rule 1 description 'Rule: accept_plex_iot_users'
+set firewall name iot-servers rule 1 action 'accept'
+set firewall name iot-servers rule 1 source group address-group 'iot-plex-users'
+set firewall name iot-servers rule 1 destination group address-group 'plex-server'
+set firewall name iot-servers rule 1 destination port '32400'
+set firewall name iot-servers rule 1 protocol 'tcp'
 
 # From IOT to TRUSTED
 set firewall name iot-trusted description 'From IOT to TRUSTED'

@@ -13,6 +13,9 @@ set firewall group address-group unifi-unvr address '10.0.0.32'
 set firewall group address-group k8s_main_ingress address '10.10.1.2'
 set firewall group address-group k8s_staging_ingress address '10.10.2.2'
 
+set firewall group address-group plex-server description 'Plex Server'
+set firewall group address-group plex-server address '10.10.1.14'
+
 # Cloudflare IPv4 Network
 set firewall group network-group cloudflare-ipv4 description 'Task Managed: Cloudflare IPv4 Networks'
 set firewall group network-group cloudflare-ipv4 network '173.245.48.0/20'
@@ -32,5 +35,5 @@ set firewall group network-group cloudflare-ipv4 network '172.64.0.0/13'
 set firewall group network-group cloudflare-ipv4 network '131.0.72.0/22'
 
 # Unifi IoT Devices
-set firewall group address-group unifi-iot-cameras description 'Unifi cameras on IoT VLAN'
-set firewall group address-group unifi-iot-cameras address '192.168.1.24'
+set firewall group address-group iot-plex-users description 'Plex IoT users'
+set firewall group address-group iot-plex-users address '192.168.1.52'

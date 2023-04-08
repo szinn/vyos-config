@@ -130,6 +130,10 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 name-ser
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 start '10.20.0.200'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 stop '10.20.0.254'
 
+# 
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping g4-front-door ip-address '10.20.0.8'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping g4-front-door mac-address 'e0:63:da:00:9f:e1'
+
 # Scotte's devices
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iphone ip-address '10.20.0.16'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iphone mac-address '12:44:75:4c:12:fa'
@@ -208,8 +212,6 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs ip-address '192.168.1.20'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs mac-address '64:16:66:cd:f8:e8'
 
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping g4-front-door ip-address '192.168.1.24'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping g4-front-door mac-address 'e0:63:da:00:9f:e1'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 ip-address '192.168.1.25'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 mac-address '2c:aa:8e:6e:90:d3'
 # set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-2 ip-address '192.168.1.26'
