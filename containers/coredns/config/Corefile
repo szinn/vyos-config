@@ -14,21 +14,13 @@
   }
 }
 
-# (k8s_gateway_main) {
-#   forward . 10.10.1.3:53
-# }
+(k8s_gateway_main) {
+  forward . 10.10.1.3:53
+}
 
-# (k8s_gateway_staging) {
-#   forward . 10.10.2.3:53
-# }
-
-# unifi {
-#   import common
-#   hosts /host/etc/hosts {
-#     ttl 1
-#     reload 5s
-#   }
-# }
+(k8s_gateway_staging) {
+  forward . 10.10.2.3:53
+}
 
 # Hack to prevent the gatway returning 127.0.0.1 from /etc/hosts
 gateway.zinn.tech {
@@ -38,10 +30,10 @@ gateway.zinn.tech {
   }
 }
 
-# test.zinn.ca {
-#   import common
-#   import k8s_gateway_staging
-# }
+test.zinn.ca {
+  import common
+  import k8s_gateway_staging
+}
 
 zinn.ca {
   import common
@@ -50,7 +42,7 @@ zinn.ca {
     reload 5s
     fallthrough
   }
-#   import k8s_gateway_main
+  import k8s_gateway_main
 }
 
 zinn.tech {
