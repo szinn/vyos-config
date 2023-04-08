@@ -89,3 +89,17 @@ set container name speedtest-exporter memory '0'
 set container name speedtest-exporter allow-host-networks
 set container name speedtest-exporter restart 'on-failure'
 set container name speedtest-exporter shared-memory '0'
+
+# cloudflare-ddns
+set container name cloudflare-ddns allow-host-networks
+set container name cloudflare-ddns environment CF_API_TOKEN value "${SECRET_CLOUDFLARE_API_TOKEN}"
+set container name cloudflare-ddns environment DOMAINS value 'zinn.ca,vpn.zinn.ca'
+set container name cloudflare-ddns environment IP6_PROVIDER value "none"
+set container name cloudflare-ddns environment TZ value 'America/Toronto'
+set container name cloudflare-ddns environment PGID value "1000"
+set container name cloudflare-ddns environment PUID value "1000"
+set container name cloudflare-ddns image 'docker.io/favonia/cloudflare-ddns:1.9.1'
+set container name cloudflare-ddns memory '0'
+set container name cloudflare-ddns restart 'on-failure'
+set container name cloudflare-ddns shared-memory '0'
+
