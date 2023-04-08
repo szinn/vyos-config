@@ -37,8 +37,7 @@ set firewall name lan-servers rule 1 protocol 'icmp'
 
 # From LAN to TRUSTED
 set firewall name lan-trusted description 'From LAN to TRUSTED'
-set firewall name lan-trusted default-action 'drop'
-set firewall name lan-trusted enable-default-log
+set firewall name lan-trusted default-action 'accept'
 
 # From LAN to IOT
 set firewall name lan-iot description 'From LAN to IOT'
