@@ -75,6 +75,10 @@ set firewall name local-servers rule 2 description 'Rule: accept_dns'
 set firewall name local-servers rule 2 action 'accept'
 set firewall name local-servers rule 2 destination port 'domain,domain-s'
 set firewall name local-servers rule 2 protocol 'tcp_udp'
+set firewall name local-servers rule 3 description 'Rule: accept_syslog'
+set firewall name local-servers rule 3 action 'accept'
+set firewall name local-servers rule 3 destination port '6003'
+set firewall name local-servers rule 3 protocol 'tcp'
 
 # From LOCAL to TRUSTED
 set firewall name local-trusted description 'From LOCAL to TRUSTED'
@@ -190,6 +194,10 @@ set firewall name servers-local rule 6 action 'accept'
 set firewall name servers-local rule 6 description 'Rule: accept_ssh'
 set firewall name servers-local rule 6 destination port 'ssh'
 set firewall name servers-local rule 6 protocol 'tcp'
+set firewall name servers-local rule 7 action 'accept'
+set firewall name servers-local rule 7 description 'Rule: accept_speedtest'
+set firewall name servers-local rule 7 destination port '9798'
+set firewall name servers-local rule 7 protocol 'tcp'
 
 # From SERVERS to SERVICES
 set firewall name servers-services description 'From SERVERS to SERVICES'
