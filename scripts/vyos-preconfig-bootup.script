@@ -6,8 +6,3 @@
 # TODO: Remove if issues don't come back, turn back on if they do
 # Clean dangling container network files
 # rm /var/lib/cni/networks/services/10.5.*
-
-# Mount USB Backup Drive
-backupdest=/media/usb-backup
-mkdir -p "$backupdest"
-mount.exfat-fuse -o rw,uid=vyos,gid=vyattacfg /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_40B0767E23131611A6534646-0:0-part2 "$backupdest"

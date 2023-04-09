@@ -85,5 +85,7 @@ else
       run delete container image "${image_id}"
     fi
   done
-fi
 
+  # Clean annoying overlay* folders
+  sudo find "/config" -name "overlay*" -type d -prune -exec rm -rf "{}" \;
+fi

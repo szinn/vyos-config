@@ -17,7 +17,9 @@ set system sysctl parameter kernel.pty.max value '24000'
 # set system syslog host 10.45.0.2 facility kern protocol 'tcp'
 # set system syslog host 10.45.0.2 port '6001'
 
-# set system task-scheduler task backup-config crontab-spec '30 0 * * *'
-# set system task-scheduler task backup-config executable path '/config/scripts/custom-config-backup.sh'
+set system task-scheduler task task-cloudflare-networks executable path '/config/scripts/task-cloudflare-networks.sh'
+set system task-scheduler task task-cloudflare-networks interval '6h'
+set system task-scheduler task backup-config crontab-spec '30 2 * * *'
+set system task-scheduler task backup-config executable path '/config/scripts/task-config-backup-usb.sh'
 
 set system time-zone 'America/Toronto'
