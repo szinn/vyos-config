@@ -121,3 +121,23 @@ set container name node-exporter volume node-exporter-rootfs source '/'
 set container name node-exporter volume node-exporter-sysfs destination '/host/sys'
 set container name node-exporter volume node-exporter-sysfs mode 'ro'
 set container name node-exporter volume node-exporter-sysfs source '/sys'
+
+# vnstat
+set container name vnstat allow-host-networks
+set container name vnstat environment EXCLUDE_PATTERN value '^docker|^veth|^br-|^lxc'
+set container name vnstat environment TZ value 'UTC'
+set container name vnstat image 'ghcr.io/vergoh/vnstat:2.10'
+set container name vnstat memory '0'
+set container name vnstat shared-memory '0'
+set container name vnstat volume vnstat-data destination '/var/lib/vnstat'
+set container name vnstat volume vnstat-data mode 'rw'
+set container name vnstat volume vnstat-data source '/config/containers/vnstat'
+
+# frr-exporter
+set container name frr-exporter allow-host-networks
+set container name frr-exporter image 'docker.io/tynany/frr_exporter:v1.1.4'
+set container name frr-exporter memory '0'
+set container name frr-exporter shared-memory '0'
+set container name frr-exporter volume frr-exporter-varfs destination '/var/run/frr'
+set container name frr-exporter volume frr-exporter-varfs mode 'ro'
+set container name frr-exporter volume frr-exporter-varfs source '/var/run/frr'

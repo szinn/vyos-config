@@ -10,3 +10,4 @@
 !/dnsdist/
 !/main-k8s/
 !/staging-k8s/
+!/vnstat/
