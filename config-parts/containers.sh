@@ -51,6 +51,17 @@ set container name dnsdist volume config destination '/etc/dnsdist/dnsdist.conf'
 set container name dnsdist volume config source '/config/containers/dnsdist/config/dnsdist.conf'
 set container name dnsdist volume config mode 'ro'
 
+# gatus
+set container name gatus cap-add 'net-bind-service'
+set container name gatus cap-add 'net-raw'
+set container name gatus image 'ghcr.io/twin/gatus:v5.3.1'
+set container name gatus memory '0'
+set container name gatus network services address '10.0.5.5'
+set container name gatus shared-memory '0'
+set container name gatus volume gatus-config destination '/config/config.yaml'
+set container name gatus volume gatus-config mode 'ro'
+set container name gatus volume gatus-config source '/config/containers/gatus/config/config.yaml'
+
 # haproxy - main cluster
 set container name main-k8s-api image 'docker.io/library/haproxy:2.7.6'
 set container name main-k8s-api memory '0'

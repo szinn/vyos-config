@@ -1,0 +1,104 @@
+web:
+  port: 80
+storage:
+  type: memory
+metrics: true
+ui:
+  title: Home Status | Gatus
+  header: Home Status
+alerting:
+  discord:
+    webhook-url: "https://discord.com/api/webhooks/993259345997463572/SAazXkzCWI-nNfKXg4OS11F6i9xrL_PN4Q5SMEx9AawhAJIhEV23PoGwNHRFxgP5ziSy"
+
+endpoints:
+  # DNS
+  - name: external-dns
+    group: DNS
+    url: 10.0.5.4
+    dns:
+      query-name: "google.com"
+      query-type: "A"
+    conditions: ["[DNS_RCODE] == NOERROR"]
+  - name: internal-dns
+    group: DNS
+    url: 10.0.5.4
+    dns:
+      query-name: "gateway.zinn.tech"
+      query-type: "A"
+    conditions: ["[BODY] == 10.0.0.1", "[DNS_RCODE] == NOERROR"]
+
+  # Servers
+  - name: Ragnar
+    group: Servers
+    url: icmp://10.10.0.2
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Hades
+    group: Servers
+    url: icmp://10.10.0.3
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Ares
+    group: Servers
+    url: icmp://10.10.0.4
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: PiKVM
+    group: Servers
+    url: icmp://10.10.0.5
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: UNVR
+    group: Servers
+    url: icmp://10.0.0.32
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+
+    # k8s Cluster
+  - name: Kubernetes k8s-1
+    group: Kubernetes
+    url: icmp://10.10.0.16
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Kubernetes k8s-2
+    group: Kubernetes
+    url: icmp://10.10.0.17
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Kubernetes k8s-3
+    group: Kubernetes
+    url: icmp://10.10.0.18
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Kubernetes k8s-4
+    group: Kubernetes
+    url: icmp://10.10.0.19
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Kubernetes k8s-5
+    group: Kubernetes
+    url: icmp://10.10.0.20
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Kubernetes k8s-6
+    group: Kubernetes
+    url: icmp://10.10.0.21
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+
+  # IoT
+  - name: TESMart
+    group: IoT
+    url: icmp://192.168.1.10
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Ecobee
+    group: IoT
+    url: icmp://192.168.1.49
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]
+  - name: Philips Hue
+    group: IoT
+    url: icmp://192.168.1.51
+    conditions: ["[CONNECTED] == true"]
+    alerts: [{ type: discord }]

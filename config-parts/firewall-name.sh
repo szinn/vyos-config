@@ -146,6 +146,9 @@ set firewall name services-trusted enable-default-log
 set firewall name services-iot description 'From SERVICES to IOT'
 set firewall name services-iot default-action 'drop'
 set firewall name services-iot enable-default-log
+set firewall name services-iot rule 1 description 'Rule: gatus_icmp'
+set firewall name services-iot rule 1 action 'accept'
+set firewall name services-iot rule 1 protocol 'icmp'
 
 # From SERVICES to GUEST
 set firewall name services-guest description 'From SERVICES to GUEST'
