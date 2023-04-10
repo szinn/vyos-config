@@ -20,7 +20,7 @@ if [[ $(findmnt -M "$dest") ]]; then
     # VyOS /config
     tar --exclude="overlay*" --exclude="unifi*" -zvcf "${dest}/vyos-config.${timestamp}.tar.gz" /config
     # Unifi backups
-    rsync -r /config/containers/unifi/data/data/backup/autobackup/ $dest
+    rsync -r /config/containers/unifi/data/backup/autobackup/ $dest
     # Delete backups older than 1 month
     find $dest -type f -mtime +30 -delete
     # Sync the filesystem
