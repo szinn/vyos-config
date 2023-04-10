@@ -37,3 +37,9 @@ set firewall group network-group cloudflare-networks-ipv4 network '131.0.72.0/22
 # Unifi IoT Devices
 set firewall group address-group iot-plex-users description 'Plex IoT users'
 set firewall group address-group iot-plex-users address '192.168.1.52'
+
+# Prometheus ports for metrics
+set firewall group port-group prometheus-metrics port 9798 # speedtest
+set firewall group port-group prometheus-metrics port 9100 # node-exporter
+set firewall group port-group prometheus-metrics port 9342 # frr-exporter
+set firewall group port-group prometheus-metrics port 8685 # vnstat
