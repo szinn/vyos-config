@@ -140,7 +140,7 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iwatch ip-address '10.20.0.17'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iwatch mac-address 'fe:88:6c:19:65:43'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad ip-address '10.20.0.18'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad mac-address '5e:4b:ab:35:92:14'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad mac-address '6e:2a:cc:eb:24:2a'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-dock ip-address '10.20.0.19'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-dock mac-address '00:23:a4:06:1a:e8'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-wifi ip-address '10.20.0.20'
