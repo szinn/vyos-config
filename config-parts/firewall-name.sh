@@ -2,17 +2,25 @@
 
 # From LAN to LOCAL
 set firewall name lan-local description 'From LAN to LOCAL'
-set firewall name lan-local default-action 'accept'
-# set firewall name lan-local enable-default-log
-# set firewall name lan-local rule 3 description 'Rule: accept ntp'
-# set firewall name lan-local rule 3 action 'accept'
-# set firewall name lan-local rule 3 destination port 'ntp'
-# set firewall name lan-local rule 3 protocol 'udp'
-# set firewall name lan-local rule 4 description 'Rule: accept dhcp'
-# set firewall name lan-local rule 4 action 'accept'
-# set firewall name lan-local rule 4 destination port 'bootps,bootpc'
-# set firewall name lan-local rule 4 protocol 'udp'
-# set firewall name lan-local rule 4 source port 'bootps,bootpc'
+set firewall name lan-local default-action 'drop'
+set firewall name lan-local enable-default-log
+set firewall name lan-local rule 3 description 'Rule: accept ntp'
+set firewall name lan-local rule 3 action 'accept'
+set firewall name lan-local rule 3 destination port 'ntp'
+set firewall name lan-local rule 3 protocol 'udp'
+set firewall name lan-local rule 4 description 'Rule: accept dhcp'
+set firewall name lan-local rule 4 action 'accept'
+set firewall name lan-local rule 4 destination port 'bootps,bootpc'
+set firewall name lan-local rule 4 protocol 'udp'
+set firewall name lan-local rule 4 source port 'bootps,bootpc'
+set firewall name lan-local rule 5 description 'Rule: drop 10001 (no log)'
+set firewall name lan-local rule 5 action 'drop'
+set firewall name lan-local rule 5 destination port '10001'
+set firewall name lan-local rule 5 protocol 'udp'
+set firewall name lan-local rule 6 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+set firewall name lan-local rule 6 action 'drop'
+set firewall name lan-local rule 6 destination address '224.0.0.1'
+set firewall name lan-local rule 6 protocol '2'
 
 # set firewall name lan-local rule 11 description 'Rule: accept ssh'
 # set firewall name lan-local rule 11 action 'accept'
@@ -30,19 +38,25 @@ set firewall name lan-services default-action 'accept'
 
 # From LAN to SERVERS
 set firewall name lan-servers description 'From LAN to SERVERS'
-set firewall name lan-servers default-action 'accept'
-# set firewall name lan-servers enable-default-log
-# set firewall name lan-servers rule 5 description 'Rule: accept icmp'
-# set firewall name lan-servers rule 5 action 'accept'
-# set firewall name lan-servers rule 5 protocol 'icmp'
+set firewall name lan-servers default-action 'drop'
+set firewall name lan-servers enable-default-log
+# set firewall name lan-servers rule 1 description 'Rule: accept icmp'
+# set firewall name lan-servers rule 1 action 'accept'
+# set firewall name lan-servers rule 1 protocol 'icmp'
 
 # From LAN to TRUSTED
 set firewall name lan-trusted description 'From LAN to TRUSTED'
-set firewall name lan-trusted default-action 'accept'
+set firewall name lan-trusted default-action 'drop'
+set firewall name lan-trusted enable-default-log
+set firewall name lan-trusted rule 1 description 'Rule: drop 10001 (no log)'
+set firewall name lan-trusted rule 1 action 'drop'
+set firewall name lan-trusted rule 1 destination port '10001'
+set firewall name lan-trusted rule 1 protocol 'udp'
 
 # From LAN to IOT
 set firewall name lan-iot description 'From LAN to IOT'
-set firewall name lan-iot default-action 'accept'
+set firewall name lan-iot default-action 'drop'
+set firewall name lan-iot enable-default-log
 
 # From LAN to GUEST
 set firewall name lan-guest description 'From LAN to GUEST'
