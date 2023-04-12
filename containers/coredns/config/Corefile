@@ -28,6 +28,7 @@ gateway.zinn.tech {
   template IN A gateway.zinn.tech {
     answer "{{ .Name }} 60 IN A 10.0.0.1"
   }
+  forward . 8.8.8.8
 }
 
 test.zinn.ca {
