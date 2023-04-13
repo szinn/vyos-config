@@ -22,27 +22,22 @@ set firewall name lan-local rule 6 action 'drop'
 set firewall name lan-local rule 6 destination address '224.0.0.1'
 set firewall name lan-local rule 6 protocol '2'
 
-# set firewall name lan-local rule 11 description 'Rule: accept ssh'
-# set firewall name lan-local rule 11 action 'accept'
-# set firewall name lan-local rule 11 destination port 'ssh'
-# set firewall name lan-local rule 11 protocol 'tcp'
-# set firewall name lan-local rule 14 description 'Rule: accept mdns'
-# set firewall name lan-local rule 14 action 'accept'
-# set firewall name lan-local rule 14 destination port 'mdns'
-# set firewall name lan-local rule 14 protocol 'udp'
-# set firewall name lan-local rule 14 source port 'mdns'
-
 # From LAN to SERVICES
 set firewall name lan-services description 'From LAN to SERVICES'
 set firewall name lan-services default-action 'accept'
+set firewall name lan-services enable-default-log
+set firewall name lan-services rule 1 description 'Rule: accept unifi'
+set firewall name lan-services rule 1 action 'accept'
+set firewall name lan-services rule 1 destination group address-group 'unifi-controller'
+set firewall name lan-services rule 2 description 'Rule: accept dns'
+set firewall name lan-services rule 2 action 'accept'
+set firewall name lan-services rule 2 destination port 'domain,domain-s'
+set firewall name lan-services rule 2 protocol 'tcp_udp'
 
 # From LAN to SERVERS
 set firewall name lan-servers description 'From LAN to SERVERS'
 set firewall name lan-servers default-action 'drop'
 set firewall name lan-servers enable-default-log
-# set firewall name lan-servers rule 1 description 'Rule: accept icmp'
-# set firewall name lan-servers rule 1 action 'accept'
-# set firewall name lan-servers rule 1 protocol 'icmp'
 
 # From LAN to TRUSTED
 set firewall name lan-trusted description 'From LAN to TRUSTED'
@@ -71,12 +66,13 @@ set firewall name lan-wan default-action 'accept'
 
 # From LOCAL to LAN
 set firewall name local-lan description 'From LOCAL to LAN'
-set firewall name local-lan default-action 'accept'
+set firewall name local-lan default-action 'drop'
 set firewall name local-lan enable-default-log
 
 # From LOCAL to SERVICES
 set firewall name local-services default-action 'accept'
 set firewall name local-services description 'From LOCAL to SERVICES'
+set firewall name local-services enable-default-log
 
 # From LOCAL to SERVERS
 set firewall name local-servers description 'From LOCAL to SERVERS'
@@ -86,42 +82,49 @@ set firewall name local-servers rule 1 description 'Rule: accept bgp'
 set firewall name local-servers rule 1 action 'accept'
 set firewall name local-servers rule 1 destination port 'bgp'
 set firewall name local-servers rule 1 protocol 'tcp'
-set firewall name local-servers rule 2 description 'Rule: accept dns'
+set firewall name local-servers rule 2 description 'Rule: accept vector syslog'
 set firewall name local-servers rule 2 action 'accept'
-set firewall name local-servers rule 2 destination port 'domain,domain-s'
-set firewall name local-servers rule 2 protocol 'tcp_udp'
-set firewall name local-servers rule 10 description 'Rule: accept_syslog'
-set firewall name local-servers rule 10 action 'accept'
-set firewall name local-servers rule 10 destination port '6003'
-set firewall name local-servers rule 10 protocol 'tcp'
+set firewall name local-servers rule 2 destination port '6003'
+set firewall name local-servers rule 2 protocol 'tcp'
 
 # From LOCAL to TRUSTED
 set firewall name local-trusted description 'From LOCAL to TRUSTED'
 set firewall name local-trusted default-action 'drop'
 set firewall name local-trusted enable-default-log
-set firewall name local-trusted rule 11 description 'Rule: accept mdns'
-set firewall name local-trusted rule 11 action 'accept'
-set firewall name local-trusted rule 11 destination port 'mdns'
-set firewall name local-trusted rule 11 protocol 'udp'
-set firewall name local-trusted rule 11 source port 'mdns'
+set firewall name local-trusted rule 1 action 'accept'
+set firewall name local-trusted rule 1 description 'Rule: accept_igmp'
+set firewall name local-trusted rule 1 protocol '2'
+set firewall name local-trusted rule 2 description 'Rule: accept mdns'
+set firewall name local-trusted rule 2 action 'accept'
+set firewall name local-trusted rule 2 destination port 'mdns'
+set firewall name local-trusted rule 2 protocol 'udp'
+set firewall name local-trusted rule 2 source port 'mdns'
 
 # From LOCAL to IOT
 set firewall name local-iot description 'From LOCAL to IOT'
 set firewall name local-iot default-action 'drop'
 set firewall name local-iot enable-default-log
-set firewall name local-iot rule 11 description 'Rule: accept igmp'
-set firewall name local-iot rule 11 action 'accept'
-set firewall name local-iot rule 11 protocol '2'
-set firewall name local-iot rule 12 description 'Rule: accept mdns'
-set firewall name local-iot rule 12 action 'accept'
-set firewall name local-iot rule 12 destination port 'mdns'
-set firewall name local-iot rule 12 protocol 'udp'
-set firewall name local-iot rule 12 source port 'mdns'
+set firewall name local-iot rule 1 description 'Rule: accept igmp'
+set firewall name local-iot rule 1 action 'accept'
+set firewall name local-iot rule 1 protocol '2'
+set firewall name local-iot rule 2 description 'Rule: accept mdns'
+set firewall name local-iot rule 2 action 'accept'
+set firewall name local-iot rule 2 destination port 'mdns'
+set firewall name local-iot rule 2 protocol 'udp'
+set firewall name local-iot rule 2 source port 'mdns'
 
 # From LOCAL to GUEST
 set firewall name local-guest description 'From LOCAL to GUEST'
 set firewall name local-guest default-action 'drop'
 set firewall name local-guest enable-default-log
+set firewall name local-guest rule 1 description 'Rule: accept igmp'
+set firewall name local-guest rule 1 action 'accept'
+set firewall name local-guest rule 1 protocol '2'
+set firewall name local-guest rule 2 description 'Rule: accept mdns'
+set firewall name local-guest rule 2 action 'accept'
+set firewall name local-guest rule 2 destination port 'mdns'
+set firewall name local-guest rule 2 protocol 'udp'
+set firewall name local-guest rule 2 source port 'mdns'
 
 # From LOCAL to WAN
 set firewall name local-wan description 'From LOCAL to WAN'
@@ -309,23 +312,23 @@ set firewall name iot-lan enable-default-log
 set firewall name iot-local description 'From IOT to LOCAL'
 set firewall name iot-local default-action 'drop'
 set firewall name iot-local enable-default-log
-set firewall name iot-local rule 3 description 'Rule: accept ntp'
+set firewall name iot-local rule 1 description 'Rule: accept ntp'
+set firewall name iot-local rule 1 action 'accept'
+set firewall name iot-local rule 1 destination port 'ntp'
+set firewall name iot-local rule 1 protocol 'udp'
+set firewall name iot-local rule 2 description 'Rule: accept dhcp'
+set firewall name iot-local rule 2 action 'accept'
+set firewall name iot-local rule 2 destination port 'bootps,bootpc'
+set firewall name iot-local rule 2 protocol 'udp'
+set firewall name iot-local rule 2 source port 'bootps,bootpc'
+set firewall name iot-local rule 3 description 'Rule: accept igmp'
 set firewall name iot-local rule 3 action 'accept'
-set firewall name iot-local rule 3 destination port 'ntp'
-set firewall name iot-local rule 3 protocol 'udp'
-set firewall name iot-local rule 4 description 'Rule: accept dhcp'
+set firewall name iot-local rule 3 protocol '2'
 set firewall name iot-local rule 4 action 'accept'
-set firewall name iot-local rule 4 destination port 'bootps,bootpc'
+set firewall name iot-local rule 4 description 'Rule: accept mdns'
+set firewall name iot-local rule 4 destination port 'mdns'
 set firewall name iot-local rule 4 protocol 'udp'
-set firewall name iot-local rule 4 source port 'bootps,bootpc'
-set firewall name iot-local rule 13 description 'Rule: accept igmp'
-set firewall name iot-local rule 13 action 'accept'
-set firewall name iot-local rule 13 protocol '2'
-set firewall name iot-local rule 14 action 'accept'
-set firewall name iot-local rule 14 description 'Rule: accept mdns'
-set firewall name iot-local rule 14 destination port 'mdns'
-set firewall name iot-local rule 14 protocol 'udp'
-set firewall name iot-local rule 14 source port 'mdns'
+set firewall name iot-local rule 4 source port 'mdns'
 
 # From IOT to SERVICES
 set firewall name iot-services description 'From IOT to SERVICES'
