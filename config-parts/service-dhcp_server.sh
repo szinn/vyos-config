@@ -136,11 +136,11 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 
 # Scotte's devices
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iphone ip-address '10.20.0.16'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iphone mac-address '12:44:75:4c:12:fa'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iphone mac-address '7c:ec:b1:ab:9a:c2'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iwatch ip-address '10.20.0.17'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iwatch mac-address 'fe:88:6c:19:65:43'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-iwatch mac-address '08:25:73:ce:4f:4b'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad ip-address '10.20.0.18'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad mac-address '6e:2a:cc:eb:24:2a'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad mac-address '4c:2e:b4:7d:90:76'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-dock ip-address '10.20.0.19'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-dock mac-address '00:23:a4:06:1a:e8'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-odin-wifi ip-address '10.20.0.20'
