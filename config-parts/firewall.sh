@@ -34,6 +34,11 @@ set firewall group network-group cloudflare-networks-ipv4 network '104.24.0.0/14
 set firewall group network-group cloudflare-networks-ipv4 network '172.64.0.0/13'
 set firewall group network-group cloudflare-networks-ipv4 network '131.0.72.0/22'
 
+# Trusted groups
+set firewall group address-group trusted-ssh description 'Trusted SSH machines'
+set firewall group address-group trusted-ssh address '10.20.0.19'
+set firewall group address-group trusted-ssh address '10.20.0.20'
+
 # Unifi IoT Devices
 set firewall group address-group iot-plex-users description 'Plex IoT users'
 set firewall group address-group iot-plex-users address '192.168.1.52'

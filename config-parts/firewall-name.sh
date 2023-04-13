@@ -227,9 +227,13 @@ set firewall name servers-services default-action 'accept'
 # From SERVERS to TRUSTED
 set firewall name servers-trusted description 'From SERVERS to TRUSTED'
 set firewall name servers-trusted default-action 'drop'
-set firewall name servers-trusted rule 5 description 'Rule: accept icmp'
-set firewall name servers-trusted rule 5 action 'accept'
-set firewall name servers-trusted rule 5 protocol 'icmp'
+set firewall name servers-trusted rule 1 description 'Rule: accept icmp'
+set firewall name servers-trusted rule 1 action 'accept'
+set firewall name servers-trusted rule 1 protocol 'icmp'
+set firewall name servers-trusted rule 2 description 'Rule: accept ssh'
+set firewall name servers-trusted rule 2 action 'accept'
+set firewall name servers-trusted rule 2 destination group address-group 'trusted-ssh'
+set firewall name servers-trusted rule 2 destination port 'ssh'
 
 # From SERVERS to IOT
 set firewall name servers-iot description 'From SERVERS to IOT'
