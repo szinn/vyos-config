@@ -41,6 +41,14 @@ set nat destination rule 203 protocol 'udp'
 set nat destination rule 203 translation address '192.168.1.1'
 set nat destination rule 203 translation port '123'
 
+set nat destination rule 204 description 'Force NTP for Guest'
+set nat destination rule 204 destination address '!192.168.2.1'
+set nat destination rule 204 destination port '123'
+set nat destination rule 204 inbound-interface 'eth0.99'
+set nat destination rule 204 protocol 'udp'
+set nat destination rule 204 translation address '192.168.2.1'
+set nat destination rule 204 translation port '123'
+
 # LAN -> WAN masquerade
 set nat source rule 100 description 'ALL -> WAN'
 set nat source rule 100 outbound-interface 'eth5'
