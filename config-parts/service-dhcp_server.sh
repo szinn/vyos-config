@@ -78,7 +78,7 @@ set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 default-
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 domain-name 'zinn.tech'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 lease '86400'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 name-server '10.0.5.4'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 start '10.10.0.200'
+set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 start '10.10.0.208'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 stop '10.10.0.254'
 
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping ragnar ip-address '10.10.0.2'
@@ -127,7 +127,7 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 default-
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 domain-name 'zinn.tech'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 lease '86400'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 name-server '10.0.5.4'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 start '10.20.0.200'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 start '10.20.0.208'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 stop '10.20.0.254'
 
 # Unifi Devices
@@ -195,7 +195,7 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 default-ro
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 domain-name 'zinn.tech'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 lease '86400'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 name-server '1.1.1.1'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 start '192.168.1.200'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 start '192.168.1.208'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 stop '192.168.1.254'
 
 # IOT devices
@@ -257,6 +257,6 @@ set service dhcp-server shared-network-name GUEST ping-check
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 default-router '192.168.2.1'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 lease '86400'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 name-server '1.1.1.1'
-set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 start '192.168.2.200'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 start '192.168.2.208'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 stop '192.168.2.254'
 

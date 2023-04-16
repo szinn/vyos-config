@@ -10,5 +10,6 @@
 !/dnsdist/
 !/gatus/
 !/main-k8s/
+!/onepassword-connect/
 !/staging-k8s/
 !/vnstat/
