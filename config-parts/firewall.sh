@@ -39,6 +39,15 @@ set firewall group address-group trusted-ssh description 'Trusted SSH machines'
 set firewall group address-group trusted-ssh address '10.20.0.19'
 set firewall group address-group trusted-ssh address '10.20.0.20'
 
+# Scanner client machines
+set firewall group address-group scanner-clients address '10.20.0.19'
+set firewall group address-group scanner-clients address '10.20.0.20'
+
+# Scanner ports
+set firewall group port-group scanner-outbound-ports port 52217
+set firewall group port-group scanner-outbound-ports port 53220
+set firewall group port-group scanner-outbound-ports port 55265
+
 # Unifi IoT Devices
 set firewall group address-group iot-plex-users description 'Plex IoT users'
 set firewall group address-group iot-plex-users address '192.168.1.52'
