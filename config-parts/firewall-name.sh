@@ -365,6 +365,11 @@ set firewall name iot-servers rule 1 protocol 'tcp'
 set firewall name iot-trusted description 'From IOT to TRUSTED'
 set firewall name iot-trusted default-action 'drop'
 set firewall name iot-trusted enable-default-log
+set firewall name iot-trusted rule 1 action 'accept'
+set firewall name iot-trusted rule 1 description 'Rule: accept mdns'
+set firewall name iot-trusted rule 1 destination port 'mdns'
+set firewall name iot-trusted rule 1 protocol 'udp'
+set firewall name iot-trusted rule 1 source port 'mdns'
 
 # From IOT to GUEST
 set firewall name iot-guest description 'From IOT to GUEST'
