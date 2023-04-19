@@ -86,6 +86,9 @@ set firewall name local-servers rule 2 description 'Rule: accept vector syslog'
 set firewall name local-servers rule 2 action 'accept'
 set firewall name local-servers rule 2 destination port '6003'
 set firewall name local-servers rule 2 protocol 'tcp'
+set firewall name local-servers rule 3 description 'Rule: accept icmp'
+set firewall name local-servers rule 3 action 'accept'
+set firewall name local-servers rule 3 protocol 'icmp'
 
 # From LOCAL to TRUSTED
 set firewall name local-trusted description 'From LOCAL to TRUSTED'
@@ -103,6 +106,9 @@ set firewall name local-trusted rule 3 description 'Rule: accept wireguard'
 set firewall name local-trusted rule 3 action 'accept'
 set firewall name local-trusted rule 3 destination port '51820'
 set firewall name local-trusted rule 3 protocol 'udp'
+set firewall name local-trusted rule 4 description 'Rule: accept icmp'
+set firewall name local-trusted rule 4 action 'accept'
+set firewall name local-trusted rule 4 protocol 'icmp'
 
 # From LOCAL to IOT
 set firewall name local-iot description 'From LOCAL to IOT'
@@ -239,7 +245,6 @@ set firewall name servers-trusted rule 1 action 'accept'
 set firewall name servers-trusted rule 1 protocol 'icmp'
 set firewall name servers-trusted rule 2 description 'Rule: accept ssh'
 set firewall name servers-trusted rule 2 action 'accept'
-set firewall name servers-trusted rule 2 destination group address-group 'trusted-ssh'
 set firewall name servers-trusted rule 2 destination port 'ssh'
 set firewall name servers-trusted rule 2 protocol 'tcp'
 

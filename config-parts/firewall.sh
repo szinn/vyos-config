@@ -34,11 +34,6 @@ set firewall group network-group cloudflare-networks-ipv4 network '104.24.0.0/14
 set firewall group network-group cloudflare-networks-ipv4 network '172.64.0.0/13'
 set firewall group network-group cloudflare-networks-ipv4 network '131.0.72.0/22'
 
-# Trusted groups
-set firewall group address-group trusted-ssh description 'Trusted SSH machines'
-set firewall group address-group trusted-ssh address '10.20.0.19'
-set firewall group address-group trusted-ssh address '10.20.0.20'
-
 # Scanner client machines
 set firewall group address-group scanner-clients address '10.20.0.19'
 set firewall group address-group scanner-clients address '10.20.0.20'
