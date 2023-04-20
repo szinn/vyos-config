@@ -1,6 +1,8 @@
 (common) {
   errors
-  log error
+  log . {
+    class error
+  }
   reload
   loadbalance
   cache
@@ -46,15 +48,8 @@ zinn.ca {
   import k8s_gateway_main
 }
 
-zinn.tech {
+. {
   import common
-  hosts /host/etc/hosts {
-    ttl 1
-    reload 5s
-  }
-}
-
-10.in-addr.arpa {
   hosts /host/etc/hosts {
     ttl 1
     reload 5s
