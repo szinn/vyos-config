@@ -72,7 +72,6 @@ set firewall name local-lan enable-default-log
 # From LOCAL to SERVICES
 set firewall name local-services default-action 'accept'
 set firewall name local-services description 'From LOCAL to SERVICES'
-set firewall name local-services enable-default-log
 
 # From LOCAL to SERVERS
 set firewall name local-servers description 'From LOCAL to SERVERS'
