@@ -92,19 +92,29 @@ set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-m
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping pihole ip-address '10.10.0.6'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping pihole mac-address 'b8:27:eb:e9:34:f4'
 
+# Homelab VLAN
+set service dhcp-server shared-network-name HOMELAB authoritative
+set service dhcp-server shared-network-name HOMELAB ping-check
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 default-router '10.11.0.1'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 domain-name 'zinn.tech'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 lease '86400'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 name-server '10.0.5.4'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 range 0 start '10.11.0.208'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 range 0 stop '10.11.0.254'
+
 # k8s Main Cluster
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-1 ip-address '10.10.0.16'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-1 mac-address '7c:83:34:b1:82:d7'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-2 ip-address '10.10.0.17'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-2 mac-address '7c:83:34:b1:fe:32'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-3 ip-address '10.10.0.18'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-3 mac-address '7c:83:34:b1:7b:8b'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-4 ip-address '10.10.0.19'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-4 mac-address '1c:69:7a:a5:63:05'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-5 ip-address '10.10.0.20'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-5 mac-address '1c:69:7a:a5:a4:a7'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-6 ip-address '10.10.0.21'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-6 mac-address '1c:69:7a:a5:c1:19'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-1 ip-address '10.11.0.16'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-1 mac-address '7c:83:34:b1:82:d7'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-2 ip-address '10.11.0.17'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-2 mac-address '7c:83:34:b1:fe:32'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-3 ip-address '10.11.0.18'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-3 mac-address '7c:83:34:b1:7b:8b'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-4 ip-address '10.11.0.19'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-4 mac-address '1c:69:7a:a5:63:05'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-5 ip-address '10.11.0.20'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-5 mac-address '1c:69:7a:a5:a4:a7'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-6 ip-address '10.11.0.21'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-6 mac-address '1c:69:7a:a5:c1:19'
 
 # Staging VLAN
 set service dhcp-server shared-network-name STAGING authoritative

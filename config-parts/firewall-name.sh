@@ -39,6 +39,11 @@ set firewall name lan-servers description 'From LAN to SERVERS'
 set firewall name lan-servers default-action 'drop'
 set firewall name lan-servers enable-default-log
 
+# From LAN to HOMELAB
+set firewall name lan-homelab description 'From LAN to HOMELAB'
+set firewall name lan-homelab default-action 'drop'
+set firewall name lan-homelab enable-default-log
+
 # From LAN to STAGING
 set firewall name lan-staging description 'From LAN to STAGING'
 set firewall name lan-staging default-action 'drop'
@@ -86,13 +91,25 @@ set firewall name local-servers rule 1 description 'Rule: accept bgp'
 set firewall name local-servers rule 1 action 'accept'
 set firewall name local-servers rule 1 destination port 'bgp'
 set firewall name local-servers rule 1 protocol 'tcp'
-set firewall name local-servers rule 2 description 'Rule: accept vector syslog'
+set firewall name local-servers rule 2 description 'Rule: accept icmp'
 set firewall name local-servers rule 2 action 'accept'
-set firewall name local-servers rule 2 destination port '6003'
-set firewall name local-servers rule 2 protocol 'tcp'
-set firewall name local-servers rule 3 description 'Rule: accept icmp'
-set firewall name local-servers rule 3 action 'accept'
-set firewall name local-servers rule 3 protocol 'icmp'
+set firewall name local-servers rule 2 protocol 'icmp'
+
+# From LOCAL to HOMELAB
+set firewall name local-homelab description 'From LOCAL to HOMELAB'
+set firewall name local-homelab default-action 'drop'
+set firewall name local-homelab enable-default-log
+set firewall name local-homelab rule 1 description 'Rule: accept bgp'
+set firewall name local-homelab rule 1 action 'accept'
+set firewall name local-homelab rule 1 destination port 'bgp'
+set firewall name local-homelab rule 1 protocol 'tcp'
+set firewall name local-homelab rule 2 description 'Rule: accept vector syslog'
+set firewall name local-homelab rule 2 action 'accept'
+set firewall name local-homelab rule 2 destination port '6003'
+set firewall name local-homelab rule 2 protocol 'tcp'
+set firewall name local-homelab rule 3 description 'Rule: accept icmp'
+set firewall name local-homelab rule 3 action 'accept'
+set firewall name local-homelab rule 3 protocol 'icmp'
 
 # From LOCAL to STAGING
 set firewall name local-staging description 'From LOCAL to STAGING'
@@ -184,6 +201,10 @@ set firewall name services-local rule 2 source port 'bootps,bootpc'
 set firewall name services-servers description 'From SERVICES to SERVERS'
 set firewall name services-servers default-action 'accept'
 
+# From SERVICES to HOMELAB
+set firewall name services-homelab description 'From SERVICES to HOMELAB'
+set firewall name services-homelab default-action 'accept'
+
 # From SERVICES to STAGING
 set firewall name services-staging description 'From SERVICES to STAGING'
 set firewall name services-staging default-action 'accept'
@@ -248,14 +269,14 @@ set firewall name servers-local rule 7 description 'Rule: accept ssh'
 set firewall name servers-local rule 7 action 'accept'
 set firewall name servers-local rule 7 destination port 'ssh'
 set firewall name servers-local rule 7 protocol 'tcp'
-set firewall name servers-local rule 8 description 'Rule: accept prometheus metrics scrape'
-set firewall name servers-local rule 8 action 'accept'
-set firewall name servers-local rule 8 destination group port-group prometheus-metrics
-set firewall name servers-local rule 8 protocol 'tcp'
 
 # From SERVERS to SERVICES
 set firewall name servers-services description 'From SERVERS to SERVICES'
 set firewall name servers-services default-action 'accept'
+
+# From SERVERS toHOMELABB
+set firewall name servers-homelab description 'From SERVERS to HOMELAB'
+set firewall name servers-homelab default-action 'accept'
 
 # From SERVERS to STAGING
 set firewall name servers-staging description 'From SERVERS to STAGING'
@@ -284,6 +305,81 @@ set firewall name servers-guest enable-default-log
 # From SERVERS to WAN
 set firewall name servers-wan description 'From SERVERS to WAN'
 set firewall name servers-wan default-action 'accept'
+
+# ---------------------------------
+
+# From HOMELAB to LAN
+set firewall name homelab-lan description 'From HOMELAB to LAN'
+set firewall name homelab-lan default-action 'drop'
+set firewall name homelab-lan enable-default-log
+set firewall name homelab-lan rule 1 description 'Rule: accept icmp'
+set firewall name homelab-lan rule 1 action 'accept'
+set firewall name homelab-lan rule 1 protocol 'icmp'
+
+# From HOMELAB to LOCAL
+set firewall name homelab-local description 'From HOMELAB to LOCAL'
+set firewall name homelab-local default-action 'drop'
+set firewall name homelab-local enable-default-log
+set firewall name homelab-local rule 1 description 'Rule: accept bgp'
+set firewall name homelab-local rule 1 action 'accept'
+set firewall name homelab-local rule 1 destination port 'bgp'
+set firewall name homelab-local rule 1 protocol 'tcp'
+set firewall name homelab-local rule 3 description 'Rule: accept ntp'
+set firewall name homelab-local rule 3 action 'accept'
+set firewall name homelab-local rule 3 destination port 'ntp'
+set firewall name homelab-local rule 3 protocol 'udp'
+set firewall name homelab-local rule 4 description 'Rule: accept dhcp'
+set firewall name homelab-local rule 4 action 'accept'
+set firewall name homelab-local rule 4 destination port 'bootps,bootpc'
+set firewall name homelab-local rule 4 protocol 'udp'
+set firewall name homelab-local rule 4 source port 'bootps,bootpc'
+set firewall name homelab-local rule 5 description 'Rule: accept icmp'
+set firewall name homelab-local rule 5 action 'accept'
+set firewall name homelab-local rule 5 protocol 'icmp'
+set firewall name homelab-local rule 6 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+set firewall name homelab-local rule 6 action 'drop'
+set firewall name homelab-local rule 6 destination address '224.0.0.1'
+set firewall name homelab-local rule 6 protocol '2'
+set firewall name homelab-local rule 7 description 'Rule: accept prometheus metrics scrape'
+set firewall name homelab-local rule 7 action 'accept'
+set firewall name homelab-local rule 7 destination group port-group prometheus-metrics
+set firewall name homelab-local rule 7 protocol 'tcp'
+
+# From HOMELAB to SERVICES
+set firewall name homelab-services description 'From HOMELAB to SERVICES'
+set firewall name homelab-services default-action 'accept'
+
+# From HOMELAB to SERVERS
+set firewall name homelab-servers description 'From HOMELAB to SERVERS'
+set firewall name homelab-servers default-action 'accept'
+
+# From HOMELAB to STAGING
+set firewall name homelab-staging description 'From HOMELAB to STAGING'
+set firewall name homelab-staging default-action 'accept'
+
+# From HOMELAB to HOMELAB
+set firewall name homelab-homelab description 'From HOMELAB to HOMELAB'
+set firewall name homelab-homelab default-action 'accept'
+
+# From HOMELAB to TRUSTED
+set firewall name homelab-trusted description 'From HOMELAB to TRUSTED'
+set firewall name homelab-trusted default-action 'drop'
+set firewall name homelab-trusted rule 1 description 'Rule: accept icmp'
+set firewall name homelab-trusted rule 1 action 'accept'
+set firewall name homelab-trusted rule 1 protocol 'icmp'
+
+# From HOMELAB to IOT
+set firewall name homelab-iot description 'From HOMELAB to IOT'
+set firewall name homelab-iot default-action 'accept'
+
+# From HOMELAB to GUEST
+set firewall name homelab-guest description 'From HOMELAB to GUEST'
+set firewall name homelab-guest default-action 'drop'
+set firewall name homelab-guest enable-default-log
+
+# From HOMELAB to WAN
+set firewall name homelab-wan description 'From HOMELAB to WAN'
+set firewall name homelab-wan default-action 'accept'
 
 # ---------------------------------
 
@@ -327,6 +423,10 @@ set firewall name staging-services default-action 'accept'
 # From STAGING to SERVERS
 set firewall name staging-servers description 'From STAGING to SERVERS'
 set firewall name staging-servers default-action 'accept'
+
+# From STAGING to HOMELAB
+set firewall name staging-homelab description 'From STAGING to HOMELAB'
+set firewall name staging-homelab default-action 'accept'
 
 # From STAGING to TRUSTED
 set firewall name staging-trusted description 'From STAGING to TRUSTED'
@@ -395,6 +495,10 @@ set firewall name trusted-services default-action 'accept'
 set firewall name trusted-servers description 'From TRUSTED to SERVERS'
 set firewall name trusted-servers default-action 'accept'
 
+# From TRUSTED to HOMELAB
+set firewall name trusted-homelab description 'From TRUSTED to HOMELAB'
+set firewall name trusted-homelab default-action 'accept'
+
 # From TRUSTED to STAGING
 set firewall name trusted-staging description 'From TRUSTED to STAGING'
 set firewall name trusted-staging default-action 'accept'
@@ -450,12 +554,17 @@ set firewall name iot-services enable-default-log
 set firewall name iot-servers description 'From IOT to SERVERS'
 set firewall name iot-servers default-action 'drop'
 set firewall name iot-servers enable-default-log
-set firewall name iot-servers rule 1 description 'Rule: accept plex iot users'
-set firewall name iot-servers rule 1 action 'accept'
-set firewall name iot-servers rule 1 source group address-group 'iot-plex-users'
-set firewall name iot-servers rule 1 destination group address-group 'plex-server'
-set firewall name iot-servers rule 1 destination port '32400'
-set firewall name iot-servers rule 1 protocol 'tcp'
+
+# From IOT to HOMELAB
+set firewall name iot-homelab description 'From IOT to HOMELAB'
+set firewall name iot-homelab default-action 'drop'
+set firewall name iot-homelab enable-default-log
+set firewall name iot-homelab rule 1 description 'Rule: accept plex iot users'
+set firewall name iot-homelab rule 1 action 'accept'
+set firewall name iot-homelab rule 1 source group address-group 'iot-plex-users'
+set firewall name iot-homelab rule 1 destination group address-group 'plex-server'
+set firewall name iot-homelab rule 1 destination port '32400'
+set firewall name iot-homelab rule 1 protocol 'tcp'
 
 # From IOT to STAGING
 set firewall name iot-staging description 'From IOT to STAGING'
@@ -517,6 +626,11 @@ set firewall name guest-servers description 'From GUEST to SERVERS'
 set firewall name guest-servers default-action 'drop'
 set firewall name guest-servers enable-default-log
 
+# From GUEST to HOMELAB
+set firewall name guest-homelab description 'From GUEST to HOMELAB'
+set firewall name guest-homelab default-action 'drop'
+set firewall name guest-homelab enable-default-log
+
 # From GUEST to STAGING
 set firewall name guest-staging description 'From GUEST to STAGING'
 set firewall name guest-staging default-action 'drop'
@@ -561,12 +675,17 @@ set firewall name wan-services enable-default-log
 set firewall name wan-servers description 'From WAN to SERVERS'
 set firewall name wan-servers default-action 'drop'
 set firewall name wan-servers enable-default-log
-set firewall name wan-servers rule 1 description 'Rule: accept ingress from cloudflare'
-set firewall name wan-servers rule 1 action 'accept'
-set firewall name wan-servers rule 1 source group network-group 'cloudflare-networks-ipv4'
-set firewall name wan-servers rule 1 destination group address-group 'k8s_main_ingress'
-set firewall name wan-servers rule 1 destination port 'https'
-set firewall name wan-servers rule 1 protocol 'tcp'
+
+# From WAN to HOMELAB
+set firewall name wan-homelab description 'From WAN to HOMELAB'
+set firewall name wan-homelab default-action 'drop'
+set firewall name wan-homelab enable-default-log
+set firewall name wan-homelab rule 1 description 'Rule: accept ingress from cloudflare'
+set firewall name wan-homelab rule 1 action 'accept'
+set firewall name wan-homelab rule 1 source group network-group 'cloudflare-networks-ipv4'
+set firewall name wan-homelab rule 1 destination group address-group 'k8s_main_ingress'
+set firewall name wan-homelab rule 1 destination port 'https'
+set firewall name wan-homelab rule 1 protocol 'tcp'
 
 # From WAN to STAGING
 set firewall name wan-staging description 'From WAN to STAGING'

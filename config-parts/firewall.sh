@@ -10,11 +10,11 @@ set firewall group address-group unifi-controller address '10.0.5.2'
 set firewall group address-group unifi-unvr address '10.0.0.32'
 
 # k8s cluster ingress
-set firewall group address-group k8s_main_ingress address '10.10.1.2'
+set firewall group address-group k8s_main_ingress address '10.11.1.2'
 set firewall group address-group k8s_staging_ingress address '10.12.1.2'
 
 set firewall group address-group plex-server description 'Plex Server'
-set firewall group address-group plex-server address '10.10.1.14'
+set firewall group address-group plex-server address '10.11.1.14'
 
 # Cloudflare IPv4 Network
 set firewall group network-group cloudflare-networks-ipv4 description 'Task Managed: Cloudflare IPv4 Networks'

@@ -57,32 +57,32 @@ endpoints:
     # k8s Cluster
   - name: Kubernetes k8s-1
     group: Kubernetes
-    url: icmp://10.10.0.16
+    url: icmp://10.11.0.16
     conditions: ["[CONNECTED] == true"]
     alerts: [{ type: discord }]
   - name: Kubernetes k8s-2
     group: Kubernetes
-    url: icmp://10.10.0.17
+    url: icmp://10.11.0.17
     conditions: ["[CONNECTED] == true"]
     alerts: [{ type: discord }]
   - name: Kubernetes k8s-3
     group: Kubernetes
-    url: icmp://10.10.0.18
+    url: icmp://10.11.0.18
     conditions: ["[CONNECTED] == true"]
     alerts: [{ type: discord }]
   - name: Kubernetes k8s-4
     group: Kubernetes
-    url: icmp://10.10.0.19
+    url: icmp://10.11.0.19
     conditions: ["[CONNECTED] == true"]
     alerts: [{ type: discord }]
   - name: Kubernetes k8s-5
     group: Kubernetes
-    url: icmp://10.10.0.20
+    url: icmp://10.11.0.20
     conditions: ["[CONNECTED] == true"]
     alerts: [{ type: discord }]
   - name: Kubernetes k8s-6
     group: Kubernetes
-    url: icmp://10.10.0.21
+    url: icmp://10.11.0.21
     conditions: ["[CONNECTED] == true"]
     alerts: [{ type: discord }]
 
