@@ -39,6 +39,11 @@ set firewall name lan-servers description 'From LAN to SERVERS'
 set firewall name lan-servers default-action 'drop'
 set firewall name lan-servers enable-default-log
 
+# From LAN to STAGING
+set firewall name lan-staging description 'From LAN to STAGING'
+set firewall name lan-staging default-action 'drop'
+set firewall name lan-staging enable-default-log
+
 # From LAN to TRUSTED
 set firewall name lan-trusted description 'From LAN to TRUSTED'
 set firewall name lan-trusted default-action 'drop'
@@ -88,6 +93,18 @@ set firewall name local-servers rule 2 protocol 'tcp'
 set firewall name local-servers rule 3 description 'Rule: accept icmp'
 set firewall name local-servers rule 3 action 'accept'
 set firewall name local-servers rule 3 protocol 'icmp'
+
+# From LOCAL to STAGING
+set firewall name local-staging description 'From LOCAL to STAGING'
+set firewall name local-staging default-action 'drop'
+set firewall name local-staging enable-default-log
+set firewall name local-staging rule 1 description 'Rule: accept bgp'
+set firewall name local-staging rule 1 action 'accept'
+set firewall name local-staging rule 1 destination port 'bgp'
+set firewall name local-staging rule 1 protocol 'tcp'
+set firewall name local-staging rule 2 description 'Rule: accept icmp'
+set firewall name local-staging rule 2 action 'accept'
+set firewall name local-staging rule 2 protocol 'icmp'
 
 # From LOCAL to TRUSTED
 set firewall name local-trusted description 'From LOCAL to TRUSTED'
@@ -167,6 +184,10 @@ set firewall name services-local rule 2 source port 'bootps,bootpc'
 set firewall name services-servers description 'From SERVICES to SERVERS'
 set firewall name services-servers default-action 'accept'
 
+# From SERVICES to STAGING
+set firewall name services-staging description 'From SERVICES to STAGING'
+set firewall name services-staging default-action 'accept'
+
 # From SERVICES to TRUSTED
 set firewall name services-trusted description 'From SERVICES to TRUSTED'
 set firewall name services-trusted default-action 'drop'
@@ -236,6 +257,10 @@ set firewall name servers-local rule 8 protocol 'tcp'
 set firewall name servers-services description 'From SERVERS to SERVICES'
 set firewall name servers-services default-action 'accept'
 
+# From SERVERS to STAGING
+set firewall name servers-staging description 'From SERVERS to STAGING'
+set firewall name servers-staging default-action 'accept'
+
 # From SERVERS to TRUSTED
 set firewall name servers-trusted description 'From SERVERS to TRUSTED'
 set firewall name servers-trusted default-action 'drop'
@@ -259,6 +284,69 @@ set firewall name servers-guest enable-default-log
 # From SERVERS to WAN
 set firewall name servers-wan description 'From SERVERS to WAN'
 set firewall name servers-wan default-action 'accept'
+
+# ---------------------------------
+
+# From STAGING to LAN
+set firewall name staging-lan description 'From STAGING to LAN'
+set firewall name staging-lan default-action 'drop'
+set firewall name staging-lan enable-default-log
+set firewall name staging-lan rule 1 description 'Rule: accept icmp'
+set firewall name staging-lan rule 1 action 'accept'
+set firewall name staging-lan rule 1 protocol 'icmp'
+
+# From STAGING to LOCAL
+set firewall name staging-local description 'From STAGING to LOCAL'
+set firewall name staging-local default-action 'drop'
+set firewall name staging-local enable-default-log
+set firewall name staging-local rule 1 description 'Rule: accept bgp'
+set firewall name staging-local rule 1 action 'accept'
+set firewall name staging-local rule 1 destination port 'bgp'
+set firewall name staging-local rule 1 protocol 'tcp'
+set firewall name staging-local rule 3 description 'Rule: accept ntp'
+set firewall name staging-local rule 3 action 'accept'
+set firewall name staging-local rule 3 destination port 'ntp'
+set firewall name staging-local rule 3 protocol 'udp'
+set firewall name staging-local rule 4 description 'Rule: accept dhcp'
+set firewall name staging-local rule 4 action 'accept'
+set firewall name staging-local rule 4 destination port 'bootps,bootpc'
+set firewall name staging-local rule 4 protocol 'udp'
+set firewall name staging-local rule 4 source port 'bootps,bootpc'
+set firewall name staging-local rule 5 description 'Rule: accept icmp'
+set firewall name staging-local rule 5 action 'accept'
+set firewall name staging-local rule 5 protocol 'icmp'
+set firewall name staging-local rule 6 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+set firewall name staging-local rule 6 action 'drop'
+set firewall name staging-local rule 6 destination address '224.0.0.1'
+set firewall name staging-local rule 6 protocol '2'
+
+# From STAGING to SERVICES
+set firewall name staging-services description 'From STAGING to SERVICES'
+set firewall name staging-services default-action 'accept'
+
+# From STAGING to SERVERS
+set firewall name staging-servers description 'From STAGING to SERVERS'
+set firewall name staging-servers default-action 'accept'
+
+# From STAGING to TRUSTED
+set firewall name staging-trusted description 'From STAGING to TRUSTED'
+set firewall name staging-trusted default-action 'drop'
+set firewall name staging-trusted rule 1 description 'Rule: accept icmp'
+set firewall name staging-trusted rule 1 action 'accept'
+set firewall name staging-trusted rule 1 protocol 'icmp'
+
+# From STAGING to IOT
+set firewall name staging-iot description 'From STAGING to IOT'
+set firewall name staging-iot default-action 'accept'
+
+# From STAGING to GUEST
+set firewall name staging-guest description 'From STAGING to GUEST'
+set firewall name staging-guest default-action 'drop'
+set firewall name staging-guest enable-default-log
+
+# From STAGING to WAN
+set firewall name staging-wan description 'From STAGING to WAN'
+set firewall name staging-wan default-action 'accept'
 
 # ---------------------------------
 
@@ -306,6 +394,10 @@ set firewall name trusted-services default-action 'accept'
 # From TRUSTED to SERVERS
 set firewall name trusted-servers description 'From TRUSTED to SERVERS'
 set firewall name trusted-servers default-action 'accept'
+
+# From TRUSTED to STAGING
+set firewall name trusted-staging description 'From TRUSTED to STAGING'
+set firewall name trusted-staging default-action 'accept'
 
 # From TRUSTED to IOT
 set firewall name trusted-iot description 'From TRUSTED to IOT'
@@ -365,6 +457,11 @@ set firewall name iot-servers rule 1 destination group address-group 'plex-serve
 set firewall name iot-servers rule 1 destination port '32400'
 set firewall name iot-servers rule 1 protocol 'tcp'
 
+# From IOT to STAGING
+set firewall name iot-staging description 'From IOT to STAGING'
+set firewall name iot-staging default-action 'drop'
+set firewall name iot-staging enable-default-log
+
 # From IOT to TRUSTED
 set firewall name iot-trusted description 'From IOT to TRUSTED'
 set firewall name iot-trusted default-action 'drop'
@@ -420,6 +517,11 @@ set firewall name guest-servers description 'From GUEST to SERVERS'
 set firewall name guest-servers default-action 'drop'
 set firewall name guest-servers enable-default-log
 
+# From GUEST to STAGING
+set firewall name guest-staging description 'From GUEST to STAGING'
+set firewall name guest-staging default-action 'drop'
+set firewall name guest-staging enable-default-log
+
 # From GUEST to TRUSTED
 set firewall name guest-trusted description 'From GUEST to TRUSTED'
 set firewall name guest-trusted default-action 'drop'
@@ -465,6 +567,11 @@ set firewall name wan-servers rule 1 source group network-group 'cloudflare-netw
 set firewall name wan-servers rule 1 destination group address-group 'k8s_main_ingress'
 set firewall name wan-servers rule 1 destination port 'https'
 set firewall name wan-servers rule 1 protocol 'tcp'
+
+# From WAN to STAGING
+set firewall name wan-staging description 'From WAN to STAGING'
+set firewall name wan-staging default-action 'drop'
+set firewall name wan-staging enable-default-log
 
 # From WAN to IOT
 set firewall name wan-iot description 'From WAN to IOT'

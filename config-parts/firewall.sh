@@ -11,7 +11,7 @@ set firewall group address-group unifi-unvr address '10.0.0.32'
 
 # k8s cluster ingress
 set firewall group address-group k8s_main_ingress address '10.10.1.2'
-set firewall group address-group k8s_staging_ingress address '10.10.2.2'
+set firewall group address-group k8s_staging_ingress address '10.12.1.2'
 
 set firewall group address-group plex-server description 'Plex Server'
 set firewall group address-group plex-server address '10.10.1.14'

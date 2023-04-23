@@ -106,19 +106,29 @@ set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-m
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-6 ip-address '10.10.0.21'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping k8s-6 mac-address '1c:69:7a:a5:c1:19'
 
+# Staging VLAN
+set service dhcp-server shared-network-name STAGING authoritative
+set service dhcp-server shared-network-name STAGING ping-check
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 default-router '10.12.0.1'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 domain-name 'zinn.tech'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 lease '86400'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 name-server '10.0.5.4'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 range 0 start '10.12.0.208'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 range 0 stop '10.12.0.254'
+
 # k8s Staging Cluster
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-1 ip-address '10.10.0.24'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-1 mac-address 'de:ca:ff:10:00:18'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-2 ip-address '10.10.0.25'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-2 mac-address 'de:ca:ff:10:00:19'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-3 ip-address '10.10.0.26'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-3 mac-address 'de:ca:ff:10:00:1a'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-4 ip-address '10.10.0.27'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-4 mac-address 'de:ca:ff:10:00:1b'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-5 ip-address '10.10.0.28'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-5 mac-address 'de:ca:ff:10:00:1c'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-6 ip-address '10.10.0.29'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping stage-6 mac-address 'de:ca:ff:10:00:1d'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-1 ip-address '10.12.0.16'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-1 mac-address 'de:ca:ff:10:12:10'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-2 ip-address '10.12.0.17'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-2 mac-address 'de:ca:ff:10:12:11'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-3 ip-address '10.12.0.18'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-3 mac-address 'de:ca:ff:10:12:12'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-4 ip-address '10.12.0.19'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-4 mac-address 'de:ca:ff:10:12:13'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-5 ip-address '10.12.0.20'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-5 mac-address 'de:ca:ff:10:12:14'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-6 ip-address '10.12.0.21'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-6 mac-address 'de:ca:ff:10:12:15'
 
 # TRUSTED VLAN
 set service dhcp-server shared-network-name TRUSTED authoritative

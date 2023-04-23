@@ -49,6 +49,14 @@ set nat destination rule 204 protocol 'udp'
 set nat destination rule 204 translation address '192.168.2.1'
 set nat destination rule 204 translation port '123'
 
+set nat destination rule 205 description 'Force NTP for Staging'
+set nat destination rule 205 destination address '!10.12.0.1'
+set nat destination rule 205 destination port '123'
+set nat destination rule 205 inbound-interface 'eth0.12'
+set nat destination rule 205 protocol 'udp'
+set nat destination rule 205 translation address '10.12.0.1'
+set nat destination rule 205 translation port '123'
+
 # LAN -> WAN masquerade
 set nat source rule 100 description 'ALL -> WAN'
 set nat source rule 100 outbound-interface 'eth5'
