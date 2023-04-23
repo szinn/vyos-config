@@ -171,7 +171,7 @@ set container name vnstat volume vnstat-data mode 'rw'
 
 # frr-exporter
 set container name frr-exporter allow-host-networks
-set container name frr-exporter image 'docker.io/tynany/frr_exporter:v1.1.4'
+set container name frr-exporter image 'docker.io/tynany/frr_exporter:v1.2.0'
 set container name frr-exporter memory '0'
 set container name frr-exporter shared-memory '0'
 set container name frr-exporter volume frr-exporter-varfs source '/var/run/frr'
