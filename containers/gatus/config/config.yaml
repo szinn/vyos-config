@@ -1,11 +1,18 @@
 web:
   port: 80
+  tls:
+    certificate-file: /config/certificate.crt
+    private-key-file: /config/certificate.key
+
 storage:
   type: memory
+
 metrics: true
+
 ui:
   title: Home Status | Gatus
   header: Home Status
+
 alerting:
   discord:
     webhook-url: "https://discord.com/api/webhooks/993259345997463572/SAazXkzCWI-nNfKXg4OS11F6i9xrL_PN4Q5SMEx9AawhAJIhEV23PoGwNHRFxgP5ziSy"

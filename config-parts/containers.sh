@@ -61,6 +61,12 @@ set container name gatus shared-memory '0'
 set container name gatus volume gatus-config source '/config/containers/gatus/config/config.yaml'
 set container name gatus volume gatus-config destination '/config/config.yaml'
 set container name gatus volume gatus-config mode 'ro'
+set container name gatus volume gatus-certificate-crt source '/config/secrets/certificate.crt'
+set container name gatus volume gatus-certificate-crt destination '/config/certificate.crt'
+set container name gatus volume gatus-certificate-crt mode 'ro'
+set container name gatus volume gatus-certificate-key source '/config/secrets/certificate.key'
+set container name gatus volume gatus-certificate-key destination '/config/certificate.key'
+set container name gatus volume gatus-certificate-key mode 'ro'
 
 # onepassword-connect
 set container name onepassword-connect image 'docker.io/1password/connect-api:1.6.1'
