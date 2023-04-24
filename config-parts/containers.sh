@@ -130,7 +130,7 @@ set container name speedtest-exporter shared-memory '0'
 # cloudflare-ddns
 set container name cloudflare-ddns allow-host-networks
 set container name cloudflare-ddns environment CF_API_TOKEN value "${SECRET_CLOUDFLARE_API_TOKEN}"
-set container name cloudflare-ddns environment DOMAINS value 'zinn.ca,vpn.zinn.ca'
+set container name cloudflare-ddns environment DOMAINS value 'zinn.ca,vpn.zinn.ca,zinn.tech'
 set container name cloudflare-ddns environment IP6_PROVIDER value "none"
 set container name cloudflare-ddns environment TZ value 'America/Toronto'
 set container name cloudflare-ddns environment PGID value "1000"
