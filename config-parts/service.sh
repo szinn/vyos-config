@@ -9,6 +9,9 @@ set service ntp allow-client address '192.168.0.0/16'
 delete service ntp server
 set service ntp server ca.pool.ntp.org
 
+# Prometheus monitoring on port 9273
+set service monitoring telegraf prometheus-client
+
 # SSH server
 set service ssh disable-password-authentication
 set service ssh port '22'

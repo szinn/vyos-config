@@ -51,3 +51,4 @@ set firewall group address-group iot-plex-users address '192.168.1.52'
 set firewall group port-group prometheus-metrics port 9798 # speedtest
 set firewall group port-group prometheus-metrics port 9100 # node-exporter
 set firewall group port-group prometheus-metrics port 9342 # frr-exporter
+set firewall group port-group prometheus-metrics port 9273 # vyos
