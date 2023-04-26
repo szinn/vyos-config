@@ -1,6 +1,7 @@
-# Gateway
+# LAN
 set system static-host-mapping host-name gateway.zinn.tech inet 10.0.0.1
 set system static-host-mapping host-name gateway.zinn.tech alias vpn.zinn.tech
+set system static-host-mapping host-name zeus.zinn.tech inet 10.0.0.32
 
 # Services
 set system static-host-mapping host-name styx.zinn.tech inet 10.0.5.2
