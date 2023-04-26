@@ -176,11 +176,11 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 
 # Sophie's devices
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-iphone ip-address '10.20.0.32'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-iphone mac-address 'aa:68:ae:5d:8e:00'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-iphone mac-address 'a0:4e:cf:20:08:40'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-iwatch ip-address '10.20.0.33'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-iwatch mac-address 'c4:c3:6b:da:e5:18'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-ipad ip-address '10.20.0.34'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-ipad mac-address '5e:4b:ab:35:92:14'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-ipad mac-address 'b4:f6:1c:5b:43:34'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-desktop ip-address '10.20.0.35'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-desktop mac-address '78:7b:8a:b9:bb:1c'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-desktop-wifi ip-address '10.20.0.36'
