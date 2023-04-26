@@ -54,7 +54,7 @@ set container name dnsdist volume config mode 'ro'
 # gatus
 set container name gatus cap-add 'net-bind-service'
 set container name gatus cap-add 'net-raw'
-set container name gatus image 'ghcr.io/twin/gatus:v5.3.2'
+set container name gatus image 'ghcr.io/twin/gatus:latest'
 set container name gatus memory '0'
 set container name gatus network services address '10.0.5.5'
 set container name gatus shared-memory '0'
