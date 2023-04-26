@@ -265,8 +265,8 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping aria-scale ip-address '192.168.1.56'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping aria-scale mac-address '18:00:db:0c:e8:e2'
 
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping lexmark-office ip-address '192.168.1.96'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping lexmark-office mac-address '78:8c:77:12:04:16'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping laser ip-address '192.168.1.96'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping laser mac-address '78:8c:77:12:04:16'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office ip-address '192.168.1.97'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office mac-address '84:25:3f:6d:b8:8c'
 
