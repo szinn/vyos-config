@@ -1,6 +1,9 @@
-# Gateway and Services
+# Gateway
 set system static-host-mapping host-name gateway.zinn.tech inet 10.0.0.1
 set system static-host-mapping host-name gateway.zinn.tech alias vpn.zinn.tech
+
+# Services
+set system static-host-mapping host-name styx.zinn.tech inet 10.0.5.2
 set system static-host-mapping host-name gatus.zinn.tech inet 10.0.5.5
 set system static-host-mapping host-name onepassword-connect.zinn.tech inet 10.0.5.6
 set system static-host-mapping host-name main.zinn.tech inet 10.0.5.10
