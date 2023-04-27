@@ -1,0 +1,44 @@
+; Make sure to update the epoch time in the SOA records so coreDNS picks up the changes automatically
+; https://www.epochconverter.com/
+
+; SOA Records
+$TTL 3600
+$ORIGIN zinn.tech.
+@ 3600 IN SOA ns.zinn.tech. gateway.zinn.tech. (
+  1682634747         ; serial number (epoch timestamp)
+  7200               ; refresh period
+  3600               ; retry period
+  1209600            ; expire time
+  3600               ; minimum ttl
+)
+in-addr.arpa. 3600 IN SOA ns.zinn.tech. gateway.zinn.tech. (
+  1682634747         ; serial number (epoch timestamp)
+  7200               ; refresh period
+  3600               ; retry period
+  1209600            ; expire time
+  3600               ; minimum ttl
+)
+
+; A Records
+zeus                IN  A  10.0.0.32
+styx                IN  A  10.0.5.2
+ns                  IN  A  10.0.5.4
+gatus               IN  A  10.0.5.5
+onepassword-connect IN  A  10.0.5.6
+main                IN  A  10.0.5.10
+staging             IN  A  10.0.5.11
+ares                IN  A  10.10.0.4
+
+; CNAME Records
+atlas               IN  CNAME  ragnar.zinn.tech.
+vpn                 IN  CNAME  gateway.zinn.tech.
+
+; PTR Records
+32.0.0.10.in-addr.arpa.  IN  PTR  zeus.zinn.tech.
+2.5.0.10.in-addr.arpa.   IN  PTR  styx.zinn.tech.
+4.5.0.10.in-addr.arpa.   IN  PTR  ns.zinn.tech.
+5.5.0.10.in-addr.arpa.   IN  PTR  gatus.zinn.tech.
+6.5.0.10.in-addr.arpa.   IN  PTR  onepassword-connect.zinn.tech.
+10.5.0.10.in-addr.arpa.  IN  PTR  main.zinn.tech.
+11.5.0.10.in-addr.arpa.  IN  PTR  staging.zinn.tech.
+4.0.10.10.in-addr.arpa.  IN  PTR  ares.zinn.tech.

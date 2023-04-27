@@ -7,4 +7,4 @@
 !/config/
 /config/*
 !/config/Corefile
-!/config/custom-hosts
+!/config/*.zone

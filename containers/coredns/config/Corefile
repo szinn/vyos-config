@@ -40,11 +40,6 @@ test.zinn.ca {
 
 zinn.ca {
   import common
-  hosts /host/etc/hosts {
-    ttl 1
-    reload 5s
-    fallthrough
-  }
   import k8s_gateway_main
 }
 
@@ -53,5 +48,9 @@ zinn.ca {
   hosts /host/etc/hosts {
     ttl 1
     reload 5s
+    fallthrough
+  }
+  file /config/zinn-tech.zone {
+    reload 60s
   }
 }
