@@ -1,7 +1,7 @@
 #!/bin/vbash
 
-set service dhcp-server hostfile-update
-set service dhcp-server host-decl-name
+# set service dhcp-server hostfile-update
+# set service dhcp-server host-decl-name
 
 # LAN
 set service dhcp-server shared-network-name LAN authoritative
