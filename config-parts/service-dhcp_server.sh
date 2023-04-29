@@ -10,7 +10,7 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 default-route
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 lease '14400'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 start '10.0.0.208'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 stop '10.0.0.254'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 stop '10.0.0.239'
 
 set service dhcp-server global-parameters 'option space ubnt;'
 set service dhcp-server global-parameters 'option ubnt.unifi-address code 1 = ip-address;'
@@ -69,7 +69,7 @@ set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 default-r
 set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 lease '14400'
 set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 start '10.0.4.208'
-set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 stop '10.0.4.254'
+set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 stop '10.0.4.239'
 
 # Servers VLAN
 set service dhcp-server shared-network-name SERVERS authoritative
@@ -79,7 +79,7 @@ set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 domain-n
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 lease '14400'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 start '10.10.0.208'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 stop '10.10.0.254'
+set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 range 0 stop '10.10.0.239'
 
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping ragnar ip-address '10.10.0.2'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping ragnar mac-address 'd8:5e:d3:82:27:fd'
@@ -100,7 +100,7 @@ set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 domain-n
 set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 lease '14400'
 set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 range 0 start '10.11.0.208'
-set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 range 0 stop '10.11.0.254'
+set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 range 0 stop '10.11.0.239'
 
 # k8s Main Cluster
 set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-mapping k8s-1 ip-address '10.11.0.16'
@@ -124,7 +124,7 @@ set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 domain-n
 set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 lease '14400'
 set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 range 0 start '10.12.0.208'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 range 0 stop '10.12.0.254'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 range 0 stop '10.12.0.239'
 
 # k8s Staging Cluster
 set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-1 ip-address '10.12.0.16'
@@ -148,7 +148,7 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 domain-n
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 lease '14400'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 start '10.20.0.208'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 stop '10.20.0.254'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 range 0 stop '10.20.0.239'
 
 # Unifi Devices
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping g4-front-door ip-address '10.20.0.8'
@@ -208,6 +208,10 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom ip-address '10.20.0.137'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom mac-address '38:42:0b:66:1c:82'
 
+# VyOS Proxmox Canary
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping vyos-canary-20 ip-address '10.20.0.240'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping vyos-canary-20 mac-address 'DE:CA:FF:20:00:F0'
+
 # IOT VLAN
 set service dhcp-server shared-network-name IOT authoritative
 set service dhcp-server shared-network-name IOT ping-check
@@ -216,7 +220,7 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 domain-nam
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 lease '14400'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 name-server '1.1.1.1'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 start '192.168.1.208'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 stop '192.168.1.254'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 stop '192.168.1.239'
 
 # IOT devices
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm ip-address '192.168.1.10'
@@ -270,6 +274,9 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office ip-address '192.168.1.97'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office mac-address '84:25:3f:6d:b8:8c'
 
+# VyOS Proxmox Canary
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping vyos-canary-98 ip-address '192.168.1.240'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping vyos-canary-98 mac-address 'DE:CA:FF:98:01:F0'
 
 # GUEST VLAN
 set service dhcp-server shared-network-name GUEST authoritative
@@ -278,5 +285,8 @@ set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 default-
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 lease '14400'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 name-server '1.1.1.1'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 start '192.168.2.208'
-set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 stop '192.168.2.254'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 stop '192.168.2.239'
 
+# VyOS Proxmox Canary
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping vyos-canary-99 ip-address '192.168.2.240'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping vyos-canary-99 mac-address 'DE:CA:FF:99:02:F0'
