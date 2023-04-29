@@ -174,12 +174,3 @@ set container name vnstat shared-memory '0'
 set container name vnstat volume vnstat-data source '/config/containers/vnstat'
 set container name vnstat volume vnstat-data destination '/var/lib/vnstat'
 set container name vnstat volume vnstat-data mode 'rw'
-
-# frr-exporter
-set container name frr-exporter allow-host-networks
-set container name frr-exporter image 'docker.io/tynany/frr_exporter:v1.2.0'
-set container name frr-exporter memory '0'
-set container name frr-exporter shared-memory '0'
-set container name frr-exporter volume frr-exporter-varfs source '/var/run/frr'
-set container name frr-exporter volume frr-exporter-varfs destination '/var/run/frr'
-set container name frr-exporter volume frr-exporter-varfs mode 'ro'
