@@ -3,7 +3,3 @@
 
 # Track certain files and directories
 !.gitignore
-
-!/data/
-/data/*
-!/data/.keep

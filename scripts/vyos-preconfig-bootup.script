@@ -3,6 +3,7 @@
 # Any modifications required to work around unfixed bugs or use
 # services not available through the VyOS CLI system can be placed here.
 
-# TODO: Remove if issues don't come back, turn back on if they do
-# Clean dangling container network files
-# rm /var/lib/cni/networks/services/10.5.*
+# Fix for 1Password containers requiring a user/group id of 999
+# and Vyos not preserving file perms on upgrade
+mkdir -p /tmp/onepassword/data
+chown -R 999:999 /tmp/onepassword
