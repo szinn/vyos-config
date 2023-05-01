@@ -5,11 +5,12 @@
 !.gitignore
 
 # Containers
-!/unifi/
+!/bind/
 !/coredns/
 !/dnsdist/
 !/gatus/
 !/main-k8s/
 !/onepassword-connect/
 !/staging-k8s/
+!/unifi/
 !/vnstat/

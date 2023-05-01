@@ -21,6 +21,21 @@ set container name unifi volume unifi-logs source '/config/containers/unifi/logs
 set container name unifi volume unifi-logs destination '/usr/lib/unifi/logs'
 set container name unifi volume unifi-logs mode 'rw'
 
+# bind
+set container name bind cap-add 'net-bind-service'
+set container name bind image 'docker.io/internetsystemsconsortium/bind9:9.19'
+set container name bind command '/usr/sbin/named -4 -f -c /etc/bind/named.conf -u bind'
+set container name bind memory '0'
+set container name bind network services address '10.0.5.3'
+set container name bind restart 'on-failure'
+set container name bind shared-memory '0'
+set container name bind volume config source '/config/containers/bind/config'
+set container name bind volume config destination '/etc/bind'
+set container name bind volume config mode 'ro'
+set container name bind volume cache source '/tmp/bind/cache'
+set container name bind volume cache destination '/var/cache/bind'
+set container name bind volume cache mode 'rw'
+
 # dnsdist
 set container name dnsdist cap-add 'net-bind-service'
 set container name dnsdist environment TZ value 'Europe/Amsterdam'

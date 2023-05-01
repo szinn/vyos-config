@@ -7,3 +7,5 @@
 # and Vyos not preserving file perms on upgrade
 mkdir -p /tmp/onepassword/data
 chown -R 999:999 /tmp/onepassword
+mkdir -p /tmp/bind/cache
+chown -R 104 /tmp/bind/cache
