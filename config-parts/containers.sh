@@ -69,7 +69,7 @@ set container name gatus volume gatus-certificate-key destination '/config/certi
 set container name gatus volume gatus-certificate-key mode 'ro'
 
 # onepassword-connect
-set container name onepassword-connect image 'docker.io/1password/connect-api:1.6.1'
+set container name onepassword-connect image 'docker.io/1password/connect-api:1.7.0'
 set container name onepassword-connect environment OP_HTTP_PORT value '8438'
 set container name onepassword-connect memory '0'
 set container name onepassword-connect network services address '10.0.5.6'
