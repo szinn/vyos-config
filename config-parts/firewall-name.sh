@@ -78,6 +78,13 @@ set firewall name lan-wan default-action 'accept'
 set firewall name local-lan description 'From LOCAL to LAN'
 set firewall name local-lan default-action 'drop'
 set firewall name local-lan enable-default-log
+set firewall name local-lan rule 1 description 'Rule: accept icmp'
+set firewall name local-lan rule 1 action 'accept'
+set firewall name local-lan rule 1 protocol 'icmp'
+set firewall name local-lan rule 2 description 'Rule: accept ssh'
+set firewall name local-lan rule 2 action 'accept'
+set firewall name local-lan rule 2 destination port 'ssh'
+set firewall name local-lan rule 2 protocol 'tcp'
 
 # From LOCAL to SERVICES
 set firewall name local-services default-action 'accept'
