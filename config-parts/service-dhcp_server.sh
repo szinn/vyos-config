@@ -225,16 +225,6 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 st
 # IOT devices
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm ip-address '192.168.1.10'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm mac-address '84:c2:e4:26:4e:8c'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-basement ip-address '192.168.1.16'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-basement mac-address '64:16:66:ce:90:da'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-furnace ip-address '192.168.1.17'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-furnace mac-address '64:16:66:cc:7d:3b'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-front-door ip-address '192.168.1.18'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-front-door mac-address '18:b4:30:ae:8a:85'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-kitchen ip-address '192.168.1.19'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-kitchen mac-address '64:16:66:cd:f6:08'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs ip-address '192.168.1.20'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs mac-address '64:16:66:cd:f8:e8'
 
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 ip-address '192.168.1.25'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 mac-address '2c:aa:8e:6e:90:d3'
@@ -273,6 +263,17 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping laser mac-address '78:8c:77:12:04:16'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office ip-address '192.168.1.97'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping fujitsu-scanner-office mac-address '84:25:3f:6d:b8:8c'
+
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-basement ip-address '192.168.1.128'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-basement mac-address '64:16:66:ce:90:da'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-furnace ip-address '192.168.1.129'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-furnace mac-address '64:16:66:cc:7d:3b'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-front-door ip-address '192.168.1.130'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-front-door mac-address '18:b4:30:ae:8a:85'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-kitchen ip-address '192.168.1.131'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-kitchen mac-address '64:16:66:cd:f6:08'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs ip-address '192.168.1.132'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping nest-upstairs mac-address '64:16:66:cd:f8:e8'
 
 # VyOS Proxmox Canary
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping vyos-canary-98 ip-address '192.168.1.240'
