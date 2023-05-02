@@ -6,7 +6,6 @@
 
 # Containers
 !/bind/
-!/coredns/
 !/dnsdist/
 !/gatus/
 !/main-k8s/

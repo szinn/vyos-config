@@ -91,23 +91,6 @@ set container name onepassword-sync volume data source '/tmp/onepassword/data'
 set container name onepassword-sync volume data destination '/home/opuser/.op/data'
 set container name onepassword-sync volume data mode 'rw'
 
-# coredns
-set container name coredns cap-add 'net-bind-service'
-set container name coredns image 'docker.io/coredns/coredns:1.10.1'
-set container name coredns memory '0'
-set container name coredns network services address '10.0.5.9'
-set container name coredns restart 'on-failure'
-set container name coredns shared-memory '0'
-set container name coredns volume config source '/config/containers/coredns/config'
-set container name coredns volume config destination '/config'
-set container name coredns volume config mode 'ro'
-set container name coredns volume corefile source '/config/containers/coredns/config/Corefile'
-set container name coredns volume corefile destination '/Corefile'
-set container name coredns volume corefile mode 'ro'
-set container name coredns volume vyoshosts source '/etc/hosts'
-set container name coredns volume vyoshosts destination '/host/etc/hosts'
-set container name coredns volume vyoshosts mode 'ro'
-
 # haproxy - main cluster
 set container name main-k8s-api image 'docker.io/library/haproxy:2.7.7'
 set container name main-k8s-api memory '0'
