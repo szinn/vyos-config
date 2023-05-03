@@ -276,6 +276,10 @@ set firewall name servers-local rule 7 description 'Rule: accept ssh'
 set firewall name servers-local rule 7 action 'accept'
 set firewall name servers-local rule 7 destination port 'ssh'
 set firewall name servers-local rule 7 protocol 'tcp'
+set firewall name servers-local rule 8 description 'Rule: accept iperf'
+set firewall name servers-local rule 8 action 'accept'
+set firewall name servers-local rule 8 destination port 5001
+set firewall name servers-local rule 8 protocol 'tcp'
 
 # From SERVERS to SERVICES
 set firewall name servers-services description 'From SERVERS to SERVICES'
@@ -351,6 +355,10 @@ set firewall name homelab-local rule 7 description 'Rule: accept prometheus metr
 set firewall name homelab-local rule 7 action 'accept'
 set firewall name homelab-local rule 7 destination group port-group prometheus-metrics
 set firewall name homelab-local rule 7 protocol 'tcp'
+set firewall name homelab-local rule 8 description 'Rule: accept iperf'
+set firewall name homelab-local rule 8 action 'accept'
+set firewall name homelab-local rule 8 destination port 5001
+set firewall name homelab-local rule 8 protocol 'tcp'
 
 # From HOMELAB to SERVICES
 set firewall name homelab-services description 'From HOMELAB to SERVICES'
@@ -493,6 +501,10 @@ set firewall name trusted-local rule 9 description 'Rule: accept vnstat'
 set firewall name trusted-local rule 9 action 'accept'
 set firewall name trusted-local rule 9 destination port '8685'
 set firewall name trusted-local rule 9 protocol 'tcp'
+set firewall name trusted-local rule 10 description 'Rule: accept iperf'
+set firewall name trusted-local rule 10 action 'accept'
+set firewall name trusted-local rule 10 destination port 5001
+set firewall name trusted-local rule 10 protocol 'tcp'
 
 # From TRUSTED to SERVICES
 set firewall name trusted-services description 'From TRUSTED to SERVICES'
