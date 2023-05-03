@@ -114,7 +114,7 @@ set container name staging-k8s-api volume config mode 'ro'
 # udp-broadcast-relay-mdns
 set container name udp-broadcast-relay-mdns allow-host-networks
 set container name udp-broadcast-relay-mdns cap-add 'net-raw'
-set container name udp-broadcast-relay-mdns environment CFG_DEV value 'eth0.20;eth0.98'
+set container name udp-broadcast-relay-mdns environment CFG_DEV value 'bond0.20;bond0.98'
 set container name udp-broadcast-relay-mdns environment CFG_ID value '2'
 set container name udp-broadcast-relay-mdns environment CFG_MULTICAST value '224.0.0.251'
 set container name udp-broadcast-relay-mdns environment CFG_PORT value '5353'
@@ -164,7 +164,7 @@ set container name node-exporter volume node-exporter-sysfs mode 'ro'
 
 # vnstat
 set container name vnstat allow-host-networks
-set container name vnstat environment EXCLUDE_PATTERN value '^docker|^veth|^br-|^lxc|^eth[1234]'
+set container name vnstat environment EXCLUDE_PATTERN value '^docker|^veth|^br-|^lxc'
 set container name vnstat environment TZ value 'America/New_York'
 set container name vnstat image 'ghcr.io/vergoh/vnstat:2.10'
 set container name vnstat memory '0'
