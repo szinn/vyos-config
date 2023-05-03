@@ -1,8 +1,8 @@
 #!/bin/vbash
 
 # Container networks
-set container network services prefix '10.0.5.0/24'
 set container network services description 'Network for VyOS containers'
+set container network services prefix '10.0.5.0/24'
 
 # unifi
 set container name unifi environment TZ value 'America/Toronto'
