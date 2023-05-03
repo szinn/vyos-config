@@ -91,6 +91,7 @@ set firewall zone trusted from guest firewall name 'guest-trusted'
 set firewall zone trusted from iot firewall name 'iot-trusted'
 set firewall zone trusted from wan firewall name 'wan-trusted'
 set firewall zone trusted interface 'eth0.20'
+set firewall zone trusted interface 'eth4.20'
 set firewall zone trusted interface 'wg01'
 
 set firewall zone iot description 'IoT VLAN'

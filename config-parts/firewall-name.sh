@@ -21,6 +21,10 @@ set firewall name lan-local rule 6 description 'Rule: drop multicast to 224.0.0.
 set firewall name lan-local rule 6 action 'drop'
 set firewall name lan-local rule 6 destination address '224.0.0.1'
 set firewall name lan-local rule 6 protocol '2'
+set firewall name lan-local rule 7 description 'Rule: accept ssh'
+set firewall name lan-local rule 7 action 'accept'
+set firewall name lan-local rule 7 destination port 'ssh'
+set firewall name lan-local rule 7 protocol 'tcp'
 
 # From LAN to SERVICES
 set firewall name lan-services description 'From LAN to SERVICES'

@@ -3,15 +3,6 @@
 # set service dhcp-server hostfile-update
 # set service dhcp-server host-decl-name
 
-# LAN
-set service dhcp-server shared-network-name LAN authoritative
-set service dhcp-server shared-network-name LAN ping-check
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 default-router '10.0.0.1'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 lease '86400'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 name-server '10.0.5.4'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 start '10.0.0.208'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 stop '10.0.0.239'
-
 set service dhcp-server global-parameters 'option space ubnt;'
 set service dhcp-server global-parameters 'option ubnt.unifi-address code 1 = ip-address;'
 set service dhcp-server global-parameters 'class &quot;ubnt&quot; {'
@@ -20,6 +11,14 @@ set service dhcp-server global-parameters 'option vendor-class-identifier &quot;
 set service dhcp-server global-parameters 'vendor-option-space ubnt;'
 set service dhcp-server global-parameters '}'
 
+# LAN
+set service dhcp-server shared-network-name LAN authoritative
+set service dhcp-server shared-network-name LAN ping-check
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 default-router '10.0.0.1'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 lease '86400'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 name-server '10.0.5.4'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 start '10.0.0.208'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 range 0 stop '10.0.0.239'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 subnet-parameters 'option ubnt.unifi-address 10.0.5.2;'
 
 # LAN Switches
