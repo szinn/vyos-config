@@ -5,7 +5,7 @@
 $TTL 3600
 $ORIGIN zinn.tech.
 @ 3600 IN SOA zinn.tech. gateway.zinn.tech. (
-  2023050200         ; serial number (epoch timestamp)
+  2023050401         ; serial number (epoch timestamp)
   7200               ; refresh period
   3600               ; retry period
   1209600            ; expire time
