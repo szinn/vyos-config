@@ -164,7 +164,7 @@ set container name node-exporter volume node-exporter-sysfs mode 'ro'
 
 # vnstat
 set container name vnstat allow-host-networks
-set container name vnstat environment EXCLUDE_PATTERN value '^docker|^veth|^br-|^lxc'
+set container name vnstat environment EXCLUDE_PATTERN value '^docker|^veth|^br-|^lxc|eth[0123]'
 set container name vnstat environment TZ value 'America/New_York'
 set container name vnstat image 'ghcr.io/vergoh/vnstat:2.10'
 set container name vnstat memory '0'
