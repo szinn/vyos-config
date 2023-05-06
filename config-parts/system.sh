@@ -21,8 +21,6 @@ set system syslog host 10.11.1.4 facility kern level 'warning'
 set system syslog host 10.11.1.4 facility kern protocol 'tcp'
 set system syslog host 10.11.1.4 port '6003'
 
-set system task-scheduler task task-cloudflare-networks executable path '/config/scripts/task-cloudflare-networks.sh'
-set system task-scheduler task task-cloudflare-networks interval '6h'
 set system task-scheduler task backup-config crontab-spec '30 2 * * *'
 set system task-scheduler task backup-config executable path '/config/scripts/task-config-backup-usb.sh'
 

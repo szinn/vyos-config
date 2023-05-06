@@ -1,13 +1,5 @@
 #!/bin/vbash
 
-# Forward HTTP(S) to ingress
-set nat destination rule 100 description 'HTTPS'
-set nat destination rule 100 destination port '443'
-set nat destination rule 100 inbound-interface 'eth5'
-set nat destination rule 100 protocol 'tcp'
-set nat destination rule 100 translation address '10.11.1.2'
-set nat destination rule 100 translation port '443'
-
 # Force NTP
 set nat destination rule 200 description 'Force NTP for Servers'
 set nat destination rule 200 destination address '!10.10.0.1'

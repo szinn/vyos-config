@@ -703,12 +703,6 @@ set firewall name wan-servers enable-default-log
 set firewall name wan-homelab description 'From WAN to HOMELAB'
 set firewall name wan-homelab default-action 'drop'
 set firewall name wan-homelab enable-default-log
-set firewall name wan-homelab rule 1 description 'Rule: accept ingress from cloudflare'
-set firewall name wan-homelab rule 1 action 'accept'
-set firewall name wan-homelab rule 1 source group network-group 'cloudflare-networks-ipv4'
-set firewall name wan-homelab rule 1 destination group address-group 'k8s_main_ingress'
-set firewall name wan-homelab rule 1 destination port 'https'
-set firewall name wan-homelab rule 1 protocol 'tcp'
 
 # From WAN to STAGING
 set firewall name wan-staging description 'From WAN to STAGING'
