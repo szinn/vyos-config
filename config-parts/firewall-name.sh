@@ -509,6 +509,12 @@ set firewall name trusted-local rule 10 description 'Rule: accept iperf'
 set firewall name trusted-local rule 10 action 'accept'
 set firewall name trusted-local rule 10 destination port 5001
 set firewall name trusted-local rule 10 protocol 'tcp'
+set firewall name trusted-local rule 11 description 'Rule: ignore scansnap probe'
+set firewall name trusted-local rule 11 action 'drop'
+set firewall name trusted-local rule 11 source group address-group 'scanner-clients'
+set firewall name trusted-local rule 11 destination address '255.255.255.255'
+set firewall name trusted-local rule 11 destination port 52217
+set firewall name trusted-local rule 11 protocol 'udp'
 
 # From TRUSTED to SERVICES
 set firewall name trusted-services description 'From TRUSTED to SERVICES'
