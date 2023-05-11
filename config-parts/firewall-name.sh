@@ -604,16 +604,11 @@ set firewall name iot-staging enable-default-log
 set firewall name iot-trusted description 'From IOT to TRUSTED'
 set firewall name iot-trusted default-action 'drop'
 set firewall name iot-trusted enable-default-log
-set firewall name iot-trusted rule 1 description 'Rule: accept mdns'
+set firewall name iot-trusted rule 1 description 'Rule: accept scanner traffic'
 set firewall name iot-trusted rule 1 action 'accept'
-set firewall name iot-trusted rule 1 source port 'mdns'
-set firewall name iot-trusted rule 1 destination port 'mdns'
+set firewall name iot-trusted rule 1 destination group address-group 'scanner-clients'
+set firewall name iot-trusted rule 1 destination group port-group 'scanner-outbound-ports'
 set firewall name iot-trusted rule 1 protocol 'udp'
-set firewall name iot-trusted rule 2 description 'Rule: accept scanner traffic'
-set firewall name iot-trusted rule 2 action 'accept'
-set firewall name iot-trusted rule 2 destination group address-group 'scanner-clients'
-set firewall name iot-trusted rule 2 destination group port-group 'scanner-outbound-ports'
-set firewall name iot-trusted rule 2 protocol 'udp'
 
 # From IOT to GUEST
 set firewall name iot-guest description 'From IOT to GUEST'
@@ -644,6 +639,11 @@ set firewall name guest-local rule 4 action 'accept'
 set firewall name guest-local rule 4 source port 'bootps,bootpc'
 set firewall name guest-local rule 4 destination port 'bootps,bootpc'
 set firewall name guest-local rule 4 protocol 'udp'
+set firewall name guest-local rule 5 action 'accept'
+set firewall name guest-local rule 5 description 'Rule: accept mdns'
+set firewall name guest-local rule 5 source port 'mdns'
+set firewall name guest-local rule 5 destination port 'mdns'
+set firewall name guest-local rule 5 protocol 'udp'
 
 # From GUEST to SERVICES
 set firewall name guest-services description 'From GUEST to SERVICES'
@@ -674,6 +674,11 @@ set firewall name guest-trusted enable-default-log
 set firewall name guest-iot description 'From GUEST to IOT'
 set firewall name guest-iot default-action 'drop'
 set firewall name guest-iot enable-default-log
+set firewall name guest-iot rule 1 description 'Rule: accept_tcp_printer_from_allowed_devices'
+set firewall name guest-iot rule 1 action 'accept'
+set firewall name guest-iot rule 1 destination group address-group 'printers'
+set firewall name guest-iot rule 1 destination port 'http,9100'
+set firewall name guest-iot rule 1 protocol 'tcp'
 
 # From GUEST to WAN
 set firewall name guest-wan description 'From IOT to WAN'

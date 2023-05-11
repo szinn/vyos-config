@@ -20,6 +20,9 @@ set firewall group address-group plex-server address '10.11.1.14'
 set firewall group address-group scanner-clients address '10.20.0.19'
 set firewall group address-group scanner-clients address '10.20.0.20'
 
+# Printers
+set firewall group address-group printers address '192.168.1.96'
+
 # Scanner ports
 set firewall group port-group scanner-outbound-ports port 52217
 set firewall group port-group scanner-outbound-ports port 53220
