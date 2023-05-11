@@ -677,7 +677,7 @@ set firewall name guest-iot enable-default-log
 set firewall name guest-iot rule 1 description 'Rule: accept_tcp_printer_from_allowed_devices'
 set firewall name guest-iot rule 1 action 'accept'
 set firewall name guest-iot rule 1 destination group address-group 'printers'
-set firewall name guest-iot rule 1 destination port 'http,9100'
+set firewall name guest-iot rule 1 destination port 'http,https,9100'
 set firewall name guest-iot rule 1 protocol 'tcp'
 
 # From GUEST to WAN
