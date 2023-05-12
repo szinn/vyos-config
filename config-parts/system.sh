@@ -13,15 +13,12 @@ set system name-server '1.1.1.1'
 
 set system sysctl parameter kernel.pty.max value '24000'
 
-delete system syslog global facility all level
-delete system syslog global facility protocols level
-set system syslog global facility all level 'info'
-set system syslog global facility protocols level 'debug'
 set system syslog host 10.11.1.4 facility kern level 'warning'
-set system syslog host 10.11.1.4 facility kern protocol 'tcp'
+set system syslog host 10.11.1.4 protocol 'tcp'
 set system syslog host 10.11.1.4 port '6003'
 
 set system task-scheduler task backup-config crontab-spec '30 2 * * *'
 set system task-scheduler task backup-config executable path '/config/scripts/task-config-backup-usb.sh'
 
 set system time-zone 'America/Toronto'
+
