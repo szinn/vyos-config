@@ -21,8 +21,8 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 subnet-parame
 # LAN Switches
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-pro24 ip-address '10.0.0.16'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-pro24 mac-address '74:ac:b9:4a:50:2b'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-flex-mini ip-address '10.0.0.17'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-flex-mini mac-address '74:ac:b9:a9:c9:90'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-flex-xg ip-address '10.0.0.17'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-flex-xg mac-address 'd0:21:f9:e7:7b:95'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-flex ip-address '10.0.0.18'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-flex mac-address 'f4:92:bf:a6:e7:5f'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usw-ent8-1 ip-address '10.0.0.19'
@@ -203,6 +203,8 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-kitchen mac-address '34:7e:5c:d0:6c:72'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom ip-address '10.20.0.137'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom mac-address '38:42:0b:66:1c:82'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-yard ip-address '10.20.0.138'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-yard mac-address 'f6:92:bf:a5:30:28'
 
 # VyOS Proxmox Canary
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping vyos-canary-20 ip-address '10.20.0.240'
