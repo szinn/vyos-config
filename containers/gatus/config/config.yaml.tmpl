@@ -15,7 +15,7 @@ ui:
 
 alerting:
   discord:
-    webhook-url: "https://discord.com/api/webhooks/993259345997463572/SAazXkzCWI-nNfKXg4OS11F6i9xrL_PN4Q5SMEx9AawhAJIhEV23PoGwNHRFxgP5ziSy"
+    webhook-url: "${DISCORD_WEBHOOK_URL}"
 
 endpoints:
   # DNS
@@ -26,6 +26,10 @@ endpoints:
       query-name: "google.com"
       query-type: "A"
     conditions: ["[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "External DNS: Cannot reach google.com"
+        send-on-resolved: true
   - name: internal-dns
     group: DNS
     url: 10.0.5.4
@@ -33,79 +37,125 @@ endpoints:
       query-name: "gateway.zinn.tech"
       query-type: "A"
     conditions: ["[BODY] == 10.0.0.1", "[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "Internal DNS: Cannot reach gateway"
+        send-on-resolved: true
 
   # Servers
   - name: Ragnar
     group: Servers
     url: icmp://10.10.0.2
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "Ragnar down"
+        send-on-resolved: true
   - name: Hades
     group: Servers
     url: icmp://10.10.0.3
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "Hades down"
+        send-on-resolved: true
   - name: Ares
     group: Servers
     url: icmp://10.10.0.4
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "Ares down"
+        send-on-resolved: true
   - name: PiKVM
     group: Servers
     url: icmp://10.10.0.5
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "PiKVM down"
+        send-on-resolved: true
   - name: UNVR
     group: Servers
     url: icmp://10.0.0.32
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "UNVR down"
+        send-on-resolved: true
 
     # k8s Cluster
   - name: k8s-1
     group: Kubernetes
     url: icmp://10.11.0.16
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "k8s-1 down"
+        send-on-resolved: true
   - name: k8s-2
     group: Kubernetes
     url: icmp://10.11.0.17
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "k8s-2 down"
+        send-on-resolved: true
   - name: k8s-3
     group: Kubernetes
     url: icmp://10.11.0.18
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "k8s-3 down"
+        send-on-resolved: true
   - name: k8s-4
     group: Kubernetes
     url: icmp://10.11.0.19
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "k8s-4 down"
+        send-on-resolved: true
   - name: k8s-5
     group: Kubernetes
     url: icmp://10.11.0.20
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "k8s-5 down"
+        send-on-resolved: true
   - name: k8s-6
     group: Kubernetes
     url: icmp://10.11.0.21
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "k8s-6 down"
+        send-on-resolved: true
 
   # IoT
   - name: TESmart
     group: IoT
     url: icmp://192.168.1.10
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "TESmart down"
+        send-on-resolved: true
   - name: Ecobee
     group: IoT
     url: icmp://192.168.1.49
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "Ecobee down"
+        send-on-resolved: true
   - name: Philips Hue
     group: IoT
     url: icmp://192.168.1.51
     conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: discord }]
+    alerts:
+      - type: discord
+        description: "Philips hue down"
+        send-on-reso ved: true
