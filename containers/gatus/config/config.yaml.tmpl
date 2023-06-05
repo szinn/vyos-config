@@ -145,11 +145,12 @@ endpoints:
         send-on-resolved: true
   - name: Ecobee
     group: IoT
-    url: icmp://192.168.1.49
+    url: icmp://192.168.1.50
     conditions: ["[CONNECTED] == true"]
     alerts:
       - type: discord
         description: "Ecobee down"
+        failure-threshold: 10
         send-on-resolved: true
   - name: Philips Hue
     group: IoT
