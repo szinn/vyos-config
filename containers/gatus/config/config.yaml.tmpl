@@ -43,6 +43,16 @@ endpoints:
         send-on-resolved: true
 
   # Servers
+  - name: Homelab
+    group: Servers
+    url: icmp://home.zinn.ca
+    client:
+      dns-resolver: udp://1.1.1.1:53
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Homelab down"
+        send-on-resolved: true
   - name: Ragnar
     group: Servers
     url: icmp://10.10.0.2
