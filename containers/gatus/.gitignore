@@ -6,4 +6,4 @@
 
 !/config/
 /config/*
-!/config/config.yaml.tmpl
+!/config/config.yaml
