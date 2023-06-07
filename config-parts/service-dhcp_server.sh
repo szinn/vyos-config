@@ -1,4 +1,5 @@
 #!/bin/vbash
+# shellcheck disable=all
 
 set service dhcp-server global-parameters 'option space ubnt;'
 set service dhcp-server global-parameters 'option ubnt.unifi-address code 1 = ip-address;'
@@ -204,7 +205,7 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom ip-address '10.20.0.137'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-bedroom mac-address '38:42:0b:66:1c:82'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-yard ip-address '10.20.0.138'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-yard mac-address 'f6:92:bf:a5:30:28'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sonos-yard mac-address 'f0:f6:c1:5f:6f:0e'
 
 # VyOS Proxmox Canary
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping vyos-canary-20 ip-address '10.20.0.240'
@@ -295,7 +296,7 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping sonos-bedroom ip-address '192.168.1.137'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping sonos-bedroom mac-address '38:42:0b:66:1c:82'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping sonos-yard ip-address '192.168.1.138'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping sonos-yard mac-address 'f6:92:bf:a5:30:28'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping sonos-yard mac-address 'f0:f6:c1:5f:6f:0e'
 
 # VyOS Proxmox Canary
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping vyos-canary-98 ip-address '192.168.1.240'
