@@ -37,3 +37,32 @@ set firewall group port-group prometheus-metrics port 9798 # speedtest
 set firewall group port-group prometheus-metrics port 9100 # node-exporter
 set firewall group port-group prometheus-metrics port 9342 # frr-exporter
 set firewall group port-group prometheus-metrics port 9273 # vyos
+
+# Sonos Controllers
+set firewall group address-group sonos-controllers address '10.20.0.16'  # Scotte
+set firewall group address-group sonos-controllers address '10.20.0.17'
+set firewall group address-group sonos-controllers address '10.20.0.18'
+set firewall group address-group sonos-controllers address '10.20.0.19'
+set firewall group address-group sonos-controllers address '10.20.0.20'
+set firewall group address-group sonos-controllers address '10.20.0.30'
+set firewall group address-group sonos-controllers address '10.20.0.31'
+set firewall group address-group sonos-controllers address '10.20.0.32'  # Sophie
+set firewall group address-group sonos-controllers address '10.20.0.33'
+set firewall group address-group sonos-controllers address '10.20.0.34'
+set firewall group address-group sonos-controllers address '10.20.0.35'
+set firewall group address-group sonos-controllers address '10.20.0.36'
+set firewall group address-group sonos-controllers address '192.168.2.64'  # Scotte
+set firewall group address-group sonos-controllers address '192.168.2.65'  # Ben
+
+# Sonos Players
+set firewall group address-group sonos-players address '10.20.0.128'
+set firewall group address-group sonos-players address '10.20.0.129'
+set firewall group address-group sonos-players address '10.20.0.130'
+set firewall group address-group sonos-players address '10.20.0.131'
+set firewall group address-group sonos-players address '10.20.0.132'
+set firewall group address-group sonos-players address '10.20.0.133'
+set firewall group address-group sonos-players address '10.20.0.134'
+set firewall group address-group sonos-players address '10.20.0.135'
+set firewall group address-group sonos-players address '10.20.0.136'
+set firewall group address-group sonos-players address '10.20.0.137'
+set firewall group address-group sonos-players address '10.20.0.138'

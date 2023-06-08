@@ -162,6 +162,19 @@ set container name udp-broadcast-relay-mdns memory '0'
 set container name udp-broadcast-relay-mdns restart 'on-failure'
 set container name udp-broadcast-relay-mdns shared-memory '0'
 
+# udp-broadcast-relay-sonos
+set container name udp-broadcast-relay-sonos allow-host-networks
+set container name udp-broadcast-relay-sonos cap-add 'net-raw'
+set container name udp-broadcast-relay-sonos environment CFG_DEV value 'bond0.20;bond0.99'
+set container name udp-broadcast-relay-sonos environment CFG_ID value '1'
+set container name udp-broadcast-relay-sonos environment CFG_MULTICAST value '239.255.255.250'
+set container name udp-broadcast-relay-sonos environment CFG_PORT value '1900'
+set container name udp-broadcast-relay-sonos environment SEPARATOR value ';'
+set container name udp-broadcast-relay-sonos image 'ghcr.io/onedr0p/udp-broadcast-relay-redux:1.0.27'
+set container name udp-broadcast-relay-sonos memory '0'
+set container name udp-broadcast-relay-sonos restart 'on-failure'
+set container name udp-broadcast-relay-sonos shared-memory '0'
+
 # speedtest-exporter
 set container name speedtest-exporter image 'ghcr.io/miguelndecarvalho/speedtest-exporter:v3.5.3'
 set container name speedtest-exporter memory '0'
