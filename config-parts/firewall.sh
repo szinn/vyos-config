@@ -10,8 +10,8 @@ set firewall group address-group unifi-controller address '10.0.5.2'
 set firewall group address-group unifi-unvr address '10.0.0.32'
 
 # k8s cluster ingress
-set firewall group address-group k8s_main_ingress address '10.11.1.2'
-set firewall group address-group k8s_staging_ingress address '10.12.1.2'
+set firewall group address-group k8s-main-ingress address '10.11.1.2'
+set firewall group address-group k8s-staging-ingress address '10.12.1.2'
 
 set firewall group address-group plex-server description 'Plex Server'
 set firewall group address-group plex-server address '10.11.1.14'
@@ -38,7 +38,17 @@ set firewall group port-group prometheus-metrics port 9100 # node-exporter
 set firewall group port-group prometheus-metrics port 9342 # frr-exporter
 set firewall group port-group prometheus-metrics port 9273 # vyos
 
+# Sonos Music Library
+set firewall group address-group sonos-library address '10.11.1.15'
+
 # Sonos Controllers
+set firewall group address-group sonos-controllers address '10.11.0.16'  # Homelab
+set firewall group address-group sonos-controllers address '10.11.0.17'
+set firewall group address-group sonos-controllers address '10.11.0.18'
+set firewall group address-group sonos-controllers address '10.11.0.19'
+set firewall group address-group sonos-controllers address '10.11.0.20'
+set firewall group address-group sonos-controllers address '10.11.0.21'
+set firewall group address-group sonos-controllers address '10.11.1.15'
 set firewall group address-group sonos-controllers address '10.20.0.16'  # Scotte
 set firewall group address-group sonos-controllers address '10.20.0.17'
 set firewall group address-group sonos-controllers address '10.20.0.18'
