@@ -165,7 +165,7 @@ set container name udp-broadcast-relay-mdns shared-memory '0'
 # udp-broadcast-relay-sonos
 set container name udp-broadcast-relay-sonos allow-host-networks
 set container name udp-broadcast-relay-sonos cap-add 'net-raw'
-set container name udp-broadcast-relay-sonos environment CFG_DEV value 'bond0.20;bond0.99'
+set container name udp-broadcast-relay-sonos environment CFG_DEV value 'bond0.20;bond0.98;bond0.99'
 set container name udp-broadcast-relay-sonos environment CFG_ID value '1'
 set container name udp-broadcast-relay-sonos environment CFG_MULTICAST value '239.255.255.250'
 set container name udp-broadcast-relay-sonos environment CFG_PORT value '1900'
