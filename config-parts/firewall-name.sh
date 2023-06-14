@@ -354,6 +354,9 @@ set firewall name homelab-lan enable-default-log
 set firewall name homelab-lan rule 140 description 'Rule: accept icmp'
 set firewall name homelab-lan rule 140 action 'accept'
 set firewall name homelab-lan rule 140 protocol 'icmp'
+set firewall name homelab-lan rule 500 description 'Rule: accept rtsp'
+set firewall name homelab-lan rule 500 action 'accept'
+set firewall name homelab-lan rule 500 destination group address-group 'unifi-unvr'
 
 # From HOMELAB to LOCAL
 set firewall name homelab-local description 'From HOMELAB to LOCAL'
