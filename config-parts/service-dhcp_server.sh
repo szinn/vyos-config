@@ -159,7 +159,7 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad ip-address '10.20.0.18'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping scotte-ipad mac-address '4c:2e:b4:7d:90:76'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin ip-address '10.20.0.19'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin mac-address '00:23:a4:06:1a:e8'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin mac-address '64:4b:f0:38:77:85'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-wifi ip-address '10.20.0.20'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-wifi mac-address 'f4:d4:88:5d:e7:21'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 ip-address '10.20.0.28'
