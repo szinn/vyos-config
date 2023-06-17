@@ -503,7 +503,11 @@ set firewall name staging-wan default-action 'accept'
 
 # From TRUSTED to LAN
 set firewall name trusted-lan description 'From TRUSTED to LAN'
-set firewall name trusted-lan default-action 'accept'
+set firewall name trusted-lan default-action 'drop'
+set firewall name trusted-lan enable-default-log
+set firewall name trusted-lan rule 520 description 'Rule: accept scotte'
+set firewall name trusted-lan rule 520 action 'accept'
+set firewall name trusted-lan rule 520 source group address-group 'scotte-devices'
 
 # From TRUSTED to LOCAL
 set firewall name trusted-local description 'From TRUSTED to LOCAL'
@@ -559,15 +563,33 @@ set firewall name trusted-services default-action 'accept'
 
 # From TRUSTED to SERVERS
 set firewall name trusted-servers description 'From TRUSTED to SERVERS'
-set firewall name trusted-servers default-action 'accept'
+set firewall name trusted-servers default-action 'drop'
+set firewall name trusted-servers enable-default-log
+set firewall name trusted-servers rule 520 description 'Rule: accept scotte'
+set firewall name trusted-servers rule 520 action 'accept'
+set firewall name trusted-servers rule 520 source group address-group 'scotte-devices'
+set firewall name trusted-servers rule 530 description 'Rule: accept sophie'
+set firewall name trusted-servers rule 530 action 'accept'
+set firewall name trusted-servers rule 530 source group address-group 'sophie-devices'
 
 # From TRUSTED to HOMELAB
 set firewall name trusted-homelab description 'From TRUSTED to HOMELAB'
-set firewall name trusted-homelab default-action 'accept'
+set firewall name trusted-homelab default-action 'drop'
+set firewall name trusted-homelab enable-default-log
+set firewall name trusted-homelab rule 520 description 'Rule: accept scotte'
+set firewall name trusted-homelab rule 520 action 'accept'
+set firewall name trusted-homelab rule 520 source group address-group 'scotte-devices'
+set firewall name trusted-homelab rule 530 description 'Rule: accept sophie'
+set firewall name trusted-homelab rule 530 action 'accept'
+set firewall name trusted-homelab rule 530 source group address-group 'sophie-devices'
 
 # From TRUSTED to STAGING
 set firewall name trusted-staging description 'From TRUSTED to STAGING'
-set firewall name trusted-staging default-action 'accept'
+set firewall name trusted-staging default-action 'drop'
+set firewall name trusted-staging enable-default-log
+set firewall name trusted-staging rule 520 description 'Rule: accept scotte'
+set firewall name trusted-staging rule 520 action 'accept'
+set firewall name trusted-staging rule 520 source group address-group 'scotte-devices'
 
 # From TRUSTED to IOT
 set firewall name trusted-iot description 'From TRUSTED to IOT'
@@ -642,9 +664,9 @@ set firewall name iot-servers enable-default-log
 set firewall name iot-homelab description 'From IOT to HOMELAB'
 set firewall name iot-homelab default-action 'drop'
 set firewall name iot-homelab enable-default-log
-set firewall name iot-homelab rule 370 description 'Rule: accept plex iot users'
+set firewall name iot-homelab rule 370 description 'Rule: accept plex users'
 set firewall name iot-homelab rule 370 action 'accept'
-set firewall name iot-homelab rule 370 source group address-group 'iot-plex-users'
+set firewall name iot-homelab rule 370 source group address-group 'plex-users'
 set firewall name iot-homelab rule 370 destination group address-group 'plex-server'
 set firewall name iot-homelab rule 370 destination port '32400'
 set firewall name iot-homelab rule 370 protocol 'tcp'
@@ -763,6 +785,12 @@ set firewall name guest-servers enable-default-log
 set firewall name guest-homelab description 'From GUEST to HOMELAB'
 set firewall name guest-homelab default-action 'drop'
 set firewall name guest-homelab enable-default-log
+set firewall name guest-homelab rule 370 description 'Rule: accept plex users'
+set firewall name guest-homelab rule 370 action 'accept'
+set firewall name guest-homelab rule 370 source group address-group 'plex-users'
+set firewall name guest-homelab rule 370 destination group address-group 'plex-server'
+set firewall name guest-homelab rule 370 destination port '32400'
+set firewall name guest-homelab rule 370 protocol 'tcp'
 
 # From GUEST to STAGING
 set firewall name guest-staging description 'From GUEST to STAGING'

@@ -9,9 +9,9 @@ set firewall state-policy related action 'accept'
 set firewall group address-group unifi-controller address '10.0.5.2'
 set firewall group address-group unifi-unvr address '10.0.0.32'
 
-# k8s cluster ingress
-set firewall group address-group k8s-main-ingress address '10.11.1.2'
-set firewall group address-group k8s-staging-ingress address '10.12.1.2'
+# k8s cluster services
+set firewall group network-group k8s-main network '10.11.1.0/24'
+set firewall group network-group k8s-staging network '10.12.1.0/24'
 
 set firewall group address-group plex-server description 'Plex Server'
 set firewall group address-group plex-server address '10.11.1.14'
@@ -28,9 +28,14 @@ set firewall group port-group scanner-outbound-ports port 52217
 set firewall group port-group scanner-outbound-ports port 53220
 set firewall group port-group scanner-outbound-ports port 55265
 
-# Unifi IoT Devices
-set firewall group address-group iot-plex-users description 'Plex IoT users'
-set firewall group address-group iot-plex-users address '192.168.1.52'
+# Plex users
+set firewall group address-group plex-users description 'Plex IoT users'
+set firewall group address-group plex-users address '192.168.1.52'
+set firewall group address-group plex-users address '192.168.2.64' # Scotte
+# set firewall group address-group plex-users address '192.168.2.65' # Ben iPhone
+# set firewall group address-group plex-users address '192.168.2.66' # Ben Laptop
+# set firewall group address-group plex-users address '192.168.2.67' # Molly iPhone
+# set firewall group address-group plex-users address '192.168.2.68' # Molly Laptop
 
 # Prometheus ports for metrics
 set firewall group port-group prometheus-metrics port 9798 # speedtest
@@ -62,7 +67,7 @@ set firewall group address-group sonos-controllers address '10.20.0.34'
 set firewall group address-group sonos-controllers address '10.20.0.35'
 set firewall group address-group sonos-controllers address '10.20.0.36'
 set firewall group address-group sonos-controllers address '192.168.2.64'  # Scotte
-set firewall group address-group sonos-controllers address '192.168.2.65'  # Ben
+# set firewall group address-group sonos-controllers address '192.168.2.65'  # Ben iPhone
 
 # Sonos Players
 set firewall group address-group sonos-players address '192.168.1.128'
@@ -76,3 +81,20 @@ set firewall group address-group sonos-players address '192.168.1.135'
 set firewall group address-group sonos-players address '192.168.1.136'
 set firewall group address-group sonos-players address '192.168.1.137'
 set firewall group address-group sonos-players address '192.168.1.138'
+
+# Scotte devices
+set firewall group address-group scotte-devices address '10.20.0.16'
+set firewall group address-group scotte-devices address '10.20.0.17'
+set firewall group address-group scotte-devices address '10.20.0.18'
+set firewall group address-group scotte-devices address '10.20.0.19'
+set firewall group address-group scotte-devices address '10.20.0.20'
+set firewall group address-group scotte-devices address '10.20.1.2'
+set firewall group address-group scotte-devices address '10.20.1.3'
+set firewall group address-group scotte-devices address '10.20.1.4'
+
+# Sophie devices
+set firewall group address-group sophie-devices address '10.20.0.32'
+set firewall group address-group sophie-devices address '10.20.0.33'
+set firewall group address-group sophie-devices address '10.20.0.34'
+set firewall group address-group sophie-devices address '10.20.0.35'
+set firewall group address-group sophie-devices address '10.20.0.36'

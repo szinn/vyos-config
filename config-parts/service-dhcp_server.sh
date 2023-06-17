@@ -290,6 +290,10 @@ set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 
 # Scotte's devices
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping scotte-iphone ip-address '192.168.2.64'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping scotte-iphone mac-address '7c:ec:b1:ab:9a:c2'
+# 192.168.2.65 Ben iPhone
+# 192.168.2.66 Ben Laptop
+# 192.168.2.67 Molly iPhone
+# 192.168.2.68 Molly Laptop
 
 # VyOS Proxmox Canary
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping vyos-canary-99 ip-address '192.168.2.240'
