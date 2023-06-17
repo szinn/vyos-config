@@ -283,7 +283,7 @@ set service dhcp-server shared-network-name GUEST authoritative
 set service dhcp-server shared-network-name GUEST ping-check
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 default-router '192.168.2.1'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 lease '86400'
-set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 name-server '1.1.1.1'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 name-server '10.0.5.4'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 start '192.168.2.208'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 range 0 stop '192.168.2.239'
 
