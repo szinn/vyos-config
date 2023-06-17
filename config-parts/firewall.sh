@@ -70,6 +70,7 @@ set firewall group address-group sonos-controllers address '192.168.2.64'  # Sco
 # set firewall group address-group sonos-controllers address '192.168.2.65'  # Ben iPhone
 
 # Sonos Players
+set firewall group address-group sonos-players address '192.168.1.52'  # SonyTV
 set firewall group address-group sonos-players address '192.168.1.128'
 set firewall group address-group sonos-players address '192.168.1.129'
 set firewall group address-group sonos-players address '192.168.1.130'
