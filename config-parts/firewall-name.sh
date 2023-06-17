@@ -508,6 +508,9 @@ set firewall name trusted-lan enable-default-log
 set firewall name trusted-lan rule 520 description 'Rule: accept scotte'
 set firewall name trusted-lan rule 520 action 'accept'
 set firewall name trusted-lan rule 520 source group address-group 'scotte-devices'
+set firewall name trusted-lan rule 540 description 'Rule: accept cameras'
+set firewall name trusted-lan rule 540 action 'accept'
+set firewall name trusted-lan rule 540 source group address-group 'unifi-cameras'
 
 # From TRUSTED to LOCAL
 set firewall name trusted-local description 'From TRUSTED to LOCAL'
