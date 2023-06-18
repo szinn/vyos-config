@@ -778,6 +778,10 @@ set firewall name guest-local rule 450 protocol 'udp'
 set firewall name guest-services description 'From GUEST to SERVICES'
 set firewall name guest-services default-action 'drop'
 set firewall name guest-services enable-default-log
+set firewall name guest-services rule 170 description 'Rule: accept dns'
+set firewall name guest-services rule 170 action 'accept'
+set firewall name guest-services rule 170 destination port 'domain,domain-s'
+set firewall name guest-services rule 170 protocol 'tcp_udp'
 
 # From GUEST to SERVERS
 set firewall name guest-servers description 'From GUEST to SERVERS'
