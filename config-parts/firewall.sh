@@ -36,7 +36,7 @@ set firewall group port-group scanner-outbound-ports port 55265
 # Plex users
 set firewall group address-group plex-users description 'Plex users'
 set firewall group address-group plex-users address '192.168.1.52'
-set firewall group address-group plex-users address '192.168.2.64-192.168.2.66'
+set firewall group address-group plex-users address "${GUEST_MEDIA_USERS}"
 
 # Prometheus ports for metrics
 set firewall group port-group prometheus-metrics port 9798 # speedtest
@@ -54,7 +54,7 @@ set firewall group address-group sonos-controllers address '10.20.0.16-10.20.0.2
 set firewall group address-group sonos-controllers address '10.20.0.30'
 set firewall group address-group sonos-controllers address '10.20.0.31'
 set firewall group address-group sonos-controllers address '10.20.0.32-10.20.0.36' # Sophie
-set firewall group address-group sonos-controllers address '192.168.2.64-192.168.2.66' # Guests
+set firewall group address-group sonos-controllers address "${GUEST_MEDIA_USERS}"
 
 # Sonos Players
 set firewall group address-group sonos-players address '192.168.1.52' # SonyTV

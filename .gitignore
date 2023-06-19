@@ -8,6 +8,7 @@
 !/apply-config.sh
 !/LICENSE
 !/secrets.sops.env
+!/settings.env
 
 # VyOS config
 !bootstrap/

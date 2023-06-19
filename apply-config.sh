@@ -34,6 +34,9 @@ if [ -f "/config/secrets.sops.env" ]; then
     export "${variableDeclaration//[$'\r\n']/}" # The substitution removes the line breaks
   done
 fi
+if [ -f "/config/settings.env" ]; then
+  source /config/settings.env
+fi
 
 # Apply environment to container files
 restart_containers=""
