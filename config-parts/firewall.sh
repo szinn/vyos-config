@@ -36,9 +36,7 @@ set firewall group port-group scanner-outbound-ports port 55265
 # Plex users
 set firewall group address-group plex-users description 'Plex users'
 set firewall group address-group plex-users address '192.168.1.52'
-set firewall group address-group plex-users address '192.168.2.64' # Scotte iPhone
-set firewall group address-group plex-users address '192.168.2.65' # Julia iPhone
-set firewall group address-group plex-users address '192.168.2.66' # Charles laptop
+set firewall group address-group plex-users address '192.168.2.64-192.168.2.66'
 
 # Prometheus ports for metrics
 set firewall group port-group prometheus-metrics port 9798 # speedtest
@@ -50,56 +48,21 @@ set firewall group port-group prometheus-metrics port 9273 # vyos
 set firewall group address-group sonos-library address '10.11.1.15'
 
 # Sonos Controllers
-set firewall group address-group sonos-controllers address '10.11.0.16' # Homelab
-set firewall group address-group sonos-controllers address '10.11.0.17'
-set firewall group address-group sonos-controllers address '10.11.0.18'
-set firewall group address-group sonos-controllers address '10.11.0.19'
-set firewall group address-group sonos-controllers address '10.11.0.20'
-set firewall group address-group sonos-controllers address '10.11.0.21'
+set firewall group address-group sonos-controllers address '10.11.0.16-10.11.0.21' # Homelab
 set firewall group address-group sonos-controllers address '10.11.1.15'
-set firewall group address-group sonos-controllers address '10.20.0.16' # Scotte
-set firewall group address-group sonos-controllers address '10.20.0.17'
-set firewall group address-group sonos-controllers address '10.20.0.18'
-set firewall group address-group sonos-controllers address '10.20.0.19'
-set firewall group address-group sonos-controllers address '10.20.0.20'
+set firewall group address-group sonos-controllers address '10.20.0.16-10.20.0.20' # Scotte
 set firewall group address-group sonos-controllers address '10.20.0.30'
 set firewall group address-group sonos-controllers address '10.20.0.31'
-set firewall group address-group sonos-controllers address '10.20.0.32' # Sophie
-set firewall group address-group sonos-controllers address '10.20.0.33'
-set firewall group address-group sonos-controllers address '10.20.0.34'
-set firewall group address-group sonos-controllers address '10.20.0.35'
-set firewall group address-group sonos-controllers address '10.20.0.36'
-set firewall group address-group sonos-controllers address '192.168.2.64' # Scotte iPhone
-set firewall group address-group sonos-controllers address '192.168.2.65' # Julia iPhone
-set firewall group address-group sonos-controllers address '192.168.2.66' # Charles laptop
+set firewall group address-group sonos-controllers address '10.20.0.32-10.20.0.36' # Sophie
+set firewall group address-group sonos-controllers address '192.168.2.64-192.168.2.66' # Guests
 
 # Sonos Players
 set firewall group address-group sonos-players address '192.168.1.52' # SonyTV
-set firewall group address-group sonos-players address '192.168.1.128'
-set firewall group address-group sonos-players address '192.168.1.129'
-set firewall group address-group sonos-players address '192.168.1.130'
-set firewall group address-group sonos-players address '192.168.1.131'
-set firewall group address-group sonos-players address '192.168.1.132'
-set firewall group address-group sonos-players address '192.168.1.133'
-set firewall group address-group sonos-players address '192.168.1.134'
-set firewall group address-group sonos-players address '192.168.1.135'
-set firewall group address-group sonos-players address '192.168.1.136'
-set firewall group address-group sonos-players address '192.168.1.137'
-set firewall group address-group sonos-players address '192.168.1.138'
+set firewall group address-group sonos-players address '192.168.1.128-192.168.1.138'
 
 # Scotte devices
-set firewall group address-group scotte-devices address '10.20.0.16'
-set firewall group address-group scotte-devices address '10.20.0.17'
-set firewall group address-group scotte-devices address '10.20.0.18'
-set firewall group address-group scotte-devices address '10.20.0.19'
-set firewall group address-group scotte-devices address '10.20.0.20'
-set firewall group address-group scotte-devices address '10.20.1.2'
-set firewall group address-group scotte-devices address '10.20.1.3'
-set firewall group address-group scotte-devices address '10.20.1.4'
+set firewall group address-group scotte-devices address '10.20.0.16-10.20.0.20'
+set firewall group address-group scotte-devices address '10.20.1.2-10.20.1.4'
 
 # Sophie devices
-set firewall group address-group sophie-devices address '10.20.0.32'
-set firewall group address-group sophie-devices address '10.20.0.33'
-set firewall group address-group sophie-devices address '10.20.0.34'
-set firewall group address-group sophie-devices address '10.20.0.35'
-set firewall group address-group sophie-devices address '10.20.0.36'
+set firewall group address-group sophie-devices address '10.20.0.32-10.20.0.36'
