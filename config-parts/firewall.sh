@@ -19,7 +19,7 @@ set firewall group address-group plex-server address '10.11.1.14'
 
 # Unifi cameras
 set firewall group address-group unifi-cameras description 'Unifi Cameras'
-set firewall group address-group unifi-cameras address '10.10.0.8'
+set firewall group address-group unifi-cameras address '10.20.0.8'
 
 # Scanner client machines
 set firewall group address-group scanner-clients address '10.20.0.19'
