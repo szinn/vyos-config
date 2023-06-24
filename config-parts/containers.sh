@@ -8,7 +8,7 @@ set container network services prefix '10.0.5.0/24'
 # unifi
 set container name unifi environment TZ value 'America/Toronto'
 set container name unifi environment BIND_PRIV value 'true'
-set container name unifi image 'ghcr.io/goofball222/unifi:7.4-beta'
+set container name unifi image 'ghcr.io/goofball222/unifi:7.4.156'
 set container name unifi memory '0'
 set container name unifi network services address '10.0.5.2'
 set container name unifi restart 'on-failure'
