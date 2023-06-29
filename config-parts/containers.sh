@@ -176,7 +176,7 @@ set container name udp-broadcast-relay-sonos restart 'on-failure'
 set container name udp-broadcast-relay-sonos shared-memory '0'
 
 # speedtest-exporter
-set container name speedtest-exporter image 'ghcr.io/miguelndecarvalho/speedtest-exporter:v3.5.3'
+set container name speedtest-exporter image 'ghcr.io/miguelndecarvalho/speedtest-exporter:v3.5.4'
 set container name speedtest-exporter memory '0'
 set container name speedtest-exporter allow-host-networks
 set container name speedtest-exporter restart 'on-failure'
