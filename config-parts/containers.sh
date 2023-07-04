@@ -130,7 +130,7 @@ set container name pihole volume certificate-pem destination '/etc/lighttpd/cert
 set container name pihole volume certificate-pem mode 'ro'
 
 # haproxy - main cluster
-set container name main-k8s-api image 'docker.io/library/haproxy:2.8.0'
+set container name main-k8s-api image 'docker.io/library/haproxy:2.8.1'
 set container name main-k8s-api memory '0'
 set container name main-k8s-api network services address '10.0.5.10'
 set container name main-k8s-api restart 'on-failure'
@@ -140,7 +140,7 @@ set container name main-k8s-api volume config destination '/usr/local/etc/haprox
 set container name main-k8s-api volume config mode 'ro'
 
 # haproxy - staging cluster
-set container name staging-k8s-api image 'docker.io/library/haproxy:2.8.0'
+set container name staging-k8s-api image 'docker.io/library/haproxy:2.8.1'
 set container name staging-k8s-api memory '0'
 set container name staging-k8s-api network services address '10.0.5.11'
 set container name staging-k8s-api restart 'on-failure'
