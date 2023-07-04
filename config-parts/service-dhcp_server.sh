@@ -198,8 +198,8 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 st
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 range 0 stop '192.168.1.239'
 
 # IOT devices
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm ip-address '192.168.1.10'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm mac-address '84:c2:e4:26:4e:8c'
+# set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm ip-address '192.168.1.10'  # Address is hard-coded
+# set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping kvm mac-address '84:c2:e4:26:4e:8c'
 
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 ip-address '192.168.1.25'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping wyze-camera-1 mac-address '2c:aa:8e:6e:90:d3'
