@@ -275,6 +275,9 @@ set firewall name servers-lan enable-default-log
 set firewall name servers-lan rule 140 description 'Rule: accept icmp'
 set firewall name servers-lan rule 140 action 'accept'
 set firewall name servers-lan rule 140 protocol 'icmp'
+set firewall name servers-lan rule 500 description 'Rule: accept rtsp'
+set firewall name servers-lan rule 500 action 'accept'
+set firewall name servers-lan rule 500 destination group address-group 'unifi-unvr'
 
 # From SERVERS to LOCAL
 set firewall name servers-local description 'From SERVERS to LOCAL'
