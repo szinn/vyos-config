@@ -3,4 +3,3 @@
 
 # Track certain files and directories
 !.gitignore
-!adlists.list
