@@ -5,7 +5,7 @@
 
 # Add dotfiles for home directory
 if [ -d "/home/vyos" ]; then
-	tee /home/vyos/.gitconfig <<END >/dev/null
+  tee /home/vyos/.gitconfig <<END >/dev/null
 [init]
   defaultBranch = main
 [safe]
@@ -16,14 +16,12 @@ if [ -d "/home/vyos" ]; then
 [pull]
   rebase = true
 END
-	chown vyos:users /home/vyos/.gitconfig
-	#
-	tee -a /home/vyos/.bash_aliases <<END >/dev/null
+  chown vyos:users /home/vyos/.gitconfig
+  #
+  tee -a /home/vyos/.bash_aliases <<END >/dev/null
 export SOPS_AGE_KEY_FILE=/config/secrets/age.key
 export VISUAL=vi
 export EDITOR=vi
 END
-	chown vyos:users /home/vyos/.bash_aliases
+  chown vyos:users /home/vyos/.bash_aliases
 fi
-
-#
