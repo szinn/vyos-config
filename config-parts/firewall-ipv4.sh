@@ -1,6 +1,101 @@
 #!/bin/vbash
 # shellcheck disable=all
 
+
+# Configure forward filter:
+#   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> accept
+#   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> jump
+#   forward_rule <rule_number> ignored <outbound_interface_group> drop
+# 
+# interface_group do not have IG_ prefix - that is substituted
+#
+# jump target is <inbound>-<outbound> named rule
+#
+forward_rule_number=101
+function forward_rule {
+  rule=$((forward_rule_number))
+  inbound=$2
+  outbound=$3
+  action=$4
+
+  case $action in
+    accept)
+      set firewall ipv4 forward filter rule $rule action $action
+      set firewall ipv4 forward filter rule $rule inbound-interface interface-group IG_$inbound
+      set firewall ipv4 forward filter rule $rule outbound-interface interface-group IG_$outbound
+      ;;
+    drop)
+      set firewall ipv4 forward filter rule $rule action $action
+      set firewall ipv4 forward filter rule $rule outbound-interface interface-group IG_$outbound
+      ;;
+    jump)
+      set firewall ipv4 forward filter rule $rule action $action
+      set firewall ipv4 forward filter rule $rule inbound-interface interface-group IG_$inbound
+      set firewall ipv4 forward filter rule $rule outbound-interface interface-group IG_$outbound
+      set firewall ipv4 forward filter rule $rule jump-target ${inbound}-${outbound}
+      ;;
+  esac
+
+  forward_rule_number=$((forward_rule_number+5))
+}
+
+# Configure input filter
+#   input_rule <rule_number> <inbound_interface_group> jump
+#   input_rule <rule_number> any drop
+# 
+# interface_group do not have IG_ prefix - that is substituted
+#
+# jump target is <inbound>-local named rule
+#
+input_rule_number=101
+function input_rule {
+  rule=$((input_rule_number))
+  inbound=$2
+  action=$3
+
+  case $action in
+    drop)
+      set firewall ipv4 input filter rule $rule action $action
+      ;;
+    jump)
+      set firewall ipv4 input filter rule $rule action $action
+      set firewall ipv4 input filter rule $rule inbound-interface interface-group IG_$inbound
+      set firewall ipv4 input filter rule $rule jump-target ${inbound}-local
+      ;;
+  esac
+
+  input_rule_number=$((input_rule_number+5))
+}
+
+# Configure output filter
+#   output_rule <rule_number> <outbound_interface_group> jump
+#   output_rule <rule_number> any drop
+# 
+# interface_group do not have IG_ prefix - that is substituted
+#
+# jump target is local-<outbound> named rule
+#
+output_rule_number=101
+function output_rule {
+  rule=$((output_rule_number))
+  outbound=$2
+  action=$3
+
+  case $action in
+    drop)
+      set firewall ipv4 output filter rule $rule action $action
+      ;;
+    jump)
+      set firewall ipv4 output filter rule $rule action $action
+      set firewall ipv4 output filter rule $rule outbound-interface interface-group IG_$outbound
+      set firewall ipv4 output filter rule $rule jump-target local-$outbound
+      ;;
+  esac
+
+  output_rule_number=$((output_rule_number+5))
+}
+
+# Default forward policy
 set firewall ipv4 forward filter default-action 'accept'
 set firewall ipv4 forward filter rule 1 action 'accept'
 set firewall ipv4 forward filter rule 1 state established 'enable'
@@ -8,348 +103,116 @@ set firewall ipv4 forward filter rule 2 action 'drop'
 set firewall ipv4 forward filter rule 2 state invalid 'enable'
 set firewall ipv4 forward filter rule 3 action 'accept'
 set firewall ipv4 forward filter rule 3 state related 'enable'
-set firewall ipv4 forward filter rule 101 action 'accept'
-set firewall ipv4 forward filter rule 101 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 101 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 106 action 'jump'
-set firewall ipv4 forward filter rule 106 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 106 jump-target 'homelab-guest'
-set firewall ipv4 forward filter rule 106 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 111 action 'jump'
-set firewall ipv4 forward filter rule 111 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 111 jump-target 'iot-guest'
-set firewall ipv4 forward filter rule 111 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 116 action 'jump'
-set firewall ipv4 forward filter rule 116 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 116 jump-target 'lan-guest'
-set firewall ipv4 forward filter rule 116 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 121 action 'jump'
-set firewall ipv4 forward filter rule 121 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 121 jump-target 'servers-guest'
-set firewall ipv4 forward filter rule 121 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 126 action 'jump'
-set firewall ipv4 forward filter rule 126 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 126 jump-target 'services-guest'
-set firewall ipv4 forward filter rule 126 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 131 action 'jump'
-set firewall ipv4 forward filter rule 131 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 131 jump-target 'staging-guest'
-set firewall ipv4 forward filter rule 131 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 136 action 'jump'
-set firewall ipv4 forward filter rule 136 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 136 jump-target 'trusted-guest'
-set firewall ipv4 forward filter rule 136 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 141 action 'jump'
-set firewall ipv4 forward filter rule 141 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 141 jump-target 'wan-guest'
-set firewall ipv4 forward filter rule 141 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 146 action 'drop'
-set firewall ipv4 forward filter rule 146 description 'zone_guest default-action'
-set firewall ipv4 forward filter rule 146 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 151 action 'accept'
-set firewall ipv4 forward filter rule 151 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 151 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 156 action 'jump'
-set firewall ipv4 forward filter rule 156 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 156 jump-target 'guest-homelab'
-set firewall ipv4 forward filter rule 156 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 161 action 'jump'
-set firewall ipv4 forward filter rule 161 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 161 jump-target 'iot-homelab'
-set firewall ipv4 forward filter rule 161 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 166 action 'jump'
-set firewall ipv4 forward filter rule 166 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 166 jump-target 'lan-homelab'
-set firewall ipv4 forward filter rule 166 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 171 action 'jump'
-set firewall ipv4 forward filter rule 171 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 171 jump-target 'servers-homelab'
-set firewall ipv4 forward filter rule 171 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 176 action 'jump'
-set firewall ipv4 forward filter rule 176 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 176 jump-target 'services-homelab'
-set firewall ipv4 forward filter rule 176 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 181 action 'jump'
-set firewall ipv4 forward filter rule 181 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 181 jump-target 'staging-homelab'
-set firewall ipv4 forward filter rule 181 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 186 action 'jump'
-set firewall ipv4 forward filter rule 186 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 186 jump-target 'trusted-homelab'
-set firewall ipv4 forward filter rule 186 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 191 action 'jump'
-set firewall ipv4 forward filter rule 191 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 191 jump-target 'wan-homelab'
-set firewall ipv4 forward filter rule 191 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 196 action 'drop'
-set firewall ipv4 forward filter rule 196 description 'zone_homelab default-action'
-set firewall ipv4 forward filter rule 196 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 201 action 'accept'
-set firewall ipv4 forward filter rule 201 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 201 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 206 action 'jump'
-set firewall ipv4 forward filter rule 206 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 206 jump-target 'guest-iot'
-set firewall ipv4 forward filter rule 206 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 211 action 'jump'
-set firewall ipv4 forward filter rule 211 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 211 jump-target 'homelab-iot'
-set firewall ipv4 forward filter rule 211 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 216 action 'jump'
-set firewall ipv4 forward filter rule 216 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 216 jump-target 'lan-iot'
-set firewall ipv4 forward filter rule 216 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 221 action 'jump'
-set firewall ipv4 forward filter rule 221 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 221 jump-target 'servers-iot'
-set firewall ipv4 forward filter rule 221 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 226 action 'jump'
-set firewall ipv4 forward filter rule 226 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 226 jump-target 'services-iot'
-set firewall ipv4 forward filter rule 226 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 231 action 'jump'
-set firewall ipv4 forward filter rule 231 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 231 jump-target 'staging-iot'
-set firewall ipv4 forward filter rule 231 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 236 action 'jump'
-set firewall ipv4 forward filter rule 236 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 236 jump-target 'trusted-iot'
-set firewall ipv4 forward filter rule 236 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 241 action 'jump'
-set firewall ipv4 forward filter rule 241 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 241 jump-target 'wan-iot'
-set firewall ipv4 forward filter rule 241 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 246 action 'drop'
-set firewall ipv4 forward filter rule 246 description 'zone_iot default-action'
-set firewall ipv4 forward filter rule 246 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 251 action 'accept'
-set firewall ipv4 forward filter rule 251 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 251 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 256 action 'jump'
-set firewall ipv4 forward filter rule 256 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 256 jump-target 'guest-lan'
-set firewall ipv4 forward filter rule 256 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 261 action 'jump'
-set firewall ipv4 forward filter rule 261 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 261 jump-target 'homelab-lan'
-set firewall ipv4 forward filter rule 261 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 266 action 'jump'
-set firewall ipv4 forward filter rule 266 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 266 jump-target 'iot-lan'
-set firewall ipv4 forward filter rule 266 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 271 action 'jump'
-set firewall ipv4 forward filter rule 271 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 271 jump-target 'servers-lan'
-set firewall ipv4 forward filter rule 271 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 276 action 'jump'
-set firewall ipv4 forward filter rule 276 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 276 jump-target 'services-lan'
-set firewall ipv4 forward filter rule 276 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 281 action 'jump'
-set firewall ipv4 forward filter rule 281 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 281 jump-target 'staging-lan'
-set firewall ipv4 forward filter rule 281 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 286 action 'jump'
-set firewall ipv4 forward filter rule 286 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 286 jump-target 'trusted-lan'
-set firewall ipv4 forward filter rule 286 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 291 action 'jump'
-set firewall ipv4 forward filter rule 291 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 291 jump-target 'wan-lan'
-set firewall ipv4 forward filter rule 291 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 296 action 'drop'
-set firewall ipv4 forward filter rule 296 description 'zone_lan default-action'
-set firewall ipv4 forward filter rule 296 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 301 action 'accept'
-set firewall ipv4 forward filter rule 301 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 301 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 306 action 'jump'
-set firewall ipv4 forward filter rule 306 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 306 jump-target 'guest-servers'
-set firewall ipv4 forward filter rule 306 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 311 action 'jump'
-set firewall ipv4 forward filter rule 311 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 311 jump-target 'homelab-servers'
-set firewall ipv4 forward filter rule 311 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 316 action 'jump'
-set firewall ipv4 forward filter rule 316 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 316 jump-target 'iot-servers'
-set firewall ipv4 forward filter rule 316 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 321 action 'jump'
-set firewall ipv4 forward filter rule 321 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 321 jump-target 'lan-servers'
-set firewall ipv4 forward filter rule 321 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 326 action 'jump'
-set firewall ipv4 forward filter rule 326 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 326 jump-target 'services-servers'
-set firewall ipv4 forward filter rule 326 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 331 action 'jump'
-set firewall ipv4 forward filter rule 331 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 331 jump-target 'staging-servers'
-set firewall ipv4 forward filter rule 331 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 336 action 'jump'
-set firewall ipv4 forward filter rule 336 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 336 jump-target 'trusted-servers'
-set firewall ipv4 forward filter rule 336 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 341 action 'jump'
-set firewall ipv4 forward filter rule 341 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 341 jump-target 'wan-servers'
-set firewall ipv4 forward filter rule 341 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 346 action 'drop'
-set firewall ipv4 forward filter rule 346 description 'zone_servers default-action'
-set firewall ipv4 forward filter rule 346 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 351 action 'accept'
-set firewall ipv4 forward filter rule 351 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 351 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 356 action 'jump'
-set firewall ipv4 forward filter rule 356 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 356 jump-target 'guest-services'
-set firewall ipv4 forward filter rule 356 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 361 action 'jump'
-set firewall ipv4 forward filter rule 361 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 361 jump-target 'homelab-services'
-set firewall ipv4 forward filter rule 361 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 366 action 'jump'
-set firewall ipv4 forward filter rule 366 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 366 jump-target 'iot-services'
-set firewall ipv4 forward filter rule 366 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 371 action 'jump'
-set firewall ipv4 forward filter rule 371 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 371 jump-target 'lan-services'
-set firewall ipv4 forward filter rule 371 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 376 action 'jump'
-set firewall ipv4 forward filter rule 376 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 376 jump-target 'servers-services'
-set firewall ipv4 forward filter rule 376 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 381 action 'jump'
-set firewall ipv4 forward filter rule 381 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 381 jump-target 'staging-services'
-set firewall ipv4 forward filter rule 381 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 386 action 'jump'
-set firewall ipv4 forward filter rule 386 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 386 jump-target 'trusted-services'
-set firewall ipv4 forward filter rule 386 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 391 action 'jump'
-set firewall ipv4 forward filter rule 391 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 391 jump-target 'wan-services'
-set firewall ipv4 forward filter rule 391 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 396 action 'drop'
-set firewall ipv4 forward filter rule 396 description 'zone_services default-action'
-set firewall ipv4 forward filter rule 396 outbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 401 action 'accept'
-set firewall ipv4 forward filter rule 401 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 401 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 406 action 'jump'
-set firewall ipv4 forward filter rule 406 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 406 jump-target 'guest-staging'
-set firewall ipv4 forward filter rule 406 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 411 action 'jump'
-set firewall ipv4 forward filter rule 411 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 411 jump-target 'homelab-staging'
-set firewall ipv4 forward filter rule 411 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 416 action 'jump'
-set firewall ipv4 forward filter rule 416 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 416 jump-target 'iot-staging'
-set firewall ipv4 forward filter rule 416 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 421 action 'jump'
-set firewall ipv4 forward filter rule 421 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 421 jump-target 'lan-staging'
-set firewall ipv4 forward filter rule 421 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 426 action 'jump'
-set firewall ipv4 forward filter rule 426 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 426 jump-target 'servers-staging'
-set firewall ipv4 forward filter rule 426 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 431 action 'jump'
-set firewall ipv4 forward filter rule 431 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 431 jump-target 'services-staging'
-set firewall ipv4 forward filter rule 431 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 436 action 'jump'
-set firewall ipv4 forward filter rule 436 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 436 jump-target 'trusted-staging'
-set firewall ipv4 forward filter rule 436 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 441 action 'jump'
-set firewall ipv4 forward filter rule 441 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 441 jump-target 'wan-staging'
-set firewall ipv4 forward filter rule 441 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 446 action 'drop'
-set firewall ipv4 forward filter rule 446 description 'zone_staging default-action'
-set firewall ipv4 forward filter rule 446 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 451 action 'accept'
-set firewall ipv4 forward filter rule 451 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 451 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 456 action 'jump'
-set firewall ipv4 forward filter rule 456 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 456 jump-target 'guest-trusted'
-set firewall ipv4 forward filter rule 456 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 461 action 'jump'
-set firewall ipv4 forward filter rule 461 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 461 jump-target 'homelab-trusted'
-set firewall ipv4 forward filter rule 461 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 466 action 'jump'
-set firewall ipv4 forward filter rule 466 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 466 jump-target 'iot-trusted'
-set firewall ipv4 forward filter rule 466 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 471 action 'jump'
-set firewall ipv4 forward filter rule 471 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 471 jump-target 'lan-trusted'
-set firewall ipv4 forward filter rule 471 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 476 action 'jump'
-set firewall ipv4 forward filter rule 476 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 476 jump-target 'servers-trusted'
-set firewall ipv4 forward filter rule 476 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 481 action 'jump'
-set firewall ipv4 forward filter rule 481 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 481 jump-target 'services-trusted'
-set firewall ipv4 forward filter rule 481 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 486 action 'jump'
-set firewall ipv4 forward filter rule 486 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 486 jump-target 'staging-trusted'
-set firewall ipv4 forward filter rule 486 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 491 action 'jump'
-set firewall ipv4 forward filter rule 491 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 491 jump-target 'wan-trusted'
-set firewall ipv4 forward filter rule 491 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 496 action 'drop'
-set firewall ipv4 forward filter rule 496 description 'zone_trusted default-action'
-set firewall ipv4 forward filter rule 496 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 501 action 'accept'
-set firewall ipv4 forward filter rule 501 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 501 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 506 action 'jump'
-set firewall ipv4 forward filter rule 506 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 forward filter rule 506 jump-target 'guest-wan'
-set firewall ipv4 forward filter rule 506 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 511 action 'jump'
-set firewall ipv4 forward filter rule 511 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 forward filter rule 511 jump-target 'homelab-wan'
-set firewall ipv4 forward filter rule 511 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 516 action 'jump'
-set firewall ipv4 forward filter rule 516 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 forward filter rule 516 jump-target 'iot-wan'
-set firewall ipv4 forward filter rule 516 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 521 action 'jump'
-set firewall ipv4 forward filter rule 521 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 forward filter rule 521 jump-target 'lan-wan'
-set firewall ipv4 forward filter rule 521 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 526 action 'jump'
-set firewall ipv4 forward filter rule 526 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 forward filter rule 526 jump-target 'servers-wan'
-set firewall ipv4 forward filter rule 526 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 531 action 'jump'
-set firewall ipv4 forward filter rule 531 inbound-interface interface-group 'IG_services'
-set firewall ipv4 forward filter rule 531 jump-target 'services-wan'
-set firewall ipv4 forward filter rule 531 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 536 action 'jump'
-set firewall ipv4 forward filter rule 536 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 forward filter rule 536 jump-target 'staging-wan'
-set firewall ipv4 forward filter rule 536 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 541 action 'jump'
-set firewall ipv4 forward filter rule 541 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 forward filter rule 541 jump-target 'trusted-wan'
-set firewall ipv4 forward filter rule 541 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 forward filter rule 546 action 'drop'
-set firewall ipv4 forward filter rule 546 description 'zone_wan default-action'
-set firewall ipv4 forward filter rule 546 outbound-interface interface-group 'IG_wan'
+
+#                inbound   outbound  action
+forward_rule 101 guest     guest     accept
+forward_rule 106 homelab   guest     jump
+forward_rule 111 iot       guest     jump
+forward_rule 116 lan       guest     jump
+forward_rule 121 servers   guest     jump
+forward_rule 126 services  guest     jump
+forward_rule 131 staging   guest     jump
+forward_rule 136 trusted   guest     jump
+forward_rule 141 wan       guest     jump
+forward_rule 146 any       guest     drop
+
+#                inbound   outbound  action
+forward_rule 151 homelab   homelab   accept
+forward_rule 156 guest     homelab   jump
+forward_rule 161 iot       homelab   jump
+forward_rule 166 lan       homelab   jump
+forward_rule 171 servers   homelab   jump
+forward_rule 176 services  homelab   jump
+forward_rule 181 staging   homelab   jump
+forward_rule 186 trusted   homelab   jump
+forward_rule 191 wan       homelab   jump
+forward_rule 196 any       homelab   drop
+
+#                inbound   outbound  action
+forward_rule 201 iot       iot       accept
+forward_rule 206 guest     iot       jump
+forward_rule 211 homelab   iot       jump
+forward_rule 216 lan       iot       jump
+forward_rule 221 servers   iot       jump
+forward_rule 226 services  iot       jump
+forward_rule 231 staging   iot       jump
+forward_rule 236 trusted   iot       jump
+forward_rule 241 wan       iot       jump
+forward_rule 246 any       iot       drop
+
+#                inbound   outbound  action
+forward_rule 251 lan       lan       accept
+forward_rule 256 guest     lan       jump
+forward_rule 261 homelab   lan       jump
+forward_rule 266 iot       lan       jump
+forward_rule 271 servers   lan       jump
+forward_rule 276 services  lan       jump
+forward_rule 281 staging   lan       jump
+forward_rule 286 trusted   lan       jump
+forward_rule 291 wan       lan       jump
+forward_rule 296 any       lan       drop
+
+#                inbound   outbound  action
+forward_rule 301 servers   servers   accept
+forward_rule 306 guest     servers   jump
+forward_rule 311 homelab   servers   jump
+forward_rule 316 iot       servers   jump
+forward_rule 321 lan       servers   jump
+forward_rule 326 services  servers   jump
+forward_rule 331 staging   servers   jump
+forward_rule 336 trusted   servers   jump
+forward_rule 341 wan       servers   jump
+forward_rule 346 any       servers   drop
+
+#                inbound   outbound  action
+forward_rule 351 services  services  accept
+forward_rule 356 guest     services  jump
+forward_rule 361 homelab   services  jump
+forward_rule 366 iot       services  jump
+forward_rule 371 lan       services  jump
+forward_rule 376 servers   services  jump
+forward_rule 381 staging   services  jump
+forward_rule 386 trusted   services  jump
+forward_rule 391 wan       services  jump
+forward_rule 396 any       services  drop
+
+#                inbound   outbound  action
+forward_rule 401 staging   staging   accept
+forward_rule 406 guest     staging   jump
+forward_rule 411 homelab   staging   jump
+forward_rule 416 iot       staging   jump
+forward_rule 421 lan       staging   jump
+forward_rule 426 servers   staging   jump
+forward_rule 431 services  staging   jump
+forward_rule 436 trusted   staging   jump
+forward_rule 441 wan       staging   jump
+forward_rule 446 any       staging   drop
+
+#                inbound   outbound  action
+forward_rule 451 trusted   trusted   accept
+forward_rule 456 guest     trusted   jump
+forward_rule 461 homelab   trusted   jump
+forward_rule 466 iot       trusted   jump
+forward_rule 471 lan       trusted   jump
+forward_rule 476 servers   trusted   jump
+forward_rule 481 services  trusted   jump
+forward_rule 486 staging   trusted   jump
+forward_rule 491 wan       trusted   jump
+forward_rule 496 any       trusted   drop
+
+#                inbound   outbound  action
+forward_rule 501 wan       wan       accept
+forward_rule 506 guest     wan       jump
+forward_rule 511 homelab   wan       jump
+forward_rule 516 iot       wan       jump
+forward_rule 521 lan       wan       jump
+forward_rule 526 servers   wan       jump
+forward_rule 531 services  wan       jump
+forward_rule 536 staging   wan       jump
+forward_rule 541 trusted   wan       jump
+forward_rule 546 any       wan       drop
+
+# Default input policy
 set firewall ipv4 input filter default-action 'accept'
 set firewall ipv4 input filter rule 1 action 'accept'
 set firewall ipv4 input filter rule 1 state established 'enable'
@@ -357,34 +220,42 @@ set firewall ipv4 input filter rule 2 action 'drop'
 set firewall ipv4 input filter rule 2 state invalid 'enable'
 set firewall ipv4 input filter rule 3 action 'accept'
 set firewall ipv4 input filter rule 3 state related 'enable'
-set firewall ipv4 input filter rule 101 action 'jump'
-set firewall ipv4 input filter rule 101 inbound-interface interface-group 'IG_guest'
-set firewall ipv4 input filter rule 101 jump-target 'guest-local'
-set firewall ipv4 input filter rule 106 action 'jump'
-set firewall ipv4 input filter rule 106 inbound-interface interface-group 'IG_homelab'
-set firewall ipv4 input filter rule 106 jump-target 'homelab-local'
-set firewall ipv4 input filter rule 111 action 'jump'
-set firewall ipv4 input filter rule 111 inbound-interface interface-group 'IG_iot'
-set firewall ipv4 input filter rule 111 jump-target 'iot-local'
-set firewall ipv4 input filter rule 116 action 'jump'
-set firewall ipv4 input filter rule 116 inbound-interface interface-group 'IG_lan'
-set firewall ipv4 input filter rule 116 jump-target 'lan-local'
-set firewall ipv4 input filter rule 121 action 'jump'
-set firewall ipv4 input filter rule 121 inbound-interface interface-group 'IG_servers'
-set firewall ipv4 input filter rule 121 jump-target 'servers-local'
-set firewall ipv4 input filter rule 126 action 'jump'
-set firewall ipv4 input filter rule 126 inbound-interface interface-group 'IG_services'
-set firewall ipv4 input filter rule 126 jump-target 'services-local'
-set firewall ipv4 input filter rule 131 action 'jump'
-set firewall ipv4 input filter rule 131 inbound-interface interface-group 'IG_staging'
-set firewall ipv4 input filter rule 131 jump-target 'staging-local'
-set firewall ipv4 input filter rule 136 action 'jump'
-set firewall ipv4 input filter rule 136 inbound-interface interface-group 'IG_trusted'
-set firewall ipv4 input filter rule 136 jump-target 'trusted-local'
-set firewall ipv4 input filter rule 141 action 'jump'
-set firewall ipv4 input filter rule 141 inbound-interface interface-group 'IG_wan'
-set firewall ipv4 input filter rule 141 jump-target 'wan-local'
-set firewall ipv4 input filter rule 146 action 'drop'
+
+# Handle traffic from an interface group to local
+#              from      action
+input_rule 101 guest     jump
+input_rule 106 homelab   jump
+input_rule 111 iot       jump
+input_rule 116 lan       jump
+input_rule 121 servers   jump
+input_rule 126 services  jump
+input_rule 131 staging   jump
+input_rule 136 trusted   jump
+input_rule 141 wan       jump
+input_rule 146 any       drop
+
+# Default output policy
+set firewall ipv4 output filter default-action 'accept'
+set firewall ipv4 output filter rule 1 action 'accept'
+set firewall ipv4 output filter rule 1 state established 'enable'
+set firewall ipv4 output filter rule 2 action 'drop'
+set firewall ipv4 output filter rule 2 state invalid 'enable'
+set firewall ipv4 output filter rule 3 action 'accept'
+set firewall ipv4 output filter rule 3 state related 'enable'
+
+#               from      action
+output_rule 101 guest     jump
+output_rule 106 homelab   jump
+output_rule 111 iot       jump
+output_rule 116 lan       jump
+output_rule 121 servers   jump
+output_rule 126 services  jump
+output_rule 131 staging   jump
+output_rule 136 trusted   jump
+output_rule 141 wan       jump
+output_rule 146 any       drop
+
+
 set firewall ipv4 name guest-homelab default-action 'drop'
 set firewall ipv4 name guest-homelab description 'From GUEST to HOMELAB'
 set firewall ipv4 name guest-homelab enable-default-log
@@ -1077,38 +948,3 @@ set firewall ipv4 name wan-staging enable-default-log
 set firewall ipv4 name wan-trusted default-action 'drop'
 set firewall ipv4 name wan-trusted description 'From WAN to TRUSTED'
 set firewall ipv4 name wan-trusted enable-default-log
-set firewall ipv4 output filter default-action 'accept'
-set firewall ipv4 output filter rule 1 action 'accept'
-set firewall ipv4 output filter rule 1 state established 'enable'
-set firewall ipv4 output filter rule 2 action 'drop'
-set firewall ipv4 output filter rule 2 state invalid 'enable'
-set firewall ipv4 output filter rule 3 action 'accept'
-set firewall ipv4 output filter rule 3 state related 'enable'
-set firewall ipv4 output filter rule 101 action 'jump'
-set firewall ipv4 output filter rule 101 jump-target 'local-guest'
-set firewall ipv4 output filter rule 101 outbound-interface interface-group 'IG_guest'
-set firewall ipv4 output filter rule 106 action 'jump'
-set firewall ipv4 output filter rule 106 jump-target 'local-homelab'
-set firewall ipv4 output filter rule 106 outbound-interface interface-group 'IG_homelab'
-set firewall ipv4 output filter rule 111 action 'jump'
-set firewall ipv4 output filter rule 111 jump-target 'local-iot'
-set firewall ipv4 output filter rule 111 outbound-interface interface-group 'IG_iot'
-set firewall ipv4 output filter rule 116 action 'jump'
-set firewall ipv4 output filter rule 116 jump-target 'local-lan'
-set firewall ipv4 output filter rule 116 outbound-interface interface-group 'IG_lan'
-set firewall ipv4 output filter rule 121 action 'jump'
-set firewall ipv4 output filter rule 121 jump-target 'local-servers'
-set firewall ipv4 output filter rule 121 outbound-interface interface-group 'IG_servers'
-set firewall ipv4 output filter rule 126 action 'jump'
-set firewall ipv4 output filter rule 126 jump-target 'local-services'
-set firewall ipv4 output filter rule 126 outbound-interface interface-group 'IG_services'
-set firewall ipv4 output filter rule 131 action 'jump'
-set firewall ipv4 output filter rule 131 jump-target 'local-staging'
-set firewall ipv4 output filter rule 131 outbound-interface interface-group 'IG_staging'
-set firewall ipv4 output filter rule 136 action 'jump'
-set firewall ipv4 output filter rule 136 jump-target 'local-trusted'
-set firewall ipv4 output filter rule 136 outbound-interface interface-group 'IG_trusted'
-set firewall ipv4 output filter rule 141 action 'jump'
-set firewall ipv4 output filter rule 141 jump-target 'local-wan'
-set firewall ipv4 output filter rule 141 outbound-interface interface-group 'IG_wan'
-set firewall ipv4 output filter rule 146 action 'drop'
