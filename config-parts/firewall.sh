@@ -1,10 +1,19 @@
 #!/bin/vbash
 # shellcheck disable=all
 
-# General configuration
-set firewall state-policy established action 'accept'
-set firewall state-policy invalid action 'drop'
-set firewall state-policy related action 'accept'
+# Interface groups
+set firewall group interface-group IG_guest interface 'bond0.99'
+set firewall group interface-group IG_homelab interface 'bond0.11'
+set firewall group interface-group IG_iot interface 'bond0.98'
+set firewall group interface-group IG_lan interface 'bond0'
+set firewall group interface-group IG_lan interface 'eth4'
+set firewall group interface-group IG_servers interface 'bond0.10'
+set firewall group interface-group IG_services interface 'pod-services'
+set firewall group interface-group IG_staging interface 'bond0.12'
+set firewall group interface-group IG_trusted interface 'bond0.20'
+set firewall group interface-group IG_trusted interface 'eth4.20'
+set firewall group interface-group IG_trusted interface 'wg01'
+set firewall group interface-group IG_wan interface 'eth5'
 
 # Services containers
 set firewall group address-group unifi-controller address '10.0.5.2'
