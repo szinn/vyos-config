@@ -14,9 +14,9 @@
 forward_rule_number=101
 function forward_rule {
   rule=$((forward_rule_number))
-  inbound=$2
-  outbound=$3
-  action=$4
+  inbound=$1
+  outbound=$2
+  action=$3
 
   case $action in
     accept)
@@ -50,8 +50,8 @@ function forward_rule {
 input_rule_number=101
 function input_rule {
   rule=$((input_rule_number))
-  inbound=$2
-  action=$3
+  inbound=$1
+  action=$2
 
   case $action in
     drop)
@@ -78,8 +78,8 @@ function input_rule {
 output_rule_number=101
 function output_rule {
   rule=$((output_rule_number))
-  outbound=$2
-  action=$3
+  outbound=$1
+  action=$2
 
   case $action in
     drop)
@@ -95,6 +95,29 @@ function output_rule {
   output_rule_number=$((output_rule_number+5))
 }
 
+function begin_traffic {
+  shift # Ignore $1 which is "to"
+  interface=$1
+
+  forward_rule $interface $interface accept
+}
+
+function handle_traffic {
+  shift # Ignore $1 which is to
+  outbound=$1
+  shift
+  shift # Ignore next word which is from
+  for inbound in $*; do
+    forward_rule $inbound $outbound jump
+  done
+}
+
+function end_traffic {
+  shift # Ignore $1 which is "to"
+  outbound=$1
+  forward_rule any $outbound drop
+}
+
 # Default forward policy
 set firewall ipv4 forward filter default-action 'accept'
 set firewall ipv4 forward filter rule 1 action 'accept'
@@ -104,113 +127,105 @@ set firewall ipv4 forward filter rule 2 state invalid 'enable'
 set firewall ipv4 forward filter rule 3 action 'accept'
 set firewall ipv4 forward filter rule 3 state related 'enable'
 
-#                inbound   outbound  action
-forward_rule 101 guest     guest     accept
-forward_rule 106 homelab   guest     jump
-forward_rule 111 iot       guest     jump
-forward_rule 116 lan       guest     jump
-forward_rule 121 servers   guest     jump
-forward_rule 126 services  guest     jump
-forward_rule 131 staging   guest     jump
-forward_rule 136 trusted   guest     jump
-forward_rule 141 wan       guest     jump
-forward_rule 146 any       guest     drop
+begin_traffic  to guest
+handle_traffic to guest from homelab iot lan servers services staging trusted wan
+end_traffic    to guest
 
-#                inbound   outbound  action
-forward_rule 151 homelab   homelab   accept
-forward_rule 156 guest     homelab   jump
-forward_rule 161 iot       homelab   jump
-forward_rule 166 lan       homelab   jump
-forward_rule 171 servers   homelab   jump
-forward_rule 176 services  homelab   jump
-forward_rule 181 staging   homelab   jump
-forward_rule 186 trusted   homelab   jump
-forward_rule 191 wan       homelab   jump
-forward_rule 196 any       homelab   drop
+#            inbound   outbound  action
+forward_rule homelab   homelab   accept
+forward_rule guest     homelab   jump
+forward_rule iot       homelab   jump
+forward_rule lan       homelab   jump
+forward_rule servers   homelab   jump
+forward_rule services  homelab   jump
+forward_rule staging   homelab   jump
+forward_rule trusted   homelab   jump
+forward_rule wan       homelab   jump
+forward_rule any       homelab   drop
 
-#                inbound   outbound  action
-forward_rule 201 iot       iot       accept
-forward_rule 206 guest     iot       jump
-forward_rule 211 homelab   iot       jump
-forward_rule 216 lan       iot       jump
-forward_rule 221 servers   iot       jump
-forward_rule 226 services  iot       jump
-forward_rule 231 staging   iot       jump
-forward_rule 236 trusted   iot       jump
-forward_rule 241 wan       iot       jump
-forward_rule 246 any       iot       drop
+#            inbound   outbound  action
+forward_rule iot       iot       accept
+forward_rule guest     iot       jump
+forward_rule homelab   iot       jump
+forward_rule lan       iot       jump
+forward_rule servers   iot       jump
+forward_rule services  iot       jump
+forward_rule staging   iot       jump
+forward_rule trusted   iot       jump
+forward_rule wan       iot       jump
+forward_rule any       iot       drop
 
-#                inbound   outbound  action
-forward_rule 251 lan       lan       accept
-forward_rule 256 guest     lan       jump
-forward_rule 261 homelab   lan       jump
-forward_rule 266 iot       lan       jump
-forward_rule 271 servers   lan       jump
-forward_rule 276 services  lan       jump
-forward_rule 281 staging   lan       jump
-forward_rule 286 trusted   lan       jump
-forward_rule 291 wan       lan       jump
-forward_rule 296 any       lan       drop
+#            inbound   outbound  action
+forward_rule lan       lan       accept
+forward_rule guest     lan       jump
+forward_rule homelab   lan       jump
+forward_rule iot       lan       jump
+forward_rule servers   lan       jump
+forward_rule services  lan       jump
+forward_rule staging   lan       jump
+forward_rule trusted   lan       jump
+forward_rule wan       lan       jump
+forward_rule any       lan       drop
 
-#                inbound   outbound  action
-forward_rule 301 servers   servers   accept
-forward_rule 306 guest     servers   jump
-forward_rule 311 homelab   servers   jump
-forward_rule 316 iot       servers   jump
-forward_rule 321 lan       servers   jump
-forward_rule 326 services  servers   jump
-forward_rule 331 staging   servers   jump
-forward_rule 336 trusted   servers   jump
-forward_rule 341 wan       servers   jump
-forward_rule 346 any       servers   drop
+#            inbound   outbound  action
+forward_rule servers   servers   accept
+forward_rule guest     servers   jump
+forward_rule homelab   servers   jump
+forward_rule iot       servers   jump
+forward_rule lan       servers   jump
+forward_rule services  servers   jump
+forward_rule staging   servers   jump
+forward_rule trusted   servers   jump
+forward_rule wan       servers   jump
+forward_rule any       servers   drop
 
-#                inbound   outbound  action
-forward_rule 351 services  services  accept
-forward_rule 356 guest     services  jump
-forward_rule 361 homelab   services  jump
-forward_rule 366 iot       services  jump
-forward_rule 371 lan       services  jump
-forward_rule 376 servers   services  jump
-forward_rule 381 staging   services  jump
-forward_rule 386 trusted   services  jump
-forward_rule 391 wan       services  jump
-forward_rule 396 any       services  drop
+#            inbound   outbound  action
+forward_rule services  services  accept
+forward_rule guest     services  jump
+forward_rule homelab   services  jump
+forward_rule iot       services  jump
+forward_rule lan       services  jump
+forward_rule servers   services  jump
+forward_rule staging   services  jump
+forward_rule trusted   services  jump
+forward_rule wan       services  jump
+forward_rule any       services  drop
 
-#                inbound   outbound  action
-forward_rule 401 staging   staging   accept
-forward_rule 406 guest     staging   jump
-forward_rule 411 homelab   staging   jump
-forward_rule 416 iot       staging   jump
-forward_rule 421 lan       staging   jump
-forward_rule 426 servers   staging   jump
-forward_rule 431 services  staging   jump
-forward_rule 436 trusted   staging   jump
-forward_rule 441 wan       staging   jump
-forward_rule 446 any       staging   drop
+#            inbound   outbound  action
+forward_rule staging   staging   accept
+forward_rule guest     staging   jump
+forward_rule homelab   staging   jump
+forward_rule iot       staging   jump
+forward_rule lan       staging   jump
+forward_rule servers   staging   jump
+forward_rule services  staging   jump
+forward_rule trusted   staging   jump
+forward_rule wan       staging   jump
+forward_rule any       staging   drop
 
-#                inbound   outbound  action
-forward_rule 451 trusted   trusted   accept
-forward_rule 456 guest     trusted   jump
-forward_rule 461 homelab   trusted   jump
-forward_rule 466 iot       trusted   jump
-forward_rule 471 lan       trusted   jump
-forward_rule 476 servers   trusted   jump
-forward_rule 481 services  trusted   jump
-forward_rule 486 staging   trusted   jump
-forward_rule 491 wan       trusted   jump
-forward_rule 496 any       trusted   drop
+#            inbound   outbound  action
+forward_rule trusted   trusted   accept
+forward_rule guest     trusted   jump
+forward_rule homelab   trusted   jump
+forward_rule iot       trusted   jump
+forward_rule lan       trusted   jump
+forward_rule servers   trusted   jump
+forward_rule services  trusted   jump
+forward_rule staging   trusted   jump
+forward_rule wan       trusted   jump
+forward_rule any       trusted   drop
 
-#                inbound   outbound  action
-forward_rule 501 wan       wan       accept
-forward_rule 506 guest     wan       jump
-forward_rule 511 homelab   wan       jump
-forward_rule 516 iot       wan       jump
-forward_rule 521 lan       wan       jump
-forward_rule 526 servers   wan       jump
-forward_rule 531 services  wan       jump
-forward_rule 536 staging   wan       jump
-forward_rule 541 trusted   wan       jump
-forward_rule 546 any       wan       drop
+#            inbound   outbound  action
+forward_rule wan       wan       accept
+forward_rule guest     wan       jump
+forward_rule homelab   wan       jump
+forward_rule iot       wan       jump
+forward_rule lan       wan       jump
+forward_rule servers   wan       jump
+forward_rule services  wan       jump
+forward_rule staging   wan       jump
+forward_rule trusted   wan       jump
+forward_rule any       wan       drop
 
 # Default input policy
 set firewall ipv4 input filter default-action 'accept'
@@ -222,17 +237,17 @@ set firewall ipv4 input filter rule 3 action 'accept'
 set firewall ipv4 input filter rule 3 state related 'enable'
 
 # Handle traffic from an interface group to local
-#              from      action
-input_rule 101 guest     jump
-input_rule 106 homelab   jump
-input_rule 111 iot       jump
-input_rule 116 lan       jump
-input_rule 121 servers   jump
-input_rule 126 services  jump
-input_rule 131 staging   jump
-input_rule 136 trusted   jump
-input_rule 141 wan       jump
-input_rule 146 any       drop
+#          from      action
+input_rule guest     jump
+input_rule homelab   jump
+input_rule iot       jump
+input_rule lan       jump
+input_rule servers   jump
+input_rule services  jump
+input_rule staging   jump
+input_rule trusted   jump
+input_rule wan       jump
+input_rule any       drop
 
 # Default output policy
 set firewall ipv4 output filter default-action 'accept'
@@ -243,17 +258,18 @@ set firewall ipv4 output filter rule 2 state invalid 'enable'
 set firewall ipv4 output filter rule 3 action 'accept'
 set firewall ipv4 output filter rule 3 state related 'enable'
 
-#               from      action
-output_rule 101 guest     jump
-output_rule 106 homelab   jump
-output_rule 111 iot       jump
-output_rule 116 lan       jump
-output_rule 121 servers   jump
-output_rule 126 services  jump
-output_rule 131 staging   jump
-output_rule 136 trusted   jump
-output_rule 141 wan       jump
-output_rule 146 any       drop
+# Handle traffic from local to an interface group
+#           from      action
+output_rule guest     jump
+output_rule homelab   jump
+output_rule iot       jump
+output_rule lan       jump
+output_rule servers   jump
+output_rule services  jump
+output_rule staging   jump
+output_rule trusted   jump
+output_rule wan       jump
+output_rule any       drop
 
 
 set firewall ipv4 name guest-homelab default-action 'drop'
