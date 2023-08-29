@@ -99,7 +99,9 @@ function begin_traffic {
   shift # Ignore $1 which is "to"
   interface=$1
 
-  forward_rule $interface $interface accept
+  if ! test "$interface" == "local"; then
+    forward_rule $interface $interface accept
+  fi
 }
 
 function handle_traffic {
@@ -108,7 +110,9 @@ function handle_traffic {
   shift
   shift # Ignore next word which is from
   for inbound in $*; do
-    if test "$inbound" == "local"; then
+    if test "$outbound" == "local"; then
+      input_rule $inbound jump
+    elif test "$inbound" == "local"; then
       output_rule $outbound jump
     else
       forward_rule $inbound $outbound jump
@@ -119,7 +123,13 @@ function handle_traffic {
 function end_traffic {
   shift # Ignore $1 which is "to"
   outbound=$1
-  forward_rule any $outbound drop
+
+  if test "$outbound" == "local"; then
+    input_rule any drop
+    output_rule any drop
+  else
+    forward_rule any $outbound drop
+  fi
 }
 
 # Default forward policy
@@ -130,6 +140,24 @@ set firewall ipv4 forward filter rule 2 action 'drop'
 set firewall ipv4 forward filter rule 2 state invalid 'enable'
 set firewall ipv4 forward filter rule 3 action 'accept'
 set firewall ipv4 forward filter rule 3 state related 'enable'
+
+# Default input policy
+set firewall ipv4 input filter default-action 'accept'
+set firewall ipv4 input filter rule 1 action 'accept'
+set firewall ipv4 input filter rule 1 state established 'enable'
+set firewall ipv4 input filter rule 2 action 'drop'
+set firewall ipv4 input filter rule 2 state invalid 'enable'
+set firewall ipv4 input filter rule 3 action 'accept'
+set firewall ipv4 input filter rule 3 state related 'enable'
+
+# Default output policy
+set firewall ipv4 output filter default-action 'accept'
+set firewall ipv4 output filter rule 1 action 'accept'
+set firewall ipv4 output filter rule 1 state established 'enable'
+set firewall ipv4 output filter rule 2 action 'drop'
+set firewall ipv4 output filter rule 2 state invalid 'enable'
+set firewall ipv4 output filter rule 3 action 'accept'
+set firewall ipv4 output filter rule 3 state related 'enable'
 
 begin_traffic  to guest
 handle_traffic to guest from homelab iot lan servers services staging trusted wan local
@@ -167,50 +195,9 @@ begin_traffic  to wan
 handle_traffic to wan from guest homelab iot lan servers services staging trusted local
 end_traffic    to wan
 
-# Default input policy
-set firewall ipv4 input filter default-action 'accept'
-set firewall ipv4 input filter rule 1 action 'accept'
-set firewall ipv4 input filter rule 1 state established 'enable'
-set firewall ipv4 input filter rule 2 action 'drop'
-set firewall ipv4 input filter rule 2 state invalid 'enable'
-set firewall ipv4 input filter rule 3 action 'accept'
-set firewall ipv4 input filter rule 3 state related 'enable'
-
-# Handle traffic from an interface group to local
-#          from      action
-input_rule guest     jump
-input_rule homelab   jump
-input_rule iot       jump
-input_rule lan       jump
-input_rule servers   jump
-input_rule services  jump
-input_rule staging   jump
-input_rule trusted   jump
-input_rule wan       jump
-input_rule any       drop
-
-# Default output policy
-set firewall ipv4 output filter default-action 'accept'
-set firewall ipv4 output filter rule 1 action 'accept'
-set firewall ipv4 output filter rule 1 state established 'enable'
-set firewall ipv4 output filter rule 2 action 'drop'
-set firewall ipv4 output filter rule 2 state invalid 'enable'
-set firewall ipv4 output filter rule 3 action 'accept'
-set firewall ipv4 output filter rule 3 state related 'enable'
-
-# Handle traffic from local to an interface group
-#           from      action
-# output_rule guest     jump
-# output_rule homelab   jump
-# output_rule iot       jump
-# output_rule lan       jump
-# output_rule servers   jump
-# output_rule services  jump
-# output_rule staging   jump
-# output_rule trusted   jump
-# output_rule wan       jump
-output_rule any       drop
-
+begin_traffic  to local
+handle_traffic to local from guest homelab iot lan servers services staging trusted wan
+end_traffic    to local
 
 set firewall ipv4 name guest-homelab default-action 'drop'
 set firewall ipv4 name guest-homelab description 'From GUEST to HOMELAB'
