@@ -159,6 +159,14 @@ set firewall ipv4 output filter rule 2 state invalid 'enable'
 set firewall ipv4 output filter rule 3 action 'accept'
 set firewall ipv4 output filter rule 3 state related 'enable'
 
+# Ensure VyOS can talk to itself
+set firewall ipv4 output filter rule 10 action accept
+set firewall ipv4 output filter rule 10 source group address-group router-addresses
+set firewall ipv4 output filter rule 10 destination group address-group router-addresses
+set firewall ipv4 input  filter rule 10 action accept
+set firewall ipv4 input  filter rule 10 source group address-group router-addresses
+set firewall ipv4 input  filter rule 10 destination group address-group router-addresses
+
 begin_traffic  to guest
 handle_traffic to guest from homelab iot lan servers services staging trusted wan local
 end_traffic    to guest

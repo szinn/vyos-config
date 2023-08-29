@@ -78,3 +78,11 @@ set firewall ipv6 output filter rule 2 state invalid 'enable'
 set firewall ipv6 output filter rule 3 action 'accept'
 set firewall ipv6 output filter rule 3 state related 'enable'
 set firewall ipv6 output filter rule 101 action 'drop'
+
+# Ensure VyOS can talk to itself
+set firewall ipv6 output filter rule 10 action accept
+set firewall ipv6 output filter rule 10 source group address-group router-addresses-ipv6
+set firewall ipv6 output filter rule 10 destination group address-group router-addresses-ipv6
+set firewall ipv6 input  filter rule 10 action accept
+set firewall ipv6 input  filter rule 10 source group address-group router-addresses-ipv6
+set firewall ipv6 input  filter rule 10 destination group address-group router-addresses-ipv6

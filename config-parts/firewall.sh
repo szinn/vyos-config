@@ -15,6 +15,12 @@ set firewall group interface-group IG_trusted interface 'eth4.20'
 set firewall group interface-group IG_trusted interface 'wg01'
 set firewall group interface-group IG_wan interface 'eth5'
 
+# Router (VyOS itself)
+set firewall group address-group router-addresses address 10.0.0.1
+set firewall group address-group router-addresses address 127.0.0.1
+set firewall group ipv6-address-group router-addresses-ipv6 address fe80::e63a:6eff:fe5a:f805
+set firewall group ipv6-address-group router-addresses-ipv6 address ::1
+
 # Services containers
 set firewall group address-group unifi-controller address '10.0.5.2'
 set firewall group address-group unifi-unvr address '10.0.0.32'
