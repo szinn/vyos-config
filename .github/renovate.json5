@@ -11,7 +11,6 @@
     "github>szinn/vyos-config//.github/renovate/commit-message.json5",
     "github>szinn/vyos-config//.github/renovate/pr-labels.json5",
     "github>szinn/vyos-config//.github/renovate/semantic-commits.json5",
-    "github>szinn/vyos-config//.github/renovate/generic-regex-manager.json5",
     "github>szinn/vyos-config//.github/renovate/automerge-github-actions.json5"
   ],
   "onboarding": false,
@@ -27,7 +26,7 @@
   "repositories": ["szinn/vyos-config"],
   "regexManagers": [
     {
-      "description": ["Generic Docker image Regex manager"],
+      "description": "Generic Docker image Regex manager",
       "fileMatch": [
         "config-parts/.+\\.sh$"
       ],
@@ -37,5 +36,19 @@
       "datasourceTemplate": "docker"
     }
   ],
-  "packageRules": []
+  "packageRules": [
+    {
+      "description": "1Password Connect images",
+      "groupName": "1password-connect",
+      "matchPackageNames": [
+        "docker.io/1password/connect-sync",
+        "docker.io/1password/connect-api"
+      ],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    }
+  ]
 }

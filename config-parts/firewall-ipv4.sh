@@ -1,7 +1,6 @@
 #!/bin/vbash
 # shellcheck disable=all
 
-
 # Configure forward filter:
 #   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> accept
 #   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> jump
