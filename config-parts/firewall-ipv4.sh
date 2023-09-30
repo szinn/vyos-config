@@ -5,7 +5,7 @@
 #   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> accept
 #   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> jump
 #   forward_rule <rule_number> ignored <outbound_interface_group> drop
-# 
+#
 # interface_group do not have IG_ prefix - that is substituted
 #
 # jump target is <inbound>-<outbound> named rule
@@ -41,7 +41,7 @@ function forward_rule {
 # Configure input filter
 #   input_rule <rule_number> <inbound_interface_group> jump
 #   input_rule <rule_number> any drop
-# 
+#
 # interface_group do not have IG_ prefix - that is substituted
 #
 # jump target is <inbound>-local named rule
@@ -69,7 +69,7 @@ function input_rule {
 # Configure output filter
 #   output_rule <rule_number> <outbound_interface_group> jump
 #   output_rule <rule_number> any drop
-# 
+#
 # interface_group do not have IG_ prefix - that is substituted
 #
 # jump target is local-<outbound> named rule
@@ -94,20 +94,17 @@ function output_rule {
   output_rule_number=$((output_rule_number+5))
 }
 
-function begin_traffic {
-  shift # Ignore $1 which is "to"
-  interface=$1
-
-  if ! test "$interface" == "local"; then
-    forward_rule $interface $interface accept
-  fi
-}
-
 function handle_traffic {
   shift # Ignore $1 which is to
   outbound=$1
   shift
   shift # Ignore next word which is from
+
+  # begin traffic
+  if ! test "$outbound" == "local"; then
+    forward_rule $outbound $outbound accept
+  fi
+
   for inbound in $*; do
     if test "$outbound" == "local"; then
       input_rule $inbound jump
@@ -117,12 +114,8 @@ function handle_traffic {
       forward_rule $inbound $outbound jump
     fi
   done
-}
 
-function end_traffic {
-  shift # Ignore $1 which is "to"
-  outbound=$1
-
+  # end traffic
   if test "$outbound" == "local"; then
     input_rule any drop
     output_rule any drop
@@ -166,45 +159,16 @@ set firewall ipv4 input  filter rule 10 action accept
 set firewall ipv4 input  filter rule 10 source group address-group router-addresses
 set firewall ipv4 input  filter rule 10 destination group address-group router-addresses
 
-begin_traffic  to guest
-handle_traffic to guest from homelab iot lan servers services staging trusted wan local
-end_traffic    to guest
-
-begin_traffic  to homelab
-handle_traffic to homelab from guest iot lan servers services staging trusted wan local
-end_traffic    to homelab
-
-begin_traffic  to iot
-handle_traffic to iot from guest homelab lan servers services staging trusted wan local
-end_traffic    to iot
-
-begin_traffic  to lan
-handle_traffic to lan from guest homelab iot servers services staging trusted wan local
-end_traffic    to lan
-
-begin_traffic  to servers
-handle_traffic to servers from guest homelab iot lan services staging trusted wan local
-end_traffic    to servers
-
-begin_traffic  to services
+handle_traffic to guest    from homelab iot lan servers services staging trusted wan local
+handle_traffic to homelab  from guest iot lan servers services staging trusted wan local
+handle_traffic to iot      from guest homelab lan servers services staging trusted wan local
+handle_traffic to lan      from guest homelab iot servers services staging trusted wan local
+handle_traffic to servers  from guest homelab iot lan services staging trusted wan local
 handle_traffic to services from guest homelab iot lan servers staging trusted wan local
-end_traffic    to services
-
-begin_traffic  to staging
-handle_traffic to staging from guest homelab iot lan servers services trusted wan local
-end_traffic    to staging
-
-begin_traffic  to trusted
-handle_traffic to trusted from guest homelab iot lan servers services staging wan local
-end_traffic    to trusted
-
-begin_traffic  to wan
-handle_traffic to wan from guest homelab iot lan servers services staging trusted local
-end_traffic    to wan
-
-begin_traffic  to local
-handle_traffic to local from guest homelab iot lan servers services staging trusted wan
-end_traffic    to local
+handle_traffic to staging  from guest homelab iot lan servers services trusted wan local
+handle_traffic to trusted  from guest homelab iot lan servers services staging wan local
+handle_traffic to wan      from guest homelab iot lan servers services staging trusted local
+handle_traffic to local    from guest homelab iot lan servers services staging trusted wan
 
 # From GUEST to HOMELAB
 set firewall ipv4 name guest-homelab description 'From GUEST to HOMELAB'
