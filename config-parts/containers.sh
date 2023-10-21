@@ -93,7 +93,7 @@ set container name onepassword-sync volume data mode 'rw'
 
 # pihole/unbound
 set container name pihole description 'Pi-hole'
-set container name pihole image 'ghcr.io/szinn/pihole-unbound:2023.05.2'
+set container name pihole image 'ghcr.io/szinn/pihole-unbound:2023.10.0'
 set container name pihole memory '0'
 set container name pihole network services address '10.0.5.8'
 set container name pihole shared-memory '0'
