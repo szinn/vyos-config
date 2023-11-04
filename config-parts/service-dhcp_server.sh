@@ -90,6 +90,8 @@ set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-m
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping pihole mac-address 'b8:27:eb:e9:34:f4'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping artemis ip-address '10.10.0.7'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping artemis mac-address 'd8:3a:dd:0d:14:08'
+set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping nixos ip-address '10.10.0.8'
+set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping nixos mac-address 'DE:CA:FF:10:00:08'
 #
 # Homelab VLAN
 set service dhcp-server shared-network-name HOMELAB authoritative
