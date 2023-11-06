@@ -170,6 +170,8 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-nixos mac-address 'DE:CA:FF:20:00:1A'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-athena ip-address '10.20.0.27'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-athena mac-address 'DE:CA:FF:20:00:1B'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm ip-address '10.20.0.28'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm mac-address 'DE:CA:FF:20:00:1C'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 ip-address '10.20.0.28'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 mac-address '00:1c:42:0b:1e:65'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc1 ip-address '10.20.0.29'
