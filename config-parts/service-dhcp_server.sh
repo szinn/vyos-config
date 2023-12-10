@@ -92,8 +92,6 @@ set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-m
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping artemis mac-address 'd8:3a:dd:0d:14:08'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping hera ip-address '10.10.0.8'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping hera mac-address '48:21:0b:58:33:b6'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping nixos ip-address '10.10.0.16'
-set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping nixos mac-address 'DE:CA:FF:10:00:10'
 
 # Homelab VLAN
 set service dhcp-server shared-network-name HOMELAB authoritative
@@ -168,12 +166,12 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin mac-address '64:4b:f0:38:77:85'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-wifi ip-address '10.20.0.20'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-wifi mac-address 'f4:d4:88:5d:e7:21'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm ip-address '10.20.0.25'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm mac-address 'DE:CA:FF:20:00:19'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-nixos ip-address '10.20.0.26'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-nixos mac-address 'DE:CA:FF:20:00:1A'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-athena ip-address '10.20.0.27'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-athena mac-address 'DE:CA:FF:20:00:1B'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm ip-address '10.20.0.28'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm mac-address 'DE:CA:FF:20:00:1C'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 ip-address '10.20.0.28'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 mac-address '00:1c:42:0b:1e:65'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc1 ip-address '10.20.0.29'
