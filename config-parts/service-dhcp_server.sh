@@ -306,6 +306,8 @@ set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-m
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping charles-laptop mac-address '5c:e9:1e:88:6c:e2'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping ben-iphone ip-address '192.168.2.67'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping ben-iphone mac-address '88:20:0d:2f:b0:3e'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping molly-laptop ip-address '192.168.2.68'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping molly-laptop mac-address '74:a6:cd:be:06:c6'
 
 # 192.168.2.67 Ben Laptop
 # 192.168.2.68 Molly iPhone
