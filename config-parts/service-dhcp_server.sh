@@ -166,6 +166,8 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin mac-address '64:4b:f0:38:77:85'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-wifi ip-address '10.20.0.20'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-wifi mac-address 'f4:d4:88:5d:e7:21'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping proxmox-nixvm ip-address '10.20.0.24'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping proxmox-nixvm mac-address 'DE:CA:FF:20:00:18'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm ip-address '10.20.0.25'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-macvm mac-address 'DE:CA:FF:20:00:19'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-nixvm ip-address '10.20.0.26'
