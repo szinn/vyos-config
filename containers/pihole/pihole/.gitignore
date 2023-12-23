@@ -3,3 +3,5 @@
 
 # Track certain files and directories
 !.gitignore
+!pihole-FTL.conf
+
