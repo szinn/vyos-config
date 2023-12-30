@@ -775,7 +775,7 @@ set firewall ipv4 name services-lan rule 140 protocol 'icmp'
 
 # From SERVICES to LOCAL
 set firewall ipv4 name services-local description 'From SERVICES to LOCAL'
-set firewall ipv4 name services-local default-action 'drop'
+set firewall ipv4 name services-local default-action 'accept'
 set firewall ipv4 name services-local enable-default-log
 set firewall ipv4 name services-local rule 100 action 'accept'
 set firewall ipv4 name services-local rule 100 description 'Rule: accept ntp'
