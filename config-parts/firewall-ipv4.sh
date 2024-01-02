@@ -1,179 +1,40 @@
 #!/bin/vbash
 # shellcheck disable=all
 
-# Configure forward filter:
-#   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> accept
-#   forward_rule <rule_number> <inbound_interface_group> <outbound_interface_group> jump
-#   forward_rule <rule_number> ignored <outbound_interface_group> drop
-#
-# interface_group do not have IG_ prefix - that is substituted
-#
-# jump target is <inbound>-<outbound> named rule
-#
-forward_rule_number=101
-function forward_rule {
-  rule=$((forward_rule_number))
-  inbound=$1
-  outbound=$2
-  action=$3
+# create-firewall-rules guest
+#   interfaces bond0.99
 
-  case $action in
-    accept)
-      set firewall ipv4 forward filter rule $rule action $action
-      set firewall ipv4 forward filter rule $rule inbound-interface interface-group IG_$inbound
-      set firewall ipv4 forward filter rule $rule outbound-interface interface-group IG_$outbound
-      ;;
-    drop)
-      set firewall ipv4 forward filter rule $rule action $action
-      set firewall ipv4 forward filter rule $rule outbound-interface interface-group IG_$outbound
-      ;;
-    jump)
-      set firewall ipv4 forward filter rule $rule action $action
-      set firewall ipv4 forward filter rule $rule inbound-interface interface-group IG_$inbound
-      set firewall ipv4 forward filter rule $rule outbound-interface interface-group IG_$outbound
-      set firewall ipv4 forward filter rule $rule jump-target ${inbound}-${outbound}
-      ;;
-  esac
+# create-firewall-rules homelab
+#   interfaces bond0.11
 
-  forward_rule_number=$((forward_rule_number+5))
-}
+# create-firewall-rules iot
+#   interfaces bond0.98
 
-# Configure input filter
-#   input_rule <rule_number> <inbound_interface_group> jump
-#   input_rule <rule_number> any drop
-#
-# interface_group do not have IG_ prefix - that is substituted
-#
-# jump target is <inbound>-local named rule
-#
-input_rule_number=101
-function input_rule {
-  rule=$((input_rule_number))
-  inbound=$1
-  action=$2
+# create-firewall-rules lan
+#   interfaces bond0 eth4
 
-  case $action in
-    drop)
-      set firewall ipv4 input filter rule $rule action $action
-      ;;
-    jump)
-      set firewall ipv4 input filter rule $rule action $action
-      set firewall ipv4 input filter rule $rule inbound-interface interface-group IG_$inbound
-      set firewall ipv4 input filter rule $rule jump-target ${inbound}-local
-      ;;
-  esac
+# create-firewall-rules local
+#   interfaces local-zone
 
-  input_rule_number=$((input_rule_number+5))
-}
+# create-firewall-rules servers
+#   interfaces bond0.10
 
-# Configure output filter
-#   output_rule <rule_number> <outbound_interface_group> jump
-#   output_rule <rule_number> any drop
-#
-# interface_group do not have IG_ prefix - that is substituted
-#
-# jump target is local-<outbound> named rule
-#
-output_rule_number=101
-function output_rule {
-  rule=$((output_rule_number))
-  outbound=$1
-  action=$2
+# create-firewall-rules services
+#   interfaces pod-services
 
-  case $action in
-    drop)
-      set firewall ipv4 output filter rule $rule action $action
-      ;;
-    jump)
-      set firewall ipv4 output filter rule $rule action $action
-      set firewall ipv4 output filter rule $rule outbound-interface interface-group IG_$outbound
-      set firewall ipv4 output filter rule $rule jump-target local-$outbound
-      ;;
-  esac
+# create-firewall-rules staging
+#   interfaces bond0.12
 
-  output_rule_number=$((output_rule_number+5))
-}
+# create-firewall-rules trusted
+#   interfaces bond0.20 eth4.20 wg01
 
-function handle_traffic {
-  shift # Ignore $1 which is to
-  outbound=$1
-  shift
-  shift # Ignore next word which is from
-
-  # begin traffic
-  if ! test "$outbound" == "local"; then
-    forward_rule $outbound $outbound accept
-  fi
-
-  for inbound in $*; do
-    if test "$outbound" == "local"; then
-      input_rule $inbound jump
-    elif test "$inbound" == "local"; then
-      output_rule $outbound jump
-    else
-      forward_rule $inbound $outbound jump
-    fi
-  done
-
-  # end traffic
-  if test "$outbound" == "local"; then
-    input_rule any drop
-    output_rule any drop
-  else
-    forward_rule any $outbound drop
-  fi
-}
-
-# Default forward policy
-set firewall ipv4 forward filter default-action 'accept'
-set firewall ipv4 forward filter rule 1 action 'accept'
-set firewall ipv4 forward filter rule 1 state established 'enable'
-set firewall ipv4 forward filter rule 2 action 'drop'
-set firewall ipv4 forward filter rule 2 state invalid 'enable'
-set firewall ipv4 forward filter rule 3 action 'accept'
-set firewall ipv4 forward filter rule 3 state related 'enable'
-
-# Default input policy
-set firewall ipv4 input filter default-action 'accept'
-set firewall ipv4 input filter rule 1 action 'accept'
-set firewall ipv4 input filter rule 1 state established 'enable'
-set firewall ipv4 input filter rule 2 action 'drop'
-set firewall ipv4 input filter rule 2 state invalid 'enable'
-set firewall ipv4 input filter rule 3 action 'accept'
-set firewall ipv4 input filter rule 3 state related 'enable'
-
-# Default output policy
-set firewall ipv4 output filter default-action 'accept'
-set firewall ipv4 output filter rule 1 action 'accept'
-set firewall ipv4 output filter rule 1 state established 'enable'
-set firewall ipv4 output filter rule 2 action 'drop'
-set firewall ipv4 output filter rule 2 state invalid 'enable'
-set firewall ipv4 output filter rule 3 action 'accept'
-set firewall ipv4 output filter rule 3 state related 'enable'
-
-# Ensure VyOS can talk to itself
-set firewall ipv4 output filter rule 10 action accept
-set firewall ipv4 output filter rule 10 source group address-group router-addresses
-set firewall ipv4 output filter rule 10 destination group address-group router-addresses
-set firewall ipv4 input  filter rule 10 action accept
-set firewall ipv4 input  filter rule 10 source group address-group router-addresses
-set firewall ipv4 input  filter rule 10 destination group address-group router-addresses
-
-handle_traffic to guest    from homelab iot lan servers services staging trusted wan local
-handle_traffic to homelab  from guest iot lan servers services staging trusted wan local
-handle_traffic to iot      from guest homelab lan servers services staging trusted wan local
-handle_traffic to lan      from guest homelab iot servers services staging trusted wan local
-handle_traffic to servers  from guest homelab iot lan services staging trusted wan local
-handle_traffic to services from guest homelab iot lan servers staging trusted wan local
-handle_traffic to staging  from guest homelab iot lan servers services trusted wan local
-handle_traffic to trusted  from guest homelab iot lan servers services staging wan local
-handle_traffic to wan      from guest homelab iot lan servers services staging trusted local
-handle_traffic to local    from guest homelab iot lan servers services staging trusted wan
+# create-firewall-rules wan
+#   interfaces eth5
 
 # From GUEST to HOMELAB
 set firewall ipv4 name guest-homelab description 'From GUEST to HOMELAB'
 set firewall ipv4 name guest-homelab default-action 'drop'
-set firewall ipv4 name guest-homelab enable-default-log
+set firewall ipv4 name guest-homelab default-log
 set firewall ipv4 name guest-homelab rule 370 action 'accept'
 set firewall ipv4 name guest-homelab rule 370 description 'Rule: accept plex users'
 set firewall ipv4 name guest-homelab rule 370 destination group address-group 'plex-server'
@@ -184,7 +45,7 @@ set firewall ipv4 name guest-homelab rule 370 source group address-group 'plex-u
 # From GUEST to IOT
 set firewall ipv4 name guest-iot description 'From GUEST to IOT'
 set firewall ipv4 name guest-iot default-action 'drop'
-set firewall ipv4 name guest-iot enable-default-log
+set firewall ipv4 name guest-iot default-log
 set firewall ipv4 name guest-iot rule 380 action 'accept'
 set firewall ipv4 name guest-iot rule 380 description 'Rule: accept_tcp_printer_from_allowed_devices'
 set firewall ipv4 name guest-iot rule 380 destination group address-group 'printers'
@@ -206,12 +67,12 @@ set firewall ipv4 name guest-iot rule 431 source group address-group 'sonos-cont
 # From GUEST to LAN
 set firewall ipv4 name guest-lan description 'From GUEST to LAN'
 set firewall ipv4 name guest-lan default-action 'drop'
-set firewall ipv4 name guest-lan enable-default-log
+set firewall ipv4 name guest-lan default-log
 
 # From GUEST to LOCAL
 set firewall ipv4 name guest-local description 'From GUEST to LOCAL'
 set firewall ipv4 name guest-local default-action 'drop'
-set firewall ipv4 name guest-local enable-default-log
+set firewall ipv4 name guest-local default-log
 set firewall ipv4 name guest-local rule 100 action 'accept'
 set firewall ipv4 name guest-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name guest-local rule 100 destination port 'ntp'
@@ -238,12 +99,12 @@ set firewall ipv4 name guest-local rule 450 source group address-group 'sonos-co
 # From GUEST to SERVERS
 set firewall ipv4 name guest-servers description 'From GUEST to SERVERS'
 set firewall ipv4 name guest-servers default-action 'drop'
-set firewall ipv4 name guest-servers enable-default-log
+set firewall ipv4 name guest-servers default-log
 
 # From GUEST to SERVICES
 set firewall ipv4 name guest-services description 'From GUEST to SERVICES'
 set firewall ipv4 name guest-services default-action 'drop'
-set firewall ipv4 name guest-services enable-default-log
+set firewall ipv4 name guest-services default-log
 set firewall ipv4 name guest-services rule 170 action 'accept'
 set firewall ipv4 name guest-services rule 170 description 'Rule: accept dns'
 set firewall ipv4 name guest-services rule 170 destination port 'domain,domain-s'
@@ -252,12 +113,12 @@ set firewall ipv4 name guest-services rule 170 protocol 'tcp_udp'
 # From GUEST to STAGING
 set firewall ipv4 name guest-staging description 'From GUEST to STAGING'
 set firewall ipv4 name guest-staging default-action 'drop'
-set firewall ipv4 name guest-staging enable-default-log
+set firewall ipv4 name guest-staging default-log
 
 # From GUEST to TRUSTED
 set firewall ipv4 name guest-trusted description 'From GUEST to TRUSTED'
 set firewall ipv4 name guest-trusted default-action 'drop'
-set firewall ipv4 name guest-trusted enable-default-log
+set firewall ipv4 name guest-trusted default-log
 
 # From GUEST to WAN
 set firewall ipv4 name guest-wan description 'From IOT to WAN'
@@ -266,7 +127,7 @@ set firewall ipv4 name guest-wan default-action 'accept'
 # From HOMELAB to GUEST
 set firewall ipv4 name homelab-guest description 'From HOMELAB to GUEST'
 set firewall ipv4 name homelab-guest default-action 'drop'
-set firewall ipv4 name homelab-guest enable-default-log
+set firewall ipv4 name homelab-guest default-log
 
 # From HOMELAB to IOT
 set firewall ipv4 name homelab-iot description 'From HOMELAB to IOT'
@@ -275,7 +136,7 @@ set firewall ipv4 name homelab-iot default-action 'accept'
 # From HOMELAB to LAN
 set firewall ipv4 name homelab-lan description 'From HOMELAB to LAN'
 set firewall ipv4 name homelab-lan default-action 'drop'
-set firewall ipv4 name homelab-lan enable-default-log
+set firewall ipv4 name homelab-lan default-log
 set firewall ipv4 name homelab-lan rule 140 action 'accept'
 set firewall ipv4 name homelab-lan rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name homelab-lan rule 140 protocol 'icmp'
@@ -286,7 +147,7 @@ set firewall ipv4 name homelab-lan rule 500 destination group address-group 'uni
 # From HOMELAB to LOCAL
 set firewall ipv4 name homelab-local description 'From HOMELAB to LOCAL'
 set firewall ipv4 name homelab-local default-action 'drop'
-set firewall ipv4 name homelab-local enable-default-log
+set firewall ipv4 name homelab-local default-log
 set firewall ipv4 name homelab-local rule 100 action 'accept'
 set firewall ipv4 name homelab-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name homelab-local rule 100 destination port 'ntp'
@@ -347,7 +208,7 @@ set firewall ipv4 name homelab-wan default-action 'accept'
 # From IOT to GUEST
 set firewall ipv4 name iot-guest description 'From IOT to GUEST'
 set firewall ipv4 name iot-guest default-action 'drop'
-set firewall ipv4 name iot-guest enable-default-log
+set firewall ipv4 name iot-guest default-log
 set firewall ipv4 name iot-guest rule 420 action 'accept'
 set firewall ipv4 name iot-guest rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
 set firewall ipv4 name iot-guest rule 420 destination group address-group 'sonos-controllers'
@@ -364,7 +225,7 @@ set firewall ipv4 name iot-guest rule 421 source group address-group 'sonos-play
 # From IOT to HOMELAB
 set firewall ipv4 name iot-homelab description 'From IOT to HOMELAB'
 set firewall ipv4 name iot-homelab default-action 'drop'
-set firewall ipv4 name iot-homelab enable-default-log
+set firewall ipv4 name iot-homelab default-log
 set firewall ipv4 name iot-homelab rule 370 action 'accept'
 set firewall ipv4 name iot-homelab rule 370 description 'Rule: accept plex users'
 set firewall ipv4 name iot-homelab rule 370 destination group address-group 'plex-server'
@@ -393,12 +254,12 @@ set firewall ipv4 name iot-homelab rule 460 source group address-group 'sonos-pl
 # From IOT to LAN
 set firewall ipv4 name iot-lan description 'From IOT to LAN'
 set firewall ipv4 name iot-lan default-action 'drop'
-set firewall ipv4 name iot-lan enable-default-log
+set firewall ipv4 name iot-lan default-log
 
 # From IOT to LOCAL
 set firewall ipv4 name iot-local description 'From IOT to LOCAL'
 set firewall ipv4 name iot-local default-action 'drop'
-set firewall ipv4 name iot-local enable-default-log
+set firewall ipv4 name iot-local default-log
 set firewall ipv4 name iot-local rule 100 action 'accept'
 set firewall ipv4 name iot-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name iot-local rule 100 destination port 'ntp'
@@ -425,22 +286,22 @@ set firewall ipv4 name iot-local rule 440 source group address-group 'sonos-play
 # From IOT to SERVERS
 set firewall ipv4 name iot-servers description 'From IOT to SERVERS'
 set firewall ipv4 name iot-servers default-action 'drop'
-set firewall ipv4 name iot-servers enable-default-log
+set firewall ipv4 name iot-servers default-log
 
 # From IOT to SERVICES
 set firewall ipv4 name iot-services description 'From IOT to SERVICES'
 set firewall ipv4 name iot-services default-action 'drop'
-set firewall ipv4 name iot-services enable-default-log
+set firewall ipv4 name iot-services default-log
 
 # From IOT to STAGING
 set firewall ipv4 name iot-staging description 'From IOT to STAGING'
 set firewall ipv4 name iot-staging default-action 'drop'
-set firewall ipv4 name iot-staging enable-default-log
+set firewall ipv4 name iot-staging default-log
 
 # From IOT to TRUSTED
 set firewall ipv4 name iot-trusted description 'From IOT to TRUSTED'
 set firewall ipv4 name iot-trusted default-action 'drop'
-set firewall ipv4 name iot-trusted enable-default-log
+set firewall ipv4 name iot-trusted default-log
 set firewall ipv4 name iot-trusted rule 360 action 'accept'
 set firewall ipv4 name iot-trusted rule 360 description 'Rule: accept scanner traffic'
 set firewall ipv4 name iot-trusted rule 360 destination group address-group 'scanner-clients'
@@ -466,22 +327,22 @@ set firewall ipv4 name iot-wan default-action 'accept'
 # From LAN to GUEST
 set firewall ipv4 name lan-guest description 'From LAN to GUEST'
 set firewall ipv4 name lan-guest default-action 'drop'
-set firewall ipv4 name lan-guest enable-default-log
+set firewall ipv4 name lan-guest default-log
 
 # From LAN to HOMELAB
 set firewall ipv4 name lan-homelab description 'From LAN to HOMELAB'
 set firewall ipv4 name lan-homelab default-action 'drop'
-set firewall ipv4 name lan-homelab enable-default-log
+set firewall ipv4 name lan-homelab default-log
 
 # From LAN to IOT
 set firewall ipv4 name lan-iot description 'From LAN to IOT'
 set firewall ipv4 name lan-iot default-action 'drop'
-set firewall ipv4 name lan-iot enable-default-log
+set firewall ipv4 name lan-iot default-log
 
 # From LAN to LOCAL
 set firewall ipv4 name lan-local description 'From LAN to LOCAL'
 set firewall ipv4 name lan-local default-action 'drop'
-set firewall ipv4 name lan-local enable-default-log
+set firewall ipv4 name lan-local default-log
 set firewall ipv4 name lan-local rule 100 action 'accept'
 set firewall ipv4 name lan-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name lan-local rule 100 destination port 'ntp'
@@ -507,12 +368,12 @@ set firewall ipv4 name lan-local rule 910 protocol '2'
 # From LAN to SERVERS
 set firewall ipv4 name lan-servers description 'From LAN to SERVERS'
 set firewall ipv4 name lan-servers default-action 'drop'
-set firewall ipv4 name lan-servers enable-default-log
+set firewall ipv4 name lan-servers default-log
 
 # From LAN to SERVICES
 set firewall ipv4 name lan-services description 'From LAN to SERVICES'
 set firewall ipv4 name lan-services default-action 'accept'
-set firewall ipv4 name lan-services enable-default-log
+set firewall ipv4 name lan-services default-log
 set firewall ipv4 name lan-services rule 170 action 'accept'
 set firewall ipv4 name lan-services rule 170 description 'Rule: accept dns'
 set firewall ipv4 name lan-services rule 170 destination port 'domain,domain-s'
@@ -524,12 +385,12 @@ set firewall ipv4 name lan-services rule 300 destination group address-group 'un
 # From LAN to STAGING
 set firewall ipv4 name lan-staging description 'From LAN to STAGING'
 set firewall ipv4 name lan-staging default-action 'drop'
-set firewall ipv4 name lan-staging enable-default-log
+set firewall ipv4 name lan-staging default-log
 
 # From LAN to TRUSTED
 set firewall ipv4 name lan-trusted description 'From LAN to TRUSTED'
 set firewall ipv4 name lan-trusted default-action 'drop'
-set firewall ipv4 name lan-trusted enable-default-log
+set firewall ipv4 name lan-trusted default-log
 set firewall ipv4 name lan-trusted rule 900 action 'drop'
 set firewall ipv4 name lan-trusted rule 900 description 'Rule: drop 10001 (no log)'
 set firewall ipv4 name lan-trusted rule 900 destination port '10001'
@@ -542,7 +403,7 @@ set firewall ipv4 name lan-wan default-action 'accept'
 # From LOCAL to GUEST
 set firewall ipv4 name local-guest description 'From LOCAL to GUEST'
 set firewall ipv4 name local-guest default-action 'drop'
-set firewall ipv4 name local-guest enable-default-log
+set firewall ipv4 name local-guest default-log
 set firewall ipv4 name local-guest rule 120 action 'accept'
 set firewall ipv4 name local-guest rule 120 description 'Rule: accept igmp'
 set firewall ipv4 name local-guest rule 120 protocol '2'
@@ -560,7 +421,7 @@ set firewall ipv4 name local-guest rule 410 source group address-group 'sonos-pl
 # From LOCAL to HOMELAB
 set firewall ipv4 name local-homelab description 'From LOCAL to HOMELAB'
 set firewall ipv4 name local-homelab default-action 'drop'
-set firewall ipv4 name local-homelab enable-default-log
+set firewall ipv4 name local-homelab default-log
 set firewall ipv4 name local-homelab rule 140 action 'accept'
 set firewall ipv4 name local-homelab rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name local-homelab rule 140 protocol 'icmp'
@@ -581,7 +442,7 @@ set firewall ipv4 name local-homelab rule 410 source group address-group 'sonos-
 # From LOCAL to IOT
 set firewall ipv4 name local-iot description 'From LOCAL to IOT'
 set firewall ipv4 name local-iot default-action 'drop'
-set firewall ipv4 name local-iot enable-default-log
+set firewall ipv4 name local-iot default-log
 set firewall ipv4 name local-iot rule 120 action 'accept'
 set firewall ipv4 name local-iot rule 120 description 'Rule: accept igmp'
 set firewall ipv4 name local-iot rule 120 protocol '2'
@@ -602,7 +463,7 @@ set firewall ipv4 name local-iot rule 400 source group address-group 'sonos-cont
 # From LOCAL to LAN
 set firewall ipv4 name local-lan description 'From LOCAL to LAN'
 set firewall ipv4 name local-lan default-action 'drop'
-set firewall ipv4 name local-lan enable-default-log
+set firewall ipv4 name local-lan default-log
 set firewall ipv4 name local-lan rule 140 action 'accept'
 set firewall ipv4 name local-lan rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name local-lan rule 140 protocol 'icmp'
@@ -614,7 +475,7 @@ set firewall ipv4 name local-lan rule 160 protocol 'tcp'
 # From LOCAL to SERVERS
 set firewall ipv4 name local-servers description 'From LOCAL to SERVERS'
 set firewall ipv4 name local-servers default-action 'drop'
-set firewall ipv4 name local-servers enable-default-log
+set firewall ipv4 name local-servers default-log
 set firewall ipv4 name local-servers rule 140 action 'accept'
 set firewall ipv4 name local-servers rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name local-servers rule 140 protocol 'icmp'
@@ -630,7 +491,7 @@ set firewall ipv4 name local-services default-action 'accept'
 # From LOCAL to STAGING
 set firewall ipv4 name local-staging description 'From LOCAL to STAGING'
 set firewall ipv4 name local-staging default-action 'drop'
-set firewall ipv4 name local-staging enable-default-log
+set firewall ipv4 name local-staging default-log
 set firewall ipv4 name local-staging rule 140 action 'accept'
 set firewall ipv4 name local-staging rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name local-staging rule 140 protocol 'icmp'
@@ -642,7 +503,7 @@ set firewall ipv4 name local-staging rule 150 protocol 'tcp'
 # From LOCAL to TRUSTED
 set firewall ipv4 name local-trusted description 'From LOCAL to TRUSTED'
 set firewall ipv4 name local-trusted default-action 'drop'
-set firewall ipv4 name local-trusted enable-default-log
+set firewall ipv4 name local-trusted default-log
 set firewall ipv4 name local-trusted rule 120 action 'accept'
 set firewall ipv4 name local-trusted rule 120 description 'Rule: accept igmp'
 set firewall ipv4 name local-trusted rule 120 protocol '2'
@@ -671,7 +532,7 @@ set firewall ipv4 name local-wan default-action 'accept'
 # From SERVERS to GUEST
 set firewall ipv4 name servers-guest description 'From SERVERS to GUEST'
 set firewall ipv4 name servers-guest default-action 'drop'
-set firewall ipv4 name servers-guest enable-default-log
+set firewall ipv4 name servers-guest default-log
 
 # From SERVERS to HOMELAB
 set firewall ipv4 name servers-homelab description 'From SERVERS to HOMELAB'
@@ -684,7 +545,7 @@ set firewall ipv4 name servers-iot default-action 'accept'
 # From SERVERS to LAN
 set firewall ipv4 name servers-lan description 'From SERVERS to LAN'
 set firewall ipv4 name servers-lan default-action 'drop'
-set firewall ipv4 name servers-lan enable-default-log
+set firewall ipv4 name servers-lan default-log
 set firewall ipv4 name servers-lan rule 140 action 'accept'
 set firewall ipv4 name servers-lan rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name servers-lan rule 140 protocol 'icmp'
@@ -695,7 +556,7 @@ set firewall ipv4 name servers-lan rule 500 destination group address-group 'uni
 # From SERVERS to LOCAL
 set firewall ipv4 name servers-local description 'From SERVERS to LOCAL'
 set firewall ipv4 name servers-local default-action 'drop'
-set firewall ipv4 name servers-local enable-default-log
+set firewall ipv4 name servers-local default-log
 set firewall ipv4 name servers-local rule 100 action 'accept'
 set firewall ipv4 name servers-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name servers-local rule 100 destination port 'ntp'
@@ -751,7 +612,7 @@ set firewall ipv4 name servers-wan default-action 'accept'
 # From SERVICES to GUEST
 set firewall ipv4 name services-guest description 'From SERVICES to GUEST'
 set firewall ipv4 name services-guest default-action 'drop'
-set firewall ipv4 name services-guest enable-default-log
+set firewall ipv4 name services-guest default-log
 
 # From SERVICES to HOMELAB
 set firewall ipv4 name services-homelab description 'From SERVICES to HOMELAB'
@@ -760,7 +621,7 @@ set firewall ipv4 name services-homelab default-action 'accept'
 # From SERVICES to IOT
 set firewall ipv4 name services-iot description 'From SERVICES to IOT'
 set firewall ipv4 name services-iot default-action 'drop'
-set firewall ipv4 name services-iot enable-default-log
+set firewall ipv4 name services-iot default-log
 set firewall ipv4 name services-iot rule 140 action 'accept'
 set firewall ipv4 name services-iot rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name services-iot rule 140 protocol 'icmp'
@@ -768,7 +629,7 @@ set firewall ipv4 name services-iot rule 140 protocol 'icmp'
 # From SERVICES to LAN
 set firewall ipv4 name services-lan description 'From SERVICES to LAN'
 set firewall ipv4 name services-lan default-action 'accept'
-set firewall ipv4 name services-lan enable-default-log
+set firewall ipv4 name services-lan default-log
 set firewall ipv4 name services-lan rule 140 action 'accept'
 set firewall ipv4 name services-lan rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name services-lan rule 140 protocol 'icmp'
@@ -776,7 +637,7 @@ set firewall ipv4 name services-lan rule 140 protocol 'icmp'
 # From SERVICES to LOCAL
 set firewall ipv4 name services-local description 'From SERVICES to LOCAL'
 set firewall ipv4 name services-local default-action 'accept'
-set firewall ipv4 name services-local enable-default-log
+set firewall ipv4 name services-local default-log
 set firewall ipv4 name services-local rule 100 action 'accept'
 set firewall ipv4 name services-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name services-local rule 100 destination port 'ntp'
@@ -798,7 +659,7 @@ set firewall ipv4 name services-staging default-action 'accept'
 # From SERVICES to TRUSTED
 set firewall ipv4 name services-trusted description 'From SERVICES to TRUSTED'
 set firewall ipv4 name services-trusted default-action 'drop'
-set firewall ipv4 name services-trusted enable-default-log
+set firewall ipv4 name services-trusted default-log
 
 # From SERVICES to WAN
 set firewall ipv4 name services-wan description 'From SERVICES to WAN'
@@ -807,7 +668,7 @@ set firewall ipv4 name services-wan default-action 'accept'
 # From STAGING to GUEST
 set firewall ipv4 name staging-guest description 'From STAGING to GUEST'
 set firewall ipv4 name staging-guest default-action 'drop'
-set firewall ipv4 name staging-guest enable-default-log
+set firewall ipv4 name staging-guest default-log
 
 # From STAGING to HOMELAB
 set firewall ipv4 name staging-homelab description 'From STAGING to HOMELAB'
@@ -820,7 +681,7 @@ set firewall ipv4 name staging-iot default-action 'accept'
 # From STAGING to LAN
 set firewall ipv4 name staging-lan description 'From STAGING to LAN'
 set firewall ipv4 name staging-lan default-action 'drop'
-set firewall ipv4 name staging-lan enable-default-log
+set firewall ipv4 name staging-lan default-log
 set firewall ipv4 name staging-lan rule 140 action 'accept'
 set firewall ipv4 name staging-lan rule 140 description 'Rule: accept icmp'
 set firewall ipv4 name staging-lan rule 140 protocol 'icmp'
@@ -828,7 +689,7 @@ set firewall ipv4 name staging-lan rule 140 protocol 'icmp'
 # From STAGING to LOCAL
 set firewall ipv4 name staging-local description 'From STAGING to LOCAL'
 set firewall ipv4 name staging-local default-action 'drop'
-set firewall ipv4 name staging-local enable-default-log
+set firewall ipv4 name staging-local default-log
 set firewall ipv4 name staging-local rule 100 action 'accept'
 set firewall ipv4 name staging-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name staging-local rule 100 destination port 'ntp'
@@ -876,12 +737,12 @@ set firewall ipv4 name staging-wan default-action 'accept'
 # From TRUSTED to GUEST
 set firewall ipv4 name trusted-guest description 'From TRUSTED to GUEST'
 set firewall ipv4 name trusted-guest default-action 'drop'
-set firewall ipv4 name trusted-guest enable-default-log
+set firewall ipv4 name trusted-guest default-log
 
 # From TRUSTED to HOMELAB
 set firewall ipv4 name trusted-homelab description 'From TRUSTED to HOMELAB'
 set firewall ipv4 name trusted-homelab default-action 'drop'
-set firewall ipv4 name trusted-homelab enable-default-log
+set firewall ipv4 name trusted-homelab default-log
 set firewall ipv4 name trusted-homelab rule 520 action 'accept'
 set firewall ipv4 name trusted-homelab rule 520 description 'Rule: accept scotte'
 set firewall ipv4 name trusted-homelab rule 520 source group address-group 'scotte-devices'
@@ -908,7 +769,7 @@ set firewall ipv4 name trusted-iot rule 431 source group address-group 'sonos-co
 # From TRUSTED to LAN
 set firewall ipv4 name trusted-lan description 'From TRUSTED to LAN'
 set firewall ipv4 name trusted-lan default-action 'drop'
-set firewall ipv4 name trusted-lan enable-default-log
+set firewall ipv4 name trusted-lan default-log
 set firewall ipv4 name trusted-lan rule 520 action 'accept'
 set firewall ipv4 name trusted-lan rule 520 description 'Rule: accept scotte'
 set firewall ipv4 name trusted-lan rule 520 source group address-group 'scotte-devices'
@@ -919,7 +780,7 @@ set firewall ipv4 name trusted-lan rule 540 source group address-group 'unifi-ca
 # From TRUSTED to LOCAL
 set firewall ipv4 name trusted-local description 'From TRUSTED to LOCAL'
 set firewall ipv4 name trusted-local default-action 'drop'
-set firewall ipv4 name trusted-local enable-default-log
+set firewall ipv4 name trusted-local default-log
 set firewall ipv4 name trusted-local rule 100 action 'accept'
 set firewall ipv4 name trusted-local rule 100 description 'Rule: accept ntp'
 set firewall ipv4 name trusted-local rule 100 destination port 'ntp'
@@ -967,7 +828,7 @@ set firewall ipv4 name trusted-local rule 450 source group address-group 'sonos-
 # From TRUSTED to SERVERS
 set firewall ipv4 name trusted-servers description 'From TRUSTED to SERVERS'
 set firewall ipv4 name trusted-servers default-action 'drop'
-set firewall ipv4 name trusted-servers enable-default-log
+set firewall ipv4 name trusted-servers default-log
 set firewall ipv4 name trusted-servers rule 520 action 'accept'
 set firewall ipv4 name trusted-servers rule 520 description 'Rule: accept scotte'
 set firewall ipv4 name trusted-servers rule 520 source group address-group 'scotte-devices'
@@ -982,7 +843,7 @@ set firewall ipv4 name trusted-services default-action 'accept'
 # From TRUSTED to STAGING
 set firewall ipv4 name trusted-staging description 'From TRUSTED to STAGING'
 set firewall ipv4 name trusted-staging default-action 'drop'
-set firewall ipv4 name trusted-staging enable-default-log
+set firewall ipv4 name trusted-staging default-log
 set firewall ipv4 name trusted-staging rule 520 action 'accept'
 set firewall ipv4 name trusted-staging rule 520 description 'Rule: accept scotte'
 set firewall ipv4 name trusted-staging rule 520 source group address-group 'scotte-devices'
@@ -994,27 +855,27 @@ set firewall ipv4 name trusted-wan default-action 'accept'
 # From WAN to GUEST
 set firewall ipv4 name wan-guest description 'From WAN to GUEST'
 set firewall ipv4 name wan-guest default-action 'drop'
-set firewall ipv4 name wan-guest enable-default-log
+set firewall ipv4 name wan-guest default-log
 
 # From WAN to HOMELAB
 set firewall ipv4 name wan-homelab description 'From WAN to HOMELAB'
 set firewall ipv4 name wan-homelab default-action 'drop'
-set firewall ipv4 name wan-homelab enable-default-log
+set firewall ipv4 name wan-homelab default-log
 
 # From WAN to IOT
 set firewall ipv4 name wan-iot description 'From WAN to IOT'
 set firewall ipv4 name wan-iot default-action 'drop'
-set firewall ipv4 name wan-iot enable-default-log
+set firewall ipv4 name wan-iot default-log
 
 # From WAN to LAN
 set firewall ipv4 name wan-lan description 'From WAN to LAN'
 set firewall ipv4 name wan-lan default-action 'drop'
-set firewall ipv4 name wan-lan enable-default-log
+set firewall ipv4 name wan-lan default-log
 
 # From WAN to LOCAL
 set firewall ipv4 name wan-local description 'From WAN to LOCAL'
 set firewall ipv4 name wan-local default-action 'drop'
-set firewall ipv4 name wan-local enable-default-log
+set firewall ipv4 name wan-local default-log
 set firewall ipv4 name wan-local rule 180 action 'accept'
 set firewall ipv4 name wan-local rule 180 description 'Rule: accept wireguard'
 set firewall ipv4 name wan-local rule 180 destination port '51820'
@@ -1023,19 +884,19 @@ set firewall ipv4 name wan-local rule 180 protocol 'udp'
 # From WAN to SERVERS
 set firewall ipv4 name wan-servers description 'From WAN to SERVERS'
 set firewall ipv4 name wan-servers default-action 'drop'
-set firewall ipv4 name wan-servers enable-default-log
+set firewall ipv4 name wan-servers default-log
 
 # From WAN to SERVICES
 set firewall ipv4 name wan-services description 'From WAN to SERVICES'
 set firewall ipv4 name wan-services default-action 'drop'
-set firewall ipv4 name wan-services enable-default-log
+set firewall ipv4 name wan-services default-log
 
 # From WAN to STAGING
 set firewall ipv4 name wan-staging description 'From WAN to STAGING'
 set firewall ipv4 name wan-staging default-action 'drop'
-set firewall ipv4 name wan-staging enable-default-log
+set firewall ipv4 name wan-staging default-log
 
 # From WAN to TRUSTED
 set firewall ipv4 name wan-trusted description 'From WAN to TRUSTED'
 set firewall ipv4 name wan-trusted default-action 'drop'
-set firewall ipv4 name wan-trusted enable-default-log
+set firewall ipv4 name wan-trusted default-log
