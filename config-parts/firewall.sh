@@ -1,19 +1,11 @@
 #!/bin/vbash
 # shellcheck disable=all
 
-# Interface groups
-set firewall group interface-group IG_guest interface 'bond0.99'
-set firewall group interface-group IG_homelab interface 'bond0.11'
-set firewall group interface-group IG_iot interface 'bond0.98'
-set firewall group interface-group IG_lan interface 'bond0'
-set firewall group interface-group IG_lan interface 'eth4'
-set firewall group interface-group IG_servers interface 'bond0.10'
-set firewall group interface-group IG_services interface 'pod-services'
-set firewall group interface-group IG_staging interface 'bond0.12'
-set firewall group interface-group IG_trusted interface 'bond0.20'
-set firewall group interface-group IG_trusted interface 'eth4.20'
-set firewall group interface-group IG_trusted interface 'wg01'
-set firewall group interface-group IG_wan interface 'eth5'
+# General configuration
+set firewall global-options state-policy established action 'accept'
+set firewall global-options state-policy related action 'accept'
+set firewall global-options all-ping enable
+set firewall global-options broadcast-ping disable
 
 # Router (VyOS itself)
 set firewall group address-group router-addresses address 10.0.0.1
