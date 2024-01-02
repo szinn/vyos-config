@@ -25,3 +25,4 @@ export EDITOR=vi
 END
   chown vyos:users /home/vyos/.bash_aliases
 fi
+# sudo ln -sf /config/scripts/vyaml /usr/local/bin/vyaml
