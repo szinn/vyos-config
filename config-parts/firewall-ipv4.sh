@@ -63,7 +63,8 @@ create-firewall-rules homelab
   to-vlan lan drop-log
     allow-traffic icmp rtsp
   to-vlan local drop-log
-    allow-traffic bgp dhcp icmp ntp
+    allow-traffic bgp dhcp icmp iperf ntp
+    drop-traffic multicast-224
   to-vlan servers accept
   to-vlan services accept
   to-vlan staging accept
@@ -93,11 +94,13 @@ create-firewall-rules lan
   to-vlan iot drop-log
   to-vlan local drop-log
     allow-traffic dhcp ntp ssh
+    drop-traffic multicast-224 port-10001
   to-vlan servers drop-log
   to-vlan services accept-log
     allow-traffic dns
   to-vlan staging drop-log
   to-vlan trusted drop-log
+    drop-traffic port-10001
   to-vlan wan accept
 
 create-firewall-rules local
@@ -127,7 +130,8 @@ create-firewall-rules servers
   to-vlan lan drop-log
     allow-traffic icmp rtsp
   to-vlan local drop-log
-    allow-traffic bgp icmp dhcp ntp ssh
+    allow-traffic bgp icmp iperf dhcp ntp ssh
+    drop-traffic multicast-224
   to-vlan services accept
   to-vlan staging accept
   to-vlan trusted drop
@@ -158,6 +162,7 @@ create-firewall-rules staging
     allow-traffic icmp
   to-vlan local drop-log
     allow-traffic bgp dhcp icmp ntp
+    drop-traffic multicast-224
   to-vlan servers accept
   to-vlan services accept
   to-vlan trusted drop
@@ -171,7 +176,7 @@ create-firewall-rules trusted
   to-vlan iot accept
   to-vlan lan drop-log
   to-vlan local drop-log
-    allow-traffic dhcp icmp igmp mdns ntp ssh
+    allow-traffic dhcp icmp igmp iperf mdns ntp ssh
   to-vlan servers drop-log
   to-vlan services accept
   to-vlan staging drop-log
@@ -323,10 +328,10 @@ set firewall ipv4 name guest-local rule 450 source group address-group 'sonos-co
 # set firewall ipv4 name homelab-local rule 150 description 'Rule: accept bgp'
 # set firewall ipv4 name homelab-local rule 150 destination port 'bgp'
 # set firewall ipv4 name homelab-local rule 150 protocol 'tcp'
-set firewall ipv4 name homelab-local rule 330 action 'accept'
-set firewall ipv4 name homelab-local rule 330 description 'Rule: accept iperf'
-set firewall ipv4 name homelab-local rule 330 destination port '5001'
-set firewall ipv4 name homelab-local rule 330 protocol 'tcp'
+# set firewall ipv4 name homelab-local rule 330 action 'accept'
+# set firewall ipv4 name homelab-local rule 330 description 'Rule: accept iperf'
+# set firewall ipv4 name homelab-local rule 330 destination port '5001'
+# set firewall ipv4 name homelab-local rule 330 protocol 'tcp'
 set firewall ipv4 name homelab-local rule 350 action 'accept'
 set firewall ipv4 name homelab-local rule 350 description 'Rule: accept prometheus metrics scrape'
 set firewall ipv4 name homelab-local rule 350 destination group port-group 'prometheus-metrics'
@@ -336,10 +341,10 @@ set firewall ipv4 name homelab-local rule 450 description 'Rule: accept_discover
 set firewall ipv4 name homelab-local rule 450 destination port '1900,1901,1902,57621'
 set firewall ipv4 name homelab-local rule 450 protocol 'udp'
 set firewall ipv4 name homelab-local rule 450 source group address-group 'sonos-controllers'
-set firewall ipv4 name homelab-local rule 910 action 'drop'
-set firewall ipv4 name homelab-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
-set firewall ipv4 name homelab-local rule 910 destination address '224.0.0.1'
-set firewall ipv4 name homelab-local rule 910 protocol '2'
+# set firewall ipv4 name homelab-local rule 910 action 'drop'
+# set firewall ipv4 name homelab-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+# set firewall ipv4 name homelab-local rule 910 destination address '224.0.0.1'
+# set firewall ipv4 name homelab-local rule 910 protocol '2'
 
 # From HOMELAB to SERVERS
 # set firewall ipv4 name homelab-servers description 'From HOMELAB to SERVERS'
@@ -515,14 +520,14 @@ set firewall ipv4 name iot-trusted rule 421 source group address-group 'sonos-pl
 # set firewall ipv4 name lan-local rule 160 description 'Rule: accept ssh'
 # set firewall ipv4 name lan-local rule 160 destination port 'ssh'
 # set firewall ipv4 name lan-local rule 160 protocol 'tcp'
-set firewall ipv4 name lan-local rule 900 action 'drop'
-set firewall ipv4 name lan-local rule 900 description 'Rule: drop 10001 (no log)'
-set firewall ipv4 name lan-local rule 900 destination port '10001'
-set firewall ipv4 name lan-local rule 900 protocol 'udp'
-set firewall ipv4 name lan-local rule 910 action 'drop'
-set firewall ipv4 name lan-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
-set firewall ipv4 name lan-local rule 910 destination address '224.0.0.1'
-set firewall ipv4 name lan-local rule 910 protocol '2'
+# set firewall ipv4 name lan-local rule 900 action 'drop'
+# set firewall ipv4 name lan-local rule 900 description 'Rule: drop 10001 (no log)'
+# set firewall ipv4 name lan-local rule 900 destination port '10001'
+# set firewall ipv4 name lan-local rule 900 protocol 'udp'
+# set firewall ipv4 name lan-local rule 910 action 'drop'
+# set firewall ipv4 name lan-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+# set firewall ipv4 name lan-local rule 910 destination address '224.0.0.1'
+# set firewall ipv4 name lan-local rule 910 protocol '2'
 
 # From LAN to SERVERS
 # set firewall ipv4 name lan-servers description 'From LAN to SERVERS'
@@ -550,10 +555,10 @@ set firewall ipv4 name lan-services rule 300 destination group address-group 'un
 # set firewall ipv4 name lan-trusted description 'From LAN to TRUSTED'
 # set firewall ipv4 name lan-trusted default-action 'drop'
 # set firewall ipv4 name lan-trusted default-log
-set firewall ipv4 name lan-trusted rule 900 action 'drop'
-set firewall ipv4 name lan-trusted rule 900 description 'Rule: drop 10001 (no log)'
-set firewall ipv4 name lan-trusted rule 900 destination port '10001'
-set firewall ipv4 name lan-trusted rule 900 protocol 'udp'
+# set firewall ipv4 name lan-trusted rule 900 action 'drop'
+# set firewall ipv4 name lan-trusted rule 900 description 'Rule: drop 10001 (no log)'
+# set firewall ipv4 name lan-trusted rule 900 destination port '10001'
+# set firewall ipv4 name lan-trusted rule 900 protocol 'udp'
 
 # From LAN to WAN
 # set firewall ipv4 name lan-wan description 'From LAN to WAN'
@@ -736,14 +741,14 @@ set firewall ipv4 name local-trusted rule 410 source group address-group 'sonos-
 # set firewall ipv4 name servers-local rule 160 description 'Rule: accept ssh'
 # set firewall ipv4 name servers-local rule 160 destination port 'ssh'
 # set firewall ipv4 name servers-local rule 160 protocol 'tcp'
-set firewall ipv4 name servers-local rule 330 action 'accept'
-set firewall ipv4 name servers-local rule 330 description 'Rule: accept iperf'
-set firewall ipv4 name servers-local rule 330 destination port '5001'
-set firewall ipv4 name servers-local rule 330 protocol 'tcp'
-set firewall ipv4 name servers-local rule 910 action 'drop'
-set firewall ipv4 name servers-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
-set firewall ipv4 name servers-local rule 910 destination address '224.0.0.1'
-set firewall ipv4 name servers-local rule 910 protocol '2'
+# set firewall ipv4 name servers-local rule 330 action 'accept'
+# set firewall ipv4 name servers-local rule 330 description 'Rule: accept iperf'
+# set firewall ipv4 name servers-local rule 330 destination port '5001'
+# set firewall ipv4 name servers-local rule 330 protocol 'tcp'
+# set firewall ipv4 name servers-local rule 910 action 'drop'
+# set firewall ipv4 name servers-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+# set firewall ipv4 name servers-local rule 910 destination address '224.0.0.1'
+# set firewall ipv4 name servers-local rule 910 protocol '2'
 
 # From SERVERS to SERVICES
 # set firewall ipv4 name servers-services description 'From SERVERS to SERVICES'
@@ -869,10 +874,10 @@ set firewall ipv4 name staging-local rule 350 action 'accept'
 set firewall ipv4 name staging-local rule 350 description 'Rule: accept prometheus metrics scrape'
 set firewall ipv4 name staging-local rule 350 destination group port-group 'prometheus-metrics'
 set firewall ipv4 name staging-local rule 350 protocol 'tcp'
-set firewall ipv4 name staging-local rule 910 action 'drop'
-set firewall ipv4 name staging-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
-set firewall ipv4 name staging-local rule 910 destination address '224.0.0.1'
-set firewall ipv4 name staging-local rule 910 protocol '2'
+# set firewall ipv4 name staging-local rule 910 action 'drop'
+# set firewall ipv4 name staging-local rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+# set firewall ipv4 name staging-local rule 910 destination address '224.0.0.1'
+# set firewall ipv4 name staging-local rule 910 protocol '2'
 
 # From STAGING to SERVERS
 # set firewall ipv4 name staging-servers description 'From STAGING to SERVERS'
@@ -968,10 +973,10 @@ set firewall ipv4 name trusted-local rule 320 action 'accept'
 set firewall ipv4 name trusted-local rule 320 description 'Rule: accept vnstat'
 set firewall ipv4 name trusted-local rule 320 destination port '8685'
 set firewall ipv4 name trusted-local rule 320 protocol 'tcp'
-set firewall ipv4 name trusted-local rule 330 action 'accept'
-set firewall ipv4 name trusted-local rule 330 description 'Rule: accept iperf'
-set firewall ipv4 name trusted-local rule 330 destination port '5001'
-set firewall ipv4 name trusted-local rule 330 protocol 'tcp'
+# set firewall ipv4 name trusted-local rule 330 action 'accept'
+# set firewall ipv4 name trusted-local rule 330 description 'Rule: accept iperf'
+# set firewall ipv4 name trusted-local rule 330 destination port '5001'
+# set firewall ipv4 name trusted-local rule 330 protocol 'tcp'
 set firewall ipv4 name trusted-local rule 340 action 'drop'
 set firewall ipv4 name trusted-local rule 340 description 'Rule: ignore scansnap probe'
 set firewall ipv4 name trusted-local rule 340 destination address '255.255.255.255'
