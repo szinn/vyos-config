@@ -17,7 +17,7 @@ function to-vlan {
   ZONE=${CURRENT_VLAN}-${TARGET_VLAN}
 
   set firewall zone ${TARGET_VLAN} from ${CURRENT_VLAN} firewall name ${ZONE}
-  # drop-traffic-invalid ${ZONE}
+  drop-traffic-invalid ${ZONE}
 
   case $2 in
     drop)
@@ -155,4 +155,13 @@ function drop-traffic-multicast-224 {
   set firewall ipv4 name $zone rule 910 action 'drop'
   set firewall ipv4 name $zone rule 910 destination address '224.0.0.1'
   set firewall ipv4 name $zone rule 910 protocol '2'
+}
+
+function drop-traffic-invalid {
+  zone=$1
+
+  set firewall ipv4 name $zone rule 999 action 'drop'
+  set firewall ipv4 name $zone rule 999 description 'Rule: drop_invalid'
+  set firewall ipv4 name $zone rule 999 state invalid
+  set firewall ipv4 name $zone rule 999 log
 }
