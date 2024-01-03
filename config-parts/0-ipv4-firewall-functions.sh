@@ -129,3 +129,30 @@ function allow-traffic-wireguard {
   set firewall ipv4 name $zone rule 180 destination port '51820'
   set firewall ipv4 name $zone rule 180 protocol 'udp'
 }
+
+function allow-traffic-iperf {
+  zone=$1
+
+  # set firewall ipv4 name $zone rule 330 description 'Rule: accept iperf'
+  set firewall ipv4 name $zone rule 330 action 'accept'
+  set firewall ipv4 name $zone rule 330 destination port '5001'
+  set firewall ipv4 name $zone rule 330 protocol 'tcp'
+}
+
+function drop-traffic-port-10001 {
+  zone=$1
+
+  # set firewall ipv4 name $zone rule 900 description 'Rule: drop 10001 (no log)'
+  set firewall ipv4 name $zone rule 900 action 'drop'
+  set firewall ipv4 name $zone rule 900 destination port '10001'
+  set firewall ipv4 name $zone rule 900 protocol 'udp'
+}
+
+function drop-traffic-multicast-224 {
+  zone=$1
+
+  # set firewall ipv4 name $zone rule 910 description 'Rule: drop multicast to 224.0.0.1 (no log)'
+  set firewall ipv4 name $zone rule 910 action 'drop'
+  set firewall ipv4 name $zone rule 910 destination address '224.0.0.1'
+  set firewall ipv4 name $zone rule 910 protocol '2'
+}
