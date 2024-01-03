@@ -40,15 +40,70 @@ function allow-traffic-rtsp {
   set firewall ipv4 name $zone rule 500 destination group address-group 'unifi-unvr'
 }
 
+function allow-traffic-sonos {
+  zone=$1
+
+  # set firewall ipv4 name $zone rule 400 description 'Rule: accept_discovery_from_sonos_controllers'
+  set firewall ipv4 name $zone rule 400 action 'accept'
+  set firewall ipv4 name $zone rule 400 source group address-group 'sonos-controllers'
+  set firewall ipv4 name $zone rule 400 destination port '1900,1901,1902,57621'
+  set firewall ipv4 name $zone rule 400 protocol 'udp'
+  # set firewall ipv4 name $zone rule 410 description 'Rule: accept_discovery_from_sonos_players'
+  set firewall ipv4 name $zone rule 410 action 'accept'
+  set firewall ipv4 name $zone rule 410 destination port '1900,1901,1902'
+  set firewall ipv4 name $zone rule 410 protocol 'udp'
+  set firewall ipv4 name $zone rule 410 source group address-group 'sonos-players'
+  # set firewall ipv4 name $zone rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
+  set firewall ipv4 name $zone rule 420 action 'accept'
+  set firewall ipv4 name $zone rule 420 source group address-group 'sonos-players'
+  set firewall ipv4 name $zone rule 420 destination group address-group 'sonos-controllers'
+  set firewall ipv4 name $zone rule 420 destination port '319,320,30000-65535'
+  set firewall ipv4 name $zone rule 420 protocol 'udp'
+  # set firewall ipv4 name $zone rule 421 description 'Rule: accept_tcp_from_sonos_players_to_sonos_controllers'
+  set firewall ipv4 name $zone rule 421 action 'accept'
+  set firewall ipv4 name $zone rule 421 source group address-group 'sonos-players'
+  set firewall ipv4 name $zone rule 421 destination group address-group 'sonos-controllers'
+  set firewall ipv4 name $zone rule 421 destination port '1400,3400,3401,3500,30000-65535'
+  set firewall ipv4 name $zone rule 421 protocol 'tcp'
+  # set firewall ipv4 name $zone rule 430 description 'Rule: accept_tcp_from_sonos_controllers_to_sonos_players'
+  set firewall ipv4 name $zone rule 430 action 'accept'
+  set firewall ipv4 name $zone rule 430 source group address-group 'sonos-controllers'
+  set firewall ipv4 name $zone rule 430 destination group address-group 'sonos-players'
+  set firewall ipv4 name $zone rule 430 destination port '1400,1443,4444,7000,30000-65535'
+  set firewall ipv4 name $zone rule 430 protocol 'tcp'
+  # set firewall ipv4 name $zone rule 431 description 'Rule: accept_udp_from_sonos_controllers_to_sonos_players'
+  set firewall ipv4 name $zone rule 431 action 'accept'
+  set firewall ipv4 name $zone rule 431 source group address-group 'sonos-controllers'
+  set firewall ipv4 name $zone rule 431 destination group address-group 'sonos-players'
+  set firewall ipv4 name $zone rule 431 destination port '319,320,30000-65535'
+  set firewall ipv4 name $zone rule 431 protocol 'udp'
+  # set firewall ipv4 name $zone rule 440 description 'Rule: accept_discovery_from_sonos_players'
+  set firewall ipv4 name $zone rule 440 action 'accept'
+  set firewall ipv4 name $zone rule 440 source group address-group 'sonos-players'
+  set firewall ipv4 name $zone rule 440 destination port '1900,1901,1902'
+  set firewall ipv4 name $zone rule 440 protocol 'udp'
+  # set firewall ipv4 name $zone rule 450 description 'Rule: accept_discovery_from_sonos_controllers'
+  set firewall ipv4 name $zone rule 450 action 'accept'
+  set firewall ipv4 name $zone rule 450 source group address-group 'sonos-controllers'
+  set firewall ipv4 name $zone rule 450 destination port '1900,1901,1902,57621'
+  set firewall ipv4 name $zone rule 450 protocol 'udp'
+  # set firewall ipv4 name $zone rule 460 description 'Rule: accept_music_library_sonos_players'
+  set firewall ipv4 name $zone rule 460 action 'accept'
+  set firewall ipv4 name $zone rule 460 source group address-group 'sonos-players'
+  set firewall ipv4 name $zone rule 460 destination group address-group 'sonos-library'
+  set firewall ipv4 name $zone rule 460 destination port '4534,http,https'
+  set firewall ipv4 name $zone rule 460 protocol 'tcp'
+}
+
 create-firewall-rules guest
   interfaces bond0.99
   to-vlan homelab drop-log
     allow-traffic plex
   to-vlan iot drop-log
-    allow-traffic printer
+    allow-traffic printer sonos
   to-vlan lan drop-log
   to-vlan local drop-log
-    allow-traffic dhcp igmp mdns ntp
+    allow-traffic dhcp igmp mdns ntp sonos
   to-vlan servers drop-log
   to-vlan services drop-log
     allow-traffic dns
@@ -63,7 +118,7 @@ create-firewall-rules homelab
   to-vlan lan drop-log
     allow-traffic icmp rtsp
   to-vlan local drop-log
-    allow-traffic bgp dhcp icmp iperf ntp
+    allow-traffic bgp dhcp icmp iperf ntp sonos
     drop-traffic multicast-224
   to-vlan servers accept
   to-vlan services accept
@@ -75,16 +130,17 @@ create-firewall-rules homelab
 create-firewall-rules iot
   interfaces bond0.98
   to-vlan guest drop-log
+    allow-traffic sonos
   to-vlan homelab drop-log
-    allow-traffic plex
+    allow-traffic plex sonos
   to-vlan lan drop-log
   to-vlan local drop-log
-    allow-traffic dhcp igmp mdns ntp
+    allow-traffic dhcp igmp mdns ntp sonos
   to-vlan servers drop-log
   to-vlan services drop-log
   to-vlan staging drop-log
   to-vlan trusted drop-log
-    allow-traffic scanner
+    allow-traffic scanner sonos
   to-vlan wan accept
 
 create-firewall-rules lan
@@ -106,11 +162,11 @@ create-firewall-rules lan
 create-firewall-rules local
   interfaces local-zone
   to-vlan guest drop-log
-    allow-traffic igmp mdns
+    allow-traffic igmp mdns sonos
   to-vlan homelab drop-log
-    allow-traffic bgp icmp
+    allow-traffic bgp icmp sonos
   to-vlan iot drop-log
-    allow-traffic icmp igmp mdns
+    allow-traffic icmp igmp mdns sonos
   to-vlan lan drop-log
     allow-traffic icmp ssh
   to-vlan servers drop-log
@@ -119,7 +175,7 @@ create-firewall-rules local
   to-vlan staging drop-log
     allow-traffic bgp icmp
   to-vlan trusted drop-log
-    allow-traffic icmp igmp mdns wireguard
+    allow-traffic icmp igmp mdns sonos wireguard
   to-vlan wan accept
 
 create-firewall-rules servers
@@ -174,9 +230,10 @@ create-firewall-rules trusted
   to-vlan guest drop-log
   to-vlan homelab drop-log
   to-vlan iot accept
+    allow-traffic sonos
   to-vlan lan drop-log
   to-vlan local drop-log
-    allow-traffic dhcp icmp igmp iperf mdns ntp ssh
+    allow-traffic dhcp icmp igmp iperf mdns ntp sonos ssh
   to-vlan servers drop-log
   to-vlan services accept
   to-vlan staging drop-log
@@ -197,25 +254,25 @@ create-firewall-rules wan
 
 
 # From GUEST to IOT
-set firewall ipv4 name guest-iot rule 430 action 'accept'
-set firewall ipv4 name guest-iot rule 430 description 'Rule: accept_tcp_from_sonos_controllers_to_sonos_players'
-set firewall ipv4 name guest-iot rule 430 destination group address-group 'sonos-players'
-set firewall ipv4 name guest-iot rule 430 destination port '1400,1443,4444,7000,30000-65535'
-set firewall ipv4 name guest-iot rule 430 protocol 'tcp'
-set firewall ipv4 name guest-iot rule 430 source group address-group 'sonos-controllers'
-set firewall ipv4 name guest-iot rule 431 action 'accept'
-set firewall ipv4 name guest-iot rule 431 description 'Rule: accept_udp_from_sonos_controllers_to_sonos_players'
-set firewall ipv4 name guest-iot rule 431 destination group address-group 'sonos-players'
-set firewall ipv4 name guest-iot rule 431 destination port '319,320,30000-65535'
-set firewall ipv4 name guest-iot rule 431 protocol 'udp'
-set firewall ipv4 name guest-iot rule 431 source group address-group 'sonos-controllers'
+# set firewall ipv4 name guest-iot rule 430 action 'accept'
+# set firewall ipv4 name guest-iot rule 430 description 'Rule: accept_tcp_from_sonos_controllers_to_sonos_players'
+# set firewall ipv4 name guest-iot rule 430 destination group address-group 'sonos-players'
+# set firewall ipv4 name guest-iot rule 430 destination port '1400,1443,4444,7000,30000-65535'
+# set firewall ipv4 name guest-iot rule 430 protocol 'tcp'
+# set firewall ipv4 name guest-iot rule 430 source group address-group 'sonos-controllers'
+# set firewall ipv4 name guest-iot rule 431 action 'accept'
+# set firewall ipv4 name guest-iot rule 431 description 'Rule: accept_udp_from_sonos_controllers_to_sonos_players'
+# set firewall ipv4 name guest-iot rule 431 destination group address-group 'sonos-players'
+# set firewall ipv4 name guest-iot rule 431 destination port '319,320,30000-65535'
+# set firewall ipv4 name guest-iot rule 431 protocol 'udp'
+# set firewall ipv4 name guest-iot rule 431 source group address-group 'sonos-controllers'
 
 # From GUEST to LOCAL
-set firewall ipv4 name guest-local rule 450 action 'accept'
-set firewall ipv4 name guest-local rule 450 description 'Rule: accept_discovery_from_sonos_controllers'
-set firewall ipv4 name guest-local rule 450 destination port '1900,1901,1902,57621'
-set firewall ipv4 name guest-local rule 450 protocol 'udp'
-set firewall ipv4 name guest-local rule 450 source group address-group 'sonos-controllers'
+# set firewall ipv4 name guest-local rule 450 action 'accept'
+# set firewall ipv4 name guest-local rule 450 description 'Rule: accept_discovery_from_sonos_controllers'
+# set firewall ipv4 name guest-local rule 450 destination port '1900,1901,1902,57621'
+# set firewall ipv4 name guest-local rule 450 protocol 'udp'
+# set firewall ipv4 name guest-local rule 450 source group address-group 'sonos-controllers'
 
 
 # From HOMELAB to LOCAL
@@ -223,66 +280,66 @@ set firewall ipv4 name homelab-local rule 350 action 'accept'
 set firewall ipv4 name homelab-local rule 350 description 'Rule: accept prometheus metrics scrape'
 set firewall ipv4 name homelab-local rule 350 destination group port-group 'prometheus-metrics'
 set firewall ipv4 name homelab-local rule 350 protocol 'tcp'
-set firewall ipv4 name homelab-local rule 450 action 'accept'
-set firewall ipv4 name homelab-local rule 450 description 'Rule: accept_discovery_from_sonos_controllers'
-set firewall ipv4 name homelab-local rule 450 destination port '1900,1901,1902,57621'
-set firewall ipv4 name homelab-local rule 450 protocol 'udp'
-set firewall ipv4 name homelab-local rule 450 source group address-group 'sonos-controllers'
+# set firewall ipv4 name homelab-local rule 450 action 'accept'
+# set firewall ipv4 name homelab-local rule 450 description 'Rule: accept_discovery_from_sonos_controllers'
+# set firewall ipv4 name homelab-local rule 450 destination port '1900,1901,1902,57621'
+# set firewall ipv4 name homelab-local rule 450 protocol 'udp'
+# set firewall ipv4 name homelab-local rule 450 source group address-group 'sonos-controllers'
 
 # From IOT to GUEST
-set firewall ipv4 name iot-guest rule 420 action 'accept'
-set firewall ipv4 name iot-guest rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
-set firewall ipv4 name iot-guest rule 420 destination group address-group 'sonos-controllers'
-set firewall ipv4 name iot-guest rule 420 destination port '319,320,30000-65535'
-set firewall ipv4 name iot-guest rule 420 protocol 'udp'
-set firewall ipv4 name iot-guest rule 420 source group address-group 'sonos-players'
-set firewall ipv4 name iot-guest rule 421 action 'accept'
-set firewall ipv4 name iot-guest rule 421 description 'Rule: accept_tcp_from_sonos_players_to_sonos_controllers'
-set firewall ipv4 name iot-guest rule 421 destination group address-group 'sonos-controllers'
-set firewall ipv4 name iot-guest rule 421 destination port '1400,3400,3401,3500,30000-65535'
-set firewall ipv4 name iot-guest rule 421 protocol 'tcp'
-set firewall ipv4 name iot-guest rule 421 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-guest rule 420 action 'accept'
+# set firewall ipv4 name iot-guest rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
+# set firewall ipv4 name iot-guest rule 420 destination group address-group 'sonos-controllers'
+# set firewall ipv4 name iot-guest rule 420 destination port '319,320,30000-65535'
+# set firewall ipv4 name iot-guest rule 420 protocol 'udp'
+# set firewall ipv4 name iot-guest rule 420 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-guest rule 421 action 'accept'
+# set firewall ipv4 name iot-guest rule 421 description 'Rule: accept_tcp_from_sonos_players_to_sonos_controllers'
+# set firewall ipv4 name iot-guest rule 421 destination group address-group 'sonos-controllers'
+# set firewall ipv4 name iot-guest rule 421 destination port '1400,3400,3401,3500,30000-65535'
+# set firewall ipv4 name iot-guest rule 421 protocol 'tcp'
+# set firewall ipv4 name iot-guest rule 421 source group address-group 'sonos-players'
 
 # From IOT to HOMELAB
-set firewall ipv4 name iot-homelab rule 420 action 'accept'
-set firewall ipv4 name iot-homelab rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
-set firewall ipv4 name iot-homelab rule 420 destination group address-group 'sonos-controllers'
-set firewall ipv4 name iot-homelab rule 420 destination port '319,320,30000-65535'
-set firewall ipv4 name iot-homelab rule 420 protocol 'udp'
-set firewall ipv4 name iot-homelab rule 420 source group address-group 'sonos-players'
-set firewall ipv4 name iot-homelab rule 421 action 'accept'
-set firewall ipv4 name iot-homelab rule 421 description 'Rule: accept_tcp_from_sonos_players_to_sonos_controllers'
-set firewall ipv4 name iot-homelab rule 421 destination group address-group 'sonos-controllers'
-set firewall ipv4 name iot-homelab rule 421 destination port '1400,3400,3401,3500,30000-65535'
-set firewall ipv4 name iot-homelab rule 421 protocol 'tcp'
-set firewall ipv4 name iot-homelab rule 421 source group address-group 'sonos-players'
-set firewall ipv4 name iot-homelab rule 460 action 'accept'
-set firewall ipv4 name iot-homelab rule 460 description 'Rule: accept_music_library_sonos_players'
-set firewall ipv4 name iot-homelab rule 460 destination group address-group 'sonos-library'
-set firewall ipv4 name iot-homelab rule 460 destination port '4534,http,https'
-set firewall ipv4 name iot-homelab rule 460 protocol 'tcp'
-set firewall ipv4 name iot-homelab rule 460 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-homelab rule 420 action 'accept'
+# set firewall ipv4 name iot-homelab rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
+# set firewall ipv4 name iot-homelab rule 420 destination group address-group 'sonos-controllers'
+# set firewall ipv4 name iot-homelab rule 420 destination port '319,320,30000-65535'
+# set firewall ipv4 name iot-homelab rule 420 protocol 'udp'
+# set firewall ipv4 name iot-homelab rule 420 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-homelab rule 421 action 'accept'
+# set firewall ipv4 name iot-homelab rule 421 description 'Rule: accept_tcp_from_sonos_players_to_sonos_controllers'
+# set firewall ipv4 name iot-homelab rule 421 destination group address-group 'sonos-controllers'
+# set firewall ipv4 name iot-homelab rule 421 destination port '1400,3400,3401,3500,30000-65535'
+# set firewall ipv4 name iot-homelab rule 421 protocol 'tcp'
+# set firewall ipv4 name iot-homelab rule 421 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-homelab rule 460 action 'accept'
+# set firewall ipv4 name iot-homelab rule 460 description 'Rule: accept_music_library_sonos_players'
+# set firewall ipv4 name iot-homelab rule 460 destination group address-group 'sonos-library'
+# set firewall ipv4 name iot-homelab rule 460 destination port '4534,http,https'
+# set firewall ipv4 name iot-homelab rule 460 protocol 'tcp'
+# set firewall ipv4 name iot-homelab rule 460 source group address-group 'sonos-players'
 
 # From IOT to LOCAL
-set firewall ipv4 name iot-local rule 440 action 'accept'
-set firewall ipv4 name iot-local rule 440 description 'Rule: accept_discovery_from_sonos_players'
-set firewall ipv4 name iot-local rule 440 destination port '1900,1901,1902'
-set firewall ipv4 name iot-local rule 440 protocol 'udp'
-set firewall ipv4 name iot-local rule 440 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-local rule 440 action 'accept'
+# set firewall ipv4 name iot-local rule 440 description 'Rule: accept_discovery_from_sonos_players'
+# set firewall ipv4 name iot-local rule 440 destination port '1900,1901,1902'
+# set firewall ipv4 name iot-local rule 440 protocol 'udp'
+# set firewall ipv4 name iot-local rule 440 source group address-group 'sonos-players'
 
 # From IOT to TRUSTED
-set firewall ipv4 name iot-trusted rule 420 action 'accept'
-set firewall ipv4 name iot-trusted rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
-set firewall ipv4 name iot-trusted rule 420 destination group address-group 'sonos-controllers'
-set firewall ipv4 name iot-trusted rule 420 destination port '319,320,30000-65535'
-set firewall ipv4 name iot-trusted rule 420 protocol 'udp'
-set firewall ipv4 name iot-trusted rule 420 source group address-group 'sonos-players'
-set firewall ipv4 name iot-trusted rule 421 action 'accept'
-set firewall ipv4 name iot-trusted rule 421 description 'Rule: accept_tcp_from_sonos_players_to_sonos_controllers'
-set firewall ipv4 name iot-trusted rule 421 destination group address-group 'sonos-controllers'
-set firewall ipv4 name iot-trusted rule 421 destination port '1400,3400,3401,3500,30000-65535'
-set firewall ipv4 name iot-trusted rule 421 protocol 'tcp'
-set firewall ipv4 name iot-trusted rule 421 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-trusted rule 420 action 'accept'
+# set firewall ipv4 name iot-trusted rule 420 description 'Rule: accept_udp_from_sonos_players_to_sonos_controllers'
+# set firewall ipv4 name iot-trusted rule 420 destination group address-group 'sonos-controllers'
+# set firewall ipv4 name iot-trusted rule 420 destination port '319,320,30000-65535'
+# set firewall ipv4 name iot-trusted rule 420 protocol 'udp'
+# set firewall ipv4 name iot-trusted rule 420 source group address-group 'sonos-players'
+# set firewall ipv4 name iot-trusted rule 421 action 'accept'
+# set firewall ipv4 name iot-trusted rule 421 description 'Rule: accept_tcp_from_sonos_players_to_sonos_controllers'
+# set firewall ipv4 name iot-trusted rule 421 destination group address-group 'sonos-controllers'
+# set firewall ipv4 name iot-trusted rule 421 destination port '1400,3400,3401,3500,30000-65535'
+# set firewall ipv4 name iot-trusted rule 421 protocol 'tcp'
+# set firewall ipv4 name iot-trusted rule 421 source group address-group 'sonos-players'
 
 # From LAN to SERVICES
 set firewall ipv4 name lan-services rule 300 action 'accept'
@@ -290,36 +347,36 @@ set firewall ipv4 name lan-services rule 300 description 'Rule: accept unifi'
 set firewall ipv4 name lan-services rule 300 destination group address-group 'unifi-controller'
 
 # From LOCAL to GUEST
-set firewall ipv4 name local-guest rule 410 action 'accept'
-set firewall ipv4 name local-guest rule 410 description 'Rule: accept_discovery_from_sonos_players'
-set firewall ipv4 name local-guest rule 410 destination port '1900,1901,1902'
-set firewall ipv4 name local-guest rule 410 protocol 'udp'
-set firewall ipv4 name local-guest rule 410 source group address-group 'sonos-players'
+# set firewall ipv4 name local-guest rule 410 action 'accept'
+# set firewall ipv4 name local-guest rule 410 description 'Rule: accept_discovery_from_sonos_players'
+# set firewall ipv4 name local-guest rule 410 destination port '1900,1901,1902'
+# set firewall ipv4 name local-guest rule 410 protocol 'udp'
+# set firewall ipv4 name local-guest rule 410 source group address-group 'sonos-players'
 
 # From LOCAL to HOMELAB
 set firewall ipv4 name local-homelab rule 310 action 'accept'
 set firewall ipv4 name local-homelab rule 310 description 'Rule: accept vector syslog'
 set firewall ipv4 name local-homelab rule 310 destination port '6003'
 set firewall ipv4 name local-homelab rule 310 protocol 'tcp'
-set firewall ipv4 name local-homelab rule 410 action 'accept'
-set firewall ipv4 name local-homelab rule 410 description 'Rule: accept_discovery_from_sonos_players'
-set firewall ipv4 name local-homelab rule 410 destination port '1900,1901,1902'
-set firewall ipv4 name local-homelab rule 410 protocol 'udp'
-set firewall ipv4 name local-homelab rule 410 source group address-group 'sonos-players'
+# set firewall ipv4 name local-homelab rule 410 action 'accept'
+# set firewall ipv4 name local-homelab rule 410 description 'Rule: accept_discovery_from_sonos_players'
+# set firewall ipv4 name local-homelab rule 410 destination port '1900,1901,1902'
+# set firewall ipv4 name local-homelab rule 410 protocol 'udp'
+# set firewall ipv4 name local-homelab rule 410 source group address-group 'sonos-players'
 
 # From LOCAL to IOT
-set firewall ipv4 name local-iot rule 400 action 'accept'
-set firewall ipv4 name local-iot rule 400 description 'Rule: accept_discovery_from_sonos_controllers'
-set firewall ipv4 name local-iot rule 400 destination port '1900,1901,1902,57621'
-set firewall ipv4 name local-iot rule 400 protocol 'udp'
-set firewall ipv4 name local-iot rule 400 source group address-group 'sonos-controllers'
+# set firewall ipv4 name local-iot rule 400 action 'accept'
+# set firewall ipv4 name local-iot rule 400 description 'Rule: accept_discovery_from_sonos_controllers'
+# set firewall ipv4 name local-iot rule 400 destination port '1900,1901,1902,57621'
+# set firewall ipv4 name local-iot rule 400 protocol 'udp'
+# set firewall ipv4 name local-iot rule 400 source group address-group 'sonos-controllers'
 
 # From LOCAL to TRUSTED
-set firewall ipv4 name local-trusted rule 410 action 'accept'
-set firewall ipv4 name local-trusted rule 410 description 'Rule: accept_discovery_from_sonos_players'
-set firewall ipv4 name local-trusted rule 410 destination port '1900,1901,1902'
-set firewall ipv4 name local-trusted rule 410 protocol 'udp'
-set firewall ipv4 name local-trusted rule 410 source group address-group 'sonos-players'
+# set firewall ipv4 name local-trusted rule 410 action 'accept'
+# set firewall ipv4 name local-trusted rule 410 description 'Rule: accept_discovery_from_sonos_players'
+# set firewall ipv4 name local-trusted rule 410 destination port '1900,1901,1902'
+# set firewall ipv4 name local-trusted rule 410 protocol 'udp'
+# set firewall ipv4 name local-trusted rule 410 source group address-group 'sonos-players'
 
 # From STAGING to LOCAL
 set firewall ipv4 name staging-local rule 350 action 'accept'
@@ -336,18 +393,18 @@ set firewall ipv4 name trusted-homelab rule 530 description 'Rule: accept sophie
 set firewall ipv4 name trusted-homelab rule 530 source group address-group 'sophie-devices'
 
 # From TRUSTED to IOT
-set firewall ipv4 name trusted-iot rule 430 action 'accept'
-set firewall ipv4 name trusted-iot rule 430 description 'Rule: accept_tcp_from_sonos_controllers_to_sonos_players'
-set firewall ipv4 name trusted-iot rule 430 destination group address-group 'sonos-players'
-set firewall ipv4 name trusted-iot rule 430 destination port '1400,1443,4444,7000,30000-65535'
-set firewall ipv4 name trusted-iot rule 430 protocol 'tcp'
-set firewall ipv4 name trusted-iot rule 430 source group address-group 'sonos-controllers'
-set firewall ipv4 name trusted-iot rule 431 action 'accept'
-set firewall ipv4 name trusted-iot rule 431 description 'Rule: accept_udp_from_sonos_controllers_to_sonos_players'
-set firewall ipv4 name trusted-iot rule 431 destination group address-group 'sonos-players'
-set firewall ipv4 name trusted-iot rule 431 destination port '319,320,30000-65535'
-set firewall ipv4 name trusted-iot rule 431 protocol 'udp'
-set firewall ipv4 name trusted-iot rule 431 source group address-group 'sonos-controllers'
+# set firewall ipv4 name trusted-iot rule 430 action 'accept'
+# set firewall ipv4 name trusted-iot rule 430 description 'Rule: accept_tcp_from_sonos_controllers_to_sonos_players'
+# set firewall ipv4 name trusted-iot rule 430 destination group address-group 'sonos-players'
+# set firewall ipv4 name trusted-iot rule 430 destination port '1400,1443,4444,7000,30000-65535'
+# set firewall ipv4 name trusted-iot rule 430 protocol 'tcp'
+# set firewall ipv4 name trusted-iot rule 430 source group address-group 'sonos-controllers'
+# set firewall ipv4 name trusted-iot rule 431 action 'accept'
+# set firewall ipv4 name trusted-iot rule 431 description 'Rule: accept_udp_from_sonos_controllers_to_sonos_players'
+# set firewall ipv4 name trusted-iot rule 431 destination group address-group 'sonos-players'
+# set firewall ipv4 name trusted-iot rule 431 destination port '319,320,30000-65535'
+# set firewall ipv4 name trusted-iot rule 431 protocol 'udp'
+# set firewall ipv4 name trusted-iot rule 431 source group address-group 'sonos-controllers'
 
 # From TRUSTED to LAN
 set firewall ipv4 name trusted-lan rule 520 action 'accept'
@@ -368,11 +425,11 @@ set firewall ipv4 name trusted-local rule 340 destination address '255.255.255.2
 set firewall ipv4 name trusted-local rule 340 destination port '52217'
 set firewall ipv4 name trusted-local rule 340 protocol 'udp'
 set firewall ipv4 name trusted-local rule 340 source group address-group 'scanner-clients'
-set firewall ipv4 name trusted-local rule 450 action 'accept'
-set firewall ipv4 name trusted-local rule 450 description 'Rule: accept_discovery_from_sonos_controllers'
-set firewall ipv4 name trusted-local rule 450 destination port '1900,1901,1902,57621'
-set firewall ipv4 name trusted-local rule 450 protocol 'udp'
-set firewall ipv4 name trusted-local rule 450 source group address-group 'sonos-controllers'
+# set firewall ipv4 name trusted-local rule 450 action 'accept'
+# set firewall ipv4 name trusted-local rule 450 description 'Rule: accept_discovery_from_sonos_controllers'
+# set firewall ipv4 name trusted-local rule 450 destination port '1900,1901,1902,57621'
+# set firewall ipv4 name trusted-local rule 450 protocol 'udp'
+# set firewall ipv4 name trusted-local rule 450 source group address-group 'sonos-controllers'
 
 # From TRUSTED to SERVERS
 set firewall ipv4 name trusted-servers rule 520 action 'accept'
