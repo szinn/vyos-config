@@ -216,7 +216,6 @@ create-firewall-rules lan
   to-vlan wan accept
 
 create-firewall-rules local
-  interfaces local-zone
   to-vlan guest drop-log
     allow-traffic igmp mdns sonos
   to-vlan homelab drop-log

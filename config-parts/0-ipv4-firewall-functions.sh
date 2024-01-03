@@ -4,6 +4,9 @@
 function create-firewall-rules {
   CURRENT_VLAN=$1
   set firewall zone ${CURRENT_VLAN} default-action 'drop'
+  if test "${CURRENT_VLAN}" == "local"; then
+    set firewall zone ${CURRENT_VLAN} local-zone
+  fi    
 }
 
 function interfaces {
