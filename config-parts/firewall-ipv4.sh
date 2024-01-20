@@ -290,7 +290,7 @@ create-firewall-rules trusted
   to-vlan lan drop-log
     allow-traffic scottes-devices unifi
   to-vlan local drop-log
-    allow-traffic dhcp icmp igmp iperf mdns ntp sonos ssh
+    allow-traffic dhcp icmp igmp iperf mdns ntp scottes-devices sonos ssh
     drop-traffic scansnap-probe
   to-vlan servers drop-log
     allow-traffic scottes-devices sophies-devices
