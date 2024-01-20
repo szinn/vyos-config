@@ -93,6 +93,14 @@ endpoints:
       - type: discord
         description: "Artemis down"
         send-on-resolved: true
+  - name: Hera
+    group: Servers
+    url: icmp://10.10.0.8
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Hera down"
+        send-on-resolved: true
   - name: UNVR
     group: Servers
     url: icmp://10.0.0.32
