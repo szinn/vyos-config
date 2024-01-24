@@ -258,7 +258,7 @@ create-firewall-rules services
   to-vlan lan accept-log
     allow-traffic icmp
   to-vlan local accept-log
-    allow-traffic ntp
+    allow-traffic dns ntp
   to-vlan servers accept
   to-vlan staging accept
   to-vlan trusted drop-log
