@@ -81,7 +81,7 @@ if "$dry_run"; then
 else
   # Pull new container images
   mapfile -t AVAILABLE_IMAGES < <(run show container image | awk '{ if ( NR > 1  ) { print $1 ":" $2} }')
-  mapfile -t CONFIG_IMAGES < <(sed -nr "s/set container name .* image '(.*)'/\1/p" /config/config-parts/* | uniq)
+  mapfile -t CONFIG_IMAGES < <(sed -nr "s/^set container name .* image '(.*)'/\1/p" /config/config-parts/* | uniq)
 
   for image in "${CONFIG_IMAGES[@]}"; do
     if [[ ! " ${AVAILABLE_IMAGES[*]} " =~ \ ${image}\  ]]; then
