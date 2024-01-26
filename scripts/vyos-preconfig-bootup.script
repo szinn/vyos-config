@@ -9,3 +9,6 @@ mkdir -p /tmp/onepassword/data
 chown -R 999:999 /tmp/onepassword
 mkdir -p /tmp/bind/cache
 chown -R 104 /tmp/bind/cache
+mkdir /tmp/foobar
+sudo rmdir /tmp/foobar $(sudo find /usr/lib/live/mount/persistence/container/storage -type d -name app | grep merged)
+
