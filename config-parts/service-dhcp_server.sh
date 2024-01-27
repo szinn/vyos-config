@@ -92,6 +92,8 @@ set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-m
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping artemis mac-address 'd8:3a:dd:0d:14:08'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping hera ip-address '10.10.0.8'
 set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping hera mac-address '48:21:0b:58:33:b6'
+set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping apollo ip-address '10.10.0.9'
+set service dhcp-server shared-network-name SERVERS subnet 10.10.0.0/24 static-mapping apollo mac-address 'd8:3a:dd:f6:7c:26'
 
 # Homelab VLAN
 set service dhcp-server shared-network-name HOMELAB authoritative

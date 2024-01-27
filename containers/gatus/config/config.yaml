@@ -101,6 +101,14 @@ endpoints:
       - type: discord
         description: "Hera down"
         send-on-resolved: true
+  - name: Apollo
+    group: Servers
+    url: icmp://10.10.0.9
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Apollo down"
+        send-on-resolved: true
   - name: UNVR
     group: Servers
     url: icmp://10.0.0.32
