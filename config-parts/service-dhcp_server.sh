@@ -178,12 +178,8 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-athena mac-address 'DE:CA:FF:20:00:1B'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 ip-address '10.20.0.28'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 mac-address '00:1c:42:0b:1e:65'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc1 ip-address '10.20.0.29'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc1 mac-address '00:e0:4c:a9:19:4a'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc2 ip-address '10.20.0.30'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc2 mac-address '00:e0:4c:a9:e9:59'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping block ip-address '10.20.0.31'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping block mac-address 'f4:d4:88:68:6b:3d'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc-net ip-address '10.20.0.31'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc-net mac-address '00:e0:4c:a9:19:4a'
 
 # Sophie's devices
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-iphone ip-address '10.20.0.32'
