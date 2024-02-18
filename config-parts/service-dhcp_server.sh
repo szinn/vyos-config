@@ -55,9 +55,9 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mappin
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping deck-cam mac-address '74:ac:b9:01:89:82'
 
 # LAN Power
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-pdu-pro ip-address '10.0.0.40'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-pdu-pro mac-address '60:22:32:99:68:95'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-plug ip-address '10.0.0.41'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-pdu-pro-1 ip-address '10.0.0.40'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-pdu-pro-1 mac-address '60:22:32:99:68:95'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-plug ip-address '10.0.0.47'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-plug mac-address 'fc:ec:da:76:74:9a' # USP-Plug
 
 # LAN (service port - eth4)
