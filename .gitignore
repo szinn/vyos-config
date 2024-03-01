@@ -9,6 +9,7 @@
 !/LICENSE
 !/secrets.sops.env
 !/settings.env
+!/Taskfile.yaml
 
 # VyOS config
 !bootstrap/

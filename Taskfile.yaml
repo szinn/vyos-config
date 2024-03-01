@@ -1,0 +1,9 @@
+---
+version: "3"
+
+tasks:
+  sshkey:
+    desc: Update ssh key
+    cmds:
+      - |
+        scp ~/.ssh/id_ed25519 vyos@gateway:/home/vyos/.ssh/id_ed25519
