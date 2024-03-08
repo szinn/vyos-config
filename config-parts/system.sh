@@ -4,7 +4,7 @@ set system host-name 'gateway'
 set system domain-name 'zinn.tech'
 set system login banner post-login 'Welcome to gateway.zinn.tech'
 
-set system static-host-mapping host-name gateway inet 10.0.0.1
+# set system static-host-mapping host-name gateway inet 10.0.0.1
 
 set system ipv6 disable-forwarding
 
