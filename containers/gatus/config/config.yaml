@@ -45,7 +45,7 @@ endpoints:
   # Servers
   - name: Homelab
     group: Servers
-    url: icmp://home.zinn.ca
+    url: icmp://echo-server.zinn.ca
     client:
       dns-resolver: udp://1.1.1.1:53
     conditions: ["[CONNECTED] == true"]
