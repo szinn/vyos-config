@@ -60,6 +60,10 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mappin
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-plug ip-address '10.0.0.47'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-plug mac-address 'fc:ec:da:76:74:9a' # USP-Plug
 
+# Titan
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan ip-address '10.0.0.128'
+set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
+
 # LAN (service port - eth4)
 set service dhcp-server shared-network-name SERVICE authoritative
 set service dhcp-server shared-network-name SERVICE ping-check
@@ -123,26 +127,26 @@ set service dhcp-server shared-network-name HOMELAB subnet 10.11.0.0/24 static-m
 # Staging VLAN
 set service dhcp-server shared-network-name STAGING authoritative
 set service dhcp-server shared-network-name STAGING ping-check
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 default-router '10.12.0.1'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 domain-name 'zinn.tech'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 lease '86400'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 name-server '10.0.5.4'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 range 0 start '10.12.0.208'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 range 0 stop '10.12.0.239'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 default-router '10.12.0.1'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 domain-name 'zinn.tech'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 lease '86400'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 name-server '10.0.5.4'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 range 0 start '10.12.0.208'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 range 0 stop '10.12.0.239'
 
 # k8s Staging Cluster
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-1 ip-address '10.12.0.16'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-1 mac-address 'de:ca:ff:10:12:10'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-2 ip-address '10.12.0.17'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-2 mac-address 'de:ca:ff:10:12:11'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-3 ip-address '10.12.0.18'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-3 mac-address 'de:ca:ff:10:12:12'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-4 ip-address '10.12.0.19'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-4 mac-address 'de:ca:ff:10:12:13'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-5 ip-address '10.12.0.20'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-5 mac-address 'de:ca:ff:10:12:14'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-6 ip-address '10.12.0.21'
-set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/24 static-mapping stage-6 mac-address 'de:ca:ff:10:12:15'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-1 ip-address '10.12.0.16'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-1 mac-address 'de:ca:ff:10:12:10'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-2 ip-address '10.12.0.17'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-2 mac-address 'de:ca:ff:10:12:11'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-3 ip-address '10.12.0.18'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-3 mac-address 'de:ca:ff:10:12:12'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-4 ip-address '10.12.0.19'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-4 mac-address 'de:ca:ff:10:12:13'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-5 ip-address '10.12.0.20'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-5 mac-address 'de:ca:ff:10:12:14'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-6 ip-address '10.12.0.21'
+set service dhcp-server shared-network-name STAGING subnet 10.12.0.0/16 static-mapping stage-6 mac-address 'de:ca:ff:10:12:15'
 
 # TRUSTED VLAN
 set service dhcp-server shared-network-name TRUSTED authoritative
@@ -197,6 +201,10 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 # VyOS Proxmox Canary
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping vyos-canary-20 ip-address '10.20.0.240'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping vyos-canary-20 mac-address 'DE:CA:FF:20:00:F0'
+
+# Titan
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan ip-address '10.20.0.144'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
 
 # IOT VLAN
 set service dhcp-server shared-network-name IOT authoritative
@@ -289,6 +297,10 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping vyos-canary-98 ip-address '192.168.1.240'
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping vyos-canary-98 mac-address 'DE:CA:FF:98:01:F0'
 
+# Titan
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping titan ip-address '192.168.1.144'
+set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
+
 # GUEST VLAN
 set service dhcp-server shared-network-name GUEST authoritative
 set service dhcp-server shared-network-name GUEST ping-check
@@ -317,3 +329,7 @@ set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-m
 # VyOS Proxmox Canary
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping vyos-canary-99 ip-address '192.168.2.240'
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping vyos-canary-99 mac-address 'DE:CA:FF:99:02:F0'
+
+# Titan
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping titan ip-address '192.168.2.144'
+set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
