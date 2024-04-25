@@ -69,7 +69,7 @@ set firewall group address-group sonos-players address '192.168.1.128-192.168.1.
 
 # Scotte devices
 set firewall group address-group scotte-devices address '10.20.0.16-10.20.0.20'
-set firewall group address-group scotte-devices address '10.20.0.24-10.20.0.28'
+set firewall group address-group scotte-devices address '10.20.0.24-10.20.0.31'
 set firewall group address-group scotte-devices address '10.20.1.2-10.20.1.4'
 
 # Sophie devices

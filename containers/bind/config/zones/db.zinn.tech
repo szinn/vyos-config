@@ -5,7 +5,7 @@
 $TTL 3600
 $ORIGIN zinn.tech.
 @ 3600 IN SOA zinn.tech. gateway.zinn.tech. (
-  2024042501         ; serial number (epoch timestamp)
+  2024042502         ; serial number (epoch timestamp)
   7200               ; refresh period
   3600               ; retry period
   1209600            ; expire time
@@ -18,7 +18,7 @@ $ORIGIN zinn.tech.
 ; LAN
 gateway             IN  A  10.0.0.1
 zeus                IN  A  10.0.0.32
-titan               IN  A  10.0.0.128
+; titan               IN  A  10.0.0.128
 
 ; SERVICES
 styx                IN  A  10.0.5.2
@@ -61,6 +61,7 @@ macvm               IN  A  10.20.0.25
 nixvm               IN  A  10.20.0.26
 athena              IN  A  10.20.0.27
 win11               IN  A  10.20.0.28
+titan               IN  A  10.20.0.31
 
 ; IoT
 octo                IN  A  192.168.1.48

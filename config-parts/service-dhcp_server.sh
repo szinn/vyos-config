@@ -61,8 +61,8 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mappin
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping usp-plug mac-address 'fc:ec:da:76:74:9a' # USP-Plug
 
 # Titan
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan ip-address '10.0.0.128'
-set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
+# set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan ip-address '10.0.0.128'
+# set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
 
 # Servers VLAN
 set service dhcp-server shared-network-name SERVERS authoritative
@@ -174,8 +174,8 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-athena mac-address 'DE:CA:FF:20:00:1B'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 ip-address '10.20.0.28'
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping odin-win11 mac-address '00:1c:42:0b:1e:65'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc-net ip-address '10.20.0.31'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping usbc-net mac-address '00:e0:4c:a9:19:4a'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan ip-address '10.20.0.31'
+set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan mac-address 'DE:CA:FF:20:00:1F'
 
 # Sophie's devices
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping sophie-iphone ip-address '10.20.0.32'
@@ -194,8 +194,8 @@ set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-m
 set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping vyos-canary-20 mac-address 'DE:CA:FF:20:00:F0'
 
 # Titan
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan ip-address '10.20.0.144'
-set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
+# set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan ip-address '10.20.0.144'
+# set service dhcp-server shared-network-name TRUSTED subnet 10.20.0.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
 
 # IOT VLAN
 set service dhcp-server shared-network-name IOT authoritative
@@ -289,8 +289,8 @@ set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-map
 set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping vyos-canary-98 mac-address 'DE:CA:FF:98:01:F0'
 
 # Titan
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping titan ip-address '192.168.1.144'
-set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
+# set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping titan ip-address '192.168.1.144'
+# set service dhcp-server shared-network-name IOT subnet 192.168.1.0/24 static-mapping titan mac-address 'de:ca:ff:20:00:80'
 
 # GUEST VLAN
 set service dhcp-server shared-network-name GUEST authoritative
@@ -322,5 +322,5 @@ set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-m
 set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping vyos-canary-99 mac-address 'DE:CA:FF:99:02:F0'
 
 # Titan
-set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping titan ip-address '192.168.2.144'
-set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
+# set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping titan ip-address '192.168.2.144'
+# set service dhcp-server shared-network-name GUEST subnet 192.168.2.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
