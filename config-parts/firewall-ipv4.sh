@@ -69,6 +69,14 @@ function allow-traffic-rtsp {
   set firewall ipv4 name $zone rule 500 destination group address-group 'unifi-unvr'
 }
 
+function allow-traffic-cameras {
+  zone=$1
+
+  set firewall ipv4 name $zone rule 510 action 'accept'
+  set firewall ipv4 name $zone rule 510 source group address-group 'unifi-unvr'
+  set firewall ipv4 name $zone rule 510 destination group address-group 'unifi-cameras'
+}
+
 function allow-traffic-sonos {
   zone=$1
 
@@ -205,6 +213,7 @@ create-firewall-rules lan
   to-vlan homelab drop-log
     allow-traffic icmp
   to-vlan iot drop-log
+    allow-traffic icmp
   to-vlan local drop-log
     allow-traffic dhcp ntp ssh
     drop-traffic multicast-224 port-10001
@@ -214,6 +223,7 @@ create-firewall-rules lan
     allow-traffic dns unifi icmp
   to-vlan staging drop-log
   to-vlan trusted drop-log
+    allow-traffic cameras
     drop-traffic port-10001
   to-vlan wan accept
 
