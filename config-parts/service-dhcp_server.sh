@@ -64,15 +64,6 @@ set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mappin
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan ip-address '10.0.0.128'
 set service dhcp-server shared-network-name LAN subnet 10.0.0.0/24 static-mapping titan mac-address 'de:ca:ff:00:00:80'
 
-# LAN (service port - eth4)
-set service dhcp-server shared-network-name SERVICE authoritative
-set service dhcp-server shared-network-name SERVICE ping-check
-set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 default-router '10.0.4.1'
-set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 lease '86400'
-set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 name-server '10.0.5.4'
-set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 start '10.0.4.208'
-set service dhcp-server shared-network-name SERVICE subnet 10.0.4.0/24 range 0 stop '10.0.4.239'
-
 # Servers VLAN
 set service dhcp-server shared-network-name SERVERS authoritative
 set service dhcp-server shared-network-name SERVERS ping-check

@@ -203,13 +203,15 @@ create-firewall-rules lan
   interfaces bond0 eth4
   to-vlan guest drop-log
   to-vlan homelab drop-log
+    allow-traffic icmp
   to-vlan iot drop-log
   to-vlan local drop-log
     allow-traffic dhcp ntp ssh
     drop-traffic multicast-224 port-10001
   to-vlan servers drop-log
+    allow-traffic icmp
   to-vlan services accept-log
-    allow-traffic dns unifi
+    allow-traffic dns unifi icmp
   to-vlan staging drop-log
   to-vlan trusted drop-log
     drop-traffic port-10001
