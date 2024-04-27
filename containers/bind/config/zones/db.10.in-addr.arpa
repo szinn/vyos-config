@@ -5,7 +5,7 @@
 $TTL 3600
 $ORIGIN 10.in-addr.arpa.
 @ 3600 IN SOA 10.in-addr.arpa. gateway.zinn.tech. (
-  2024042502         ; serial number (epoch timestamp)
+  2024042601         ; serial number (epoch timestamp)
   7200               ; refresh period
   3600               ; retry period
   1209600            ; expire time
@@ -28,7 +28,6 @@ $ORIGIN in-addr.arpa.
 5.5.0.10   IN  PTR  gatus-gateway.zinn.tech.
 6.5.0.10   IN  PTR  onepassword-connect.zinn.tech.
 10.5.0.10  IN  PTR  main.zinn.tech.
-11.5.0.10  IN  PTR  staging.zinn.tech.
 
 ; SERVERS
 2.0.10.10  IN  PTR  ragnar.zinn.tech.
@@ -47,6 +46,7 @@ $ORIGIN in-addr.arpa.
 19.0.11.10  IN  PTR  k8s-4.zinn.tech.
 20.0.11.10  IN  PTR  k8s-5.zinn.tech.
 21.0.11.10  IN  PTR  k8s-6.zinn.tech.
+15.0.12.10  IN  PTR  staging.zinn.tech.
 16.0.12.10  IN  PTR  stage-1.zinn.tech.
 17.0.12.10  IN  PTR  stage-2.zinn.tech.
 18.0.12.10  IN  PTR  stage-3.zinn.tech.
